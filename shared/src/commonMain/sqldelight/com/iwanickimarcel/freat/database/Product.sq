@@ -1,0 +1,31 @@
+CREATE TABLE productEntity (
+    name TEXT NOT NULL PRIMARY KEY,
+    amount REAL NOT NULL,
+    amountUnitId INTEGER NOT NULL,
+    createdAt INTEGER NOT NULL,
+    imagePath TEXT
+);
+
+getProducts:
+SELECT *
+FROM productEntity
+ORDER BY name ASC;
+
+insertProcuct:
+INSERT OR REPLACE
+INTO productEntity(
+    name,
+    amount,
+    amountUnitId,
+    createdAt,
+    imagePath
+) VALUES (?, ?,?, ?, ?);
+
+deleteProcuct:
+DELETE FROM productEntity
+WHERE name = :name;
+
+getProductByName:
+SELECT *
+FROM productEntity
+WHERE name = :name;
