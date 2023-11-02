@@ -6,7 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.ui.platform.LocalContext
 import com.iwanickimarcel.freat.App
-import com.iwanickimarcel.freat.di.ProductsModule
+import com.iwanickimarcel.freat.di.AppModule
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,7 +15,7 @@ class MainActivity : ComponentActivity() {
             App(
                 darkTheme = isSystemInDarkTheme(),
                 dynamicColor = true,
-                productsModule = ProductsModule(LocalContext.current.applicationContext)
+                appModule = AppModule(LocalContext.current.applicationContext)
             )
         }
     }

@@ -2,48 +2,54 @@ package com.iwanickimarcel.freat.navigation
 
 import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.core.screen.Screen
-import com.iwanickimarcel.freat.di.ProductsModule
+import com.iwanickimarcel.freat.di.AppModule
 import com.iwanickimarcel.freat.feature.add_product.presentation.AddProductScreen
 import com.iwanickimarcel.freat.feature.home.presentation.HomeScreen
 import com.iwanickimarcel.freat.feature.products.presentation.ProductsScreen
 import com.iwanickimarcel.freat.feature.recipes.presentation.RecipesScreen
 import com.iwanickimarcel.freat.feature.settings.presentation.SettingsScreen
 
-object Home : Screen {
+data class Home(
+    val appModule: AppModule
+) : Screen {
     @Composable
     override fun Content() {
-        HomeScreen()
+        HomeScreen(appModule)
     }
 }
 
-object Recipes : Screen {
+data class Recipes(
+    val appModule: AppModule
+) : Screen {
     @Composable
     override fun Content() {
-        RecipesScreen()
+        RecipesScreen(appModule)
     }
 }
 
 data class Products(
-    val productsModule: ProductsModule
+    val appModule: AppModule
 ) : Screen {
     @Composable
     override fun Content() {
-        ProductsScreen(productsModule)
+        ProductsScreen(appModule)
     }
 }
 
 data class AddProduct(
-    val productsModule: ProductsModule
+    val appModule: AppModule
 ) : Screen {
     @Composable
     override fun Content() {
-        AddProductScreen(productsModule)
+        AddProductScreen(appModule)
     }
 }
 
-object Settings : Screen {
+data class Settings(
+    val appModule: AppModule
+) : Screen {
     @Composable
     override fun Content() {
-        SettingsScreen()
+        SettingsScreen(appModule)
     }
 }

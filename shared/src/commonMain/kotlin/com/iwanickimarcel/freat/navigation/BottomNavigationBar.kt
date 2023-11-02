@@ -17,14 +17,10 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.vector.ImageVector
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
-import com.iwanickimarcel.freat.di.ProductsModule
+import com.iwanickimarcel.freat.di.AppModule
 
 data class BottomNavigationItem(
     val screen: Screen,
@@ -38,39 +34,40 @@ data class BottomNavigationItem(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BottomNavigationBar(
-    productsModule: ProductsModule
+    screen: Screen,
+    appModule: AppModule,
 ) {
     val navigator = LocalNavigator.current ?: return
 
     val items = listOf(
         BottomNavigationItem(
-            screen = Home,
+            screen = Home(appModule),
             title = "Home",
             filledIcon = Icons.Filled.Home,
             outlinedIcon = Icons.Outlined.Home,
         ),
         BottomNavigationItem(
-            screen = Recipes,
+            screen = Recipes(appModule),
             title = "Recipes",
             filledIcon = Icons.Filled.FoodBank,
             outlinedIcon = Icons.Outlined.FoodBank
         ),
         BottomNavigationItem(
-            screen = Products(productsModule),
+            screen = Products(appModule),
             title = "Products",
             filledIcon = Icons.Filled.Fastfood,
             outlinedIcon = Icons.Outlined.Fastfood
         ),
         BottomNavigationItem(
-            screen = Settings,
+            screen = Settings(appModule),
             title = "Settings",
             filledIcon = Icons.Filled.Settings,
             outlinedIcon = Icons.Outlined.Settings
         ),
     )
 
-    var selectedItemIndex by rememberSaveable {
-        mutableStateOf(0)
+    var selectedItemIndex = items.indexOfFirst {
+        it.screen == screen
     }
 
     NavigationBar {

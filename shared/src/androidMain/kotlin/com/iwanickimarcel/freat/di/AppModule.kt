@@ -6,7 +6,7 @@ import com.iwanickimarcel.freat.database.ProductsDatabase
 import com.iwanickimarcel.freat.feature.products.data.SqlDelightProductDataSource
 import com.iwanickimarcel.freat.feature.products.domain.ProductDataSource
 
-actual class ProductsModule(
+actual class AppModule(
     private val context: Context
 ) {
     actual val productDataSource: ProductDataSource by lazy {
