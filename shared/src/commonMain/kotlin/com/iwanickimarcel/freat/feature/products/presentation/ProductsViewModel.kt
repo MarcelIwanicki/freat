@@ -29,6 +29,12 @@ class ProductsViewModel(
                 )
             }
 
+            is ProductsEvent.OnProductLongPressDismiss -> {
+                _state.value = _state.value.copy(
+                    longPressedProduct = null
+                )
+            }
+
             is ProductsEvent.OnAddProductClick -> {
                 _state.value = _state.value.copy(
                     addProductPressed = true
