@@ -81,30 +81,33 @@ fun ProductsScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = {},
-                actions = {
-                    Box(modifier = Modifier.padding(16.dp)) {
-                        OutlinedTextField(
-                            value = "",
-                            placeholder = {
-                                Text(text = "Search for products...")
-                            },
-                            onValueChange = { },
-                            shape = RoundedCornerShape(20.dp),
-                            modifier = Modifier.fillMaxWidth(),
-                            leadingIcon = {
-                                Icon(
-                                    imageVector = Icons.Outlined.Search,
-                                    contentDescription = "Search for products"
-                                )
-                            }
-                        )
-                    }
-                },
-                scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(),
-            )
+            Column(modifier = Modifier.fillMaxSize()) {
+                Spacer(modifier = Modifier.height(8.dp))
 
+                TopAppBar(
+                    title = {},
+                    actions = {
+                        Box(modifier = Modifier.padding(16.dp)) {
+                            OutlinedTextField(
+                                value = "",
+                                placeholder = {
+                                    Text(text = "Search for products...")
+                                },
+                                onValueChange = { },
+                                shape = RoundedCornerShape(20.dp),
+                                modifier = Modifier.fillMaxWidth(),
+                                leadingIcon = {
+                                    Icon(
+                                        imageVector = Icons.Outlined.Search,
+                                        contentDescription = "Search for products"
+                                    )
+                                }
+                            )
+                        }
+                    },
+                    scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(),
+                )
+            }
         },
         content = {
             Column {
