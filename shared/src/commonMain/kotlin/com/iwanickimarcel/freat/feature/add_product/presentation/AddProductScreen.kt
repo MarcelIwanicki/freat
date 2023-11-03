@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AddAPhoto
 import androidx.compose.material.icons.outlined.ArrowBackIos
@@ -23,12 +24,18 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.iwanickimarcel.freat.di.AppModule
 import com.iwanickimarcel.freat.feature.products.presentation.AddProductPlaceholder
+import dev.icerock.moko.mvvm.compose.getViewModel
+import dev.icerock.moko.mvvm.compose.viewModelFactory
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -37,6 +44,15 @@ fun AddProductScreen(
     appModule: AppModule
 ) {
     val navigator = LocalNavigator.current ?: return
+
+    val viewModel = getViewModel(
+        key = "add-product-screen",
+        factory = viewModelFactory {
+            AddProductViewModel(appModule.productDataSource)
+        }
+    )
+
+    val state by viewModel.state.collectAsState()
 
     Scaffold(
         topBar = {
@@ -78,14 +94,16 @@ fun AddProductScreen(
                     }
                     Spacer(modifier = Modifier.height(16.dp))
                     OutlinedTextField(
-                        value = "",
+                        value = state.name ?: "",
                         placeholder = {
                             Text(text = "Insert name of the item...")
                         },
                         label = {
-                            Text(text = "Name")
+                            Text(text = state.nameError ?: "Name")
                         },
-                        onValueChange = { },
+                        onValueChange = {
+                            viewModel.onEvent(AddProductEvent.OnNameChanged(it))
+                        },
                         shape = RoundedCornerShape(20.dp),
                         modifier = Modifier.fillMaxWidth(),
                         leadingIcon = {
@@ -93,18 +111,26 @@ fun AddProductScreen(
                                 imageVector = Icons.Outlined.Book,
                                 contentDescription = "Name"
                             )
-                        }
+                        },
+                        maxLines = 1,
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.Text,
+                            imeAction = ImeAction.Next
+                        ),
+                        isError = state.nameError != null
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                     OutlinedTextField(
-                        value = "",
+                        value = state.amount?.toString() ?: "",
                         placeholder = {
                             Text(text = "Insert amount of the item...")
                         },
                         label = {
-                            Text(text = "Amount")
+                            Text(text = state.amountError ?: "Amount")
                         },
-                        onValueChange = { },
+                        onValueChange = {
+                            viewModel.onEvent(AddProductEvent.OnAmountChanged(it))
+                        },
                         shape = RoundedCornerShape(20.dp),
                         modifier = Modifier.fillMaxWidth(),
                         leadingIcon = {
@@ -112,15 +138,22 @@ fun AddProductScreen(
                                 imageVector = Icons.Outlined.Numbers,
                                 contentDescription = "Amount"
                             )
-                        }
+                        },
+                        maxLines = 1,
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.Number,
+                            imeAction = ImeAction.Done
+                        ),
+                        isError = state.amountError != null
                     )
                 }
                 Button(
                     modifier = Modifier
                         .height(48.dp)
-                        .fillMaxWidth()
-                    ,
-                    onClick = {}
+                        .fillMaxWidth(),
+                    onClick = {
+                        viewModel.onEvent(AddProductEvent.OnAddProductClick)
+                    }
                 ) {
                     Text("Add product")
                 }
