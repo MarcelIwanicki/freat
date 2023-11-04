@@ -4,11 +4,13 @@ import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -17,9 +19,13 @@ import androidx.compose.material.icons.outlined.ArrowBackIos
 import androidx.compose.material.icons.outlined.Book
 import androidx.compose.material.icons.outlined.Numbers
 import androidx.compose.material3.Button
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -113,7 +119,9 @@ fun AddProductScreen(
                             viewModel.onEvent(AddProductEvent.OnNameChanged(it))
                         },
                         shape = RoundedCornerShape(20.dp),
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(68.dp),
                         leadingIcon = {
                             Icon(
                                 imageVector = Icons.Outlined.Book,
@@ -128,32 +136,82 @@ fun AddProductScreen(
                         isError = state.nameError != null
                     )
                     Spacer(modifier = Modifier.height(16.dp))
-                    OutlinedTextField(
-                        value = state.amount?.toString() ?: "",
-                        placeholder = {
-                            Text(text = "Insert amount of the item...")
-                        },
-                        label = {
-                            Text(text = state.amountError ?: "Amount")
-                        },
-                        onValueChange = {
-                            viewModel.onEvent(AddProductEvent.OnAmountChanged(it))
-                        },
-                        shape = RoundedCornerShape(20.dp),
-                        modifier = Modifier.fillMaxWidth(),
-                        leadingIcon = {
-                            Icon(
-                                imageVector = Icons.Outlined.Numbers,
-                                contentDescription = "Amount"
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        OutlinedTextField(
+                            modifier = Modifier
+                                .width(244.dp)
+                                .height(68.dp),
+                            value = state.amount?.toString() ?: "",
+                            placeholder = {
+                                Text(text = "Insert amount...")
+                            },
+                            label = {
+                                Text(text = state.amountError ?: "Amount")
+                            },
+                            onValueChange = {
+                                viewModel.onEvent(AddProductEvent.OnAmountChanged(it))
+                            },
+                            shape = RoundedCornerShape(20.dp),
+                            leadingIcon = {
+                                Icon(
+                                    imageVector = Icons.Outlined.Numbers,
+                                    contentDescription = "Amount"
+                                )
+                            },
+                            maxLines = 1,
+                            keyboardOptions = KeyboardOptions(
+                                keyboardType = KeyboardType.Number,
+                                imeAction = ImeAction.Done
+                            ),
+                            isError = state.amountError != null
+                        )
+                        Spacer(modifier = Modifier.width(16.dp))
+                        ExposedDropdownMenuBox(
+                            expanded = state.amountUnitMenuExpanded,
+                            onExpandedChange = {
+                                viewModel.onEvent(AddProductEvent.OnAmountUnitMenuStateChanged)
+                            },
+                        ) {
+                            OutlinedTextField(
+                                modifier = Modifier.menuAnchor(),
+                                shape = RoundedCornerShape(16.dp),
+                                readOnly = true,
+                                value = state.amountUnit.abbreviation,
+                                onValueChange = {
+
+                                },
+                                label = {
+                                    Text("Unit")
+                                },
+                                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = state.amountUnitMenuExpanded) },
+                                colors = ExposedDropdownMenuDefaults.textFieldColors(
+                                    unfocusedContainerColor = MaterialTheme.colorScheme.background,
+                                ),
                             )
-                        },
-                        maxLines = 1,
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Number,
-                            imeAction = ImeAction.Done
-                        ),
-                        isError = state.amountError != null
-                    )
+                            ExposedDropdownMenu(
+                                expanded = state.amountUnitMenuExpanded,
+                                onDismissRequest = {
+                                    viewModel.onEvent(AddProductEvent.OnAmountUnitMenuStateChanged)
+                                },
+                            ) {
+                                AddProductViewModel.AMOUNT_UNIT_OPTIONS.forEach { selectionOption ->
+                                    DropdownMenuItem(
+                                        text = { Text(selectionOption) },
+                                        onClick = {
+                                            viewModel.onEvent(AddProductEvent.OnAmountUnitChanged(selectionOption))
+                                        },
+                                        contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
+                                    )
+                                }
+                            }
+                        }
+                    }
+
                 }
                 Button(
                     modifier = Modifier
