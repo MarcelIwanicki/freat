@@ -7,6 +7,8 @@ plugins {
 
 @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
 kotlin {
+    targetHierarchy.default()
+
     android {
         compilations.all {
             kotlinOptions {
@@ -45,7 +47,7 @@ kotlin {
             dependencies {
                 implementation("app.cash.sqldelight:android-driver:2.0.0")
                 implementation("androidx.appcompat:appcompat:1.6.1")
-                implementation("androidx.activity:activity-compose:1.7.2")
+                implementation("androidx.activity:activity-compose:1.8.0")
             }
         }
         val androidUnitTest by getting
@@ -81,7 +83,7 @@ sqldelight {
 }
 
 dependencies {
-    implementation("androidx.core:core:1.10.1")
+    implementation("androidx.core:core:1.12.0")
     commonMainImplementation("cafe.adriel.voyager:voyager-navigator:1.0.0-rc05")
     commonMainApi("dev.icerock.moko:mvvm-core:0.16.1")
     commonMainApi("dev.icerock.moko:mvvm-compose:0.16.1")

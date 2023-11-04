@@ -5,7 +5,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import cafe.adriel.voyager.navigator.CurrentScreen
 import cafe.adriel.voyager.navigator.Navigator
 import com.iwanickimarcel.freat.core.presentation.FreatTheme
 import com.iwanickimarcel.freat.di.AppModule
@@ -15,7 +14,7 @@ import com.iwanickimarcel.freat.navigation.Home
 fun App(
     darkTheme: Boolean,
     dynamicColor: Boolean,
-    appModule: AppModule
+    appModule: AppModule,
 ) {
     FreatTheme(
         darkTheme = darkTheme,
@@ -26,12 +25,8 @@ fun App(
             color = MaterialTheme.colorScheme.background
         ) {
             Navigator(
-                Home(
-                    appModule = appModule
-                )
-            ) {
-                CurrentScreen()
-            }
+                Home(appModule = appModule)
+            )
         }
     }
 }

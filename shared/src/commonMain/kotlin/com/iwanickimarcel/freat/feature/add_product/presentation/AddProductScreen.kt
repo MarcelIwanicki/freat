@@ -1,6 +1,7 @@
 package com.iwanickimarcel.freat.feature.add_product.presentation
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -54,6 +55,12 @@ fun AddProductScreen(
 
     val state by viewModel.state.collectAsState()
 
+    val imagePicker = appModule.imagePicker
+
+    imagePicker.registerPicker {
+        Log.d("IBWDAIUAWDBIU", "AddProductScreen: $it")
+    }
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -84,13 +91,14 @@ fun AddProductScreen(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Spacer(modifier = Modifier.height(64.dp))
+
                     AddProductPlaceholder(
                         text = "Add a photo",
                         icon = Icons.Outlined.AddAPhoto,
                         modifier = Modifier.fillMaxWidth()
                             .padding(8.dp)
                     ) {
-
+                        imagePicker.pickImage()
                     }
                     Spacer(modifier = Modifier.height(16.dp))
                     OutlinedTextField(
