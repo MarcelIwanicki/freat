@@ -1,5 +1,6 @@
 package com.iwanickimarcel.freat
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -10,12 +11,17 @@ import com.iwanickimarcel.freat.core.presentation.FreatTheme
 import com.iwanickimarcel.freat.di.AppModule
 import com.iwanickimarcel.freat.navigation.Home
 
+@SuppressLint("StaticFieldLeak")
+lateinit var appModule: AppModule
+
 @Composable
 fun App(
     darkTheme: Boolean,
     dynamicColor: Boolean,
-    appModule: AppModule,
+    module: AppModule,
 ) {
+    appModule = module
+
     FreatTheme(
         darkTheme = darkTheme,
         dynamicColor = dynamicColor
@@ -24,9 +30,7 @@ fun App(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
-            Navigator(
-                Home(appModule = appModule)
-            )
+            Navigator(Home)
         }
     }
 }

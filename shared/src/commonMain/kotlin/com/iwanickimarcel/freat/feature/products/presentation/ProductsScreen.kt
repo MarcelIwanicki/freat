@@ -62,9 +62,7 @@ fun ProductsScreen(
     )
 
     if (state.addProductPressed) {
-        navigator.push(
-            AddProduct(appModule)
-        )
+        navigator.push(AddProduct)
     }
 
     state.longPressedProduct?.let {
@@ -179,10 +177,7 @@ fun ProductsScreen(
             }
         },
         bottomBar = {
-            BottomNavigationBar(
-                Products(appModule),
-                appModule
-            )
+            BottomNavigationBar(Products)
         }
     )
 

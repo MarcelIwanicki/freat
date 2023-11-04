@@ -20,7 +20,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
-import com.iwanickimarcel.freat.di.AppModule
 
 data class BottomNavigationItem(
     val screen: Screen,
@@ -35,31 +34,30 @@ data class BottomNavigationItem(
 @Composable
 fun BottomNavigationBar(
     screen: Screen,
-    appModule: AppModule,
 ) {
     val navigator = LocalNavigator.current ?: return
 
     val items = listOf(
         BottomNavigationItem(
-            screen = Home(appModule),
+            screen = Home,
             title = "Home",
             filledIcon = Icons.Filled.Home,
             outlinedIcon = Icons.Outlined.Home,
         ),
         BottomNavigationItem(
-            screen = Recipes(appModule),
+            screen = Recipes,
             title = "Recipes",
             filledIcon = Icons.Filled.FoodBank,
             outlinedIcon = Icons.Outlined.FoodBank
         ),
         BottomNavigationItem(
-            screen = Products(appModule),
+            screen = Products,
             title = "Products",
             filledIcon = Icons.Filled.Fastfood,
             outlinedIcon = Icons.Outlined.Fastfood
         ),
         BottomNavigationItem(
-            screen = Settings(appModule),
+            screen = Settings,
             title = "Settings",
             filledIcon = Icons.Filled.Settings,
             outlinedIcon = Icons.Outlined.Settings
