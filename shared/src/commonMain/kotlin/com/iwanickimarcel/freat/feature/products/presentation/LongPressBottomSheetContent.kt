@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun LongPressBottomSheetContent(
     productsState: ProductsState,
+    onEditProductPressed: () -> Unit,
     onDeleteProductPressed: () -> Unit
 ) {
     val deleteProductText = buildString {
@@ -62,7 +63,7 @@ fun LongPressBottomSheetContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable {
-
+                    onEditProductPressed()
                 }
                 .padding(
                     horizontal = 32.dp,

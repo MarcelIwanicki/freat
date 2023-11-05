@@ -30,10 +30,15 @@ object Products : Screen {
     }
 }
 
-object AddProduct : Screen {
+data class AddProduct(
+    val productName: String? = null
+) : Screen {
     @Composable
     override fun Content() {
-        AddProductScreen(appModule)
+        AddProductScreen(
+            appModule = appModule,
+            editProductName = productName
+        )
     }
 }
 

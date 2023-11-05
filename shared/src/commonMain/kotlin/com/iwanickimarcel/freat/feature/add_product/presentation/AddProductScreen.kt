@@ -30,6 +30,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -47,7 +48,8 @@ import dev.icerock.moko.mvvm.compose.viewModelFactory
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun AddProductScreen(
-    appModule: AppModule
+    appModule: AppModule,
+    editProductName: String?,
 ) {
     val navigator = LocalNavigator.current ?: return
 
@@ -66,6 +68,12 @@ fun AddProductScreen(
         viewModel.onEvent(AddProductEvent.OnPhotoSelected(it))
     }
 
+    editProductName?.let {
+        LaunchedEffect(Unit) {
+            viewModel.onEvent(AddProductEvent.OnEditProductProvided(it))
+        }
+    }
+
     if (state.success) {
         navigator.pop()
     }
@@ -74,7 +82,14 @@ fun AddProductScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Text("Add product")
+                    Text(
+                        editProductName?.let {
+                            buildString {
+                                append("Edit ")
+                                append(it)
+                            }
+                        } ?: "Add product"
+                    )
                 },
                 navigationIcon = {
                     IconButton(
@@ -232,7 +247,11 @@ fun AddProductScreen(
                         viewModel.onEvent(AddProductEvent.OnAddProductClick)
                     }
                 ) {
-                    Text("Add product")
+                    Text(
+                        editProductName?.let {
+                            "Save changes"
+                        } ?: "Add product"
+                    )
                 }
             }
         },

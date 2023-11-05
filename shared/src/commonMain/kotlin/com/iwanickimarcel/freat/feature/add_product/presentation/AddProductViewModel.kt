@@ -28,6 +28,18 @@ class AddProductViewModel(
 
     fun onEvent(event: AddProductEvent) {
         when (event) {
+            is AddProductEvent.OnEditProductProvided -> {
+                viewModelScope.launch {
+                    val product = productDataSource.getProductByName(event.name)
+                    _state.value = _state.value.copy(
+                        name = product.name,
+                        amount = product.amount.amount,
+                        amountUnit = product.amount.unit,
+                        photoBytes = product.photoBytes
+                    )
+                }
+            }
+
             is AddProductEvent.OnNameChanged -> {
                 _state.value = _state.value.copy(
                     name = event.name,

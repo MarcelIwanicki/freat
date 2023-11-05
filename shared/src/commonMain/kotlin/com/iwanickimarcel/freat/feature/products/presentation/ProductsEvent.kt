@@ -9,4 +9,6 @@ sealed interface ProductsEvent {
     data class OnDeleteProductPress(val product: Product) : ProductsEvent
     object OnDeleteProductMenuDismiss : ProductsEvent
     object OnDeleteProductConfirm : ProductsEvent
+    data class OnEditProductPress(val product: Product) : ProductsEvent
+
 }

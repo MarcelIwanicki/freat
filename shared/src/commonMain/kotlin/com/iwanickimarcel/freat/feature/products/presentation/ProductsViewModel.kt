@@ -66,6 +66,13 @@ class ProductsViewModel(
                     productToDelete = null
                 )
             }
+
+            is ProductsEvent.OnEditProductPress -> {
+                _state.value = _state.value.copy(
+                    productToEdit = event.product,
+                    longPressedProduct = null
+                )
+            }
         }
     }
 }

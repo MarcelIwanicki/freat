@@ -41,6 +41,13 @@ class SqlDelightProductDataSource(
         emitAll(products)
     }
 
+    override suspend fun getProductByName(name: String): Product {
+        return queries
+            .getProductByName(name)
+            .executeAsOne()
+            .toProduct(imageStorage)
+    }
+
     override suspend fun insertProduct(product: Product) {
         val imagePath = product.photoBytes?.let {
             imageStorage.saveImage(it)

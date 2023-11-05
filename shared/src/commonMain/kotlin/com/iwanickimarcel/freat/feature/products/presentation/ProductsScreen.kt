@@ -66,7 +66,7 @@ fun ProductsScreen(
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
 
     if (state.addProductPressed) {
-        navigator.push(AddProduct)
+        navigator.push(AddProduct())
     }
 
     state.productToDelete?.let {
@@ -107,6 +107,12 @@ fun ProductsScreen(
         )
     }
 
+    state.productToEdit?.let {
+        navigator.push(
+            AddProduct(it.name)
+        )
+    }
+
     state.longPressedProduct?.let {
         ModalBottomSheet(
             onDismissRequest = {
@@ -120,6 +126,13 @@ fun ProductsScreen(
                 onDeleteProductPressed = {
                     viewModel.onEvent(
                         ProductsEvent.OnDeleteProductPress(
+                            state.longPressedProduct ?: return@LongPressBottomSheetContent
+                        )
+                    )
+                },
+                onEditProductPressed = {
+                    viewModel.onEvent(
+                        ProductsEvent.OnEditProductPress(
                             state.longPressedProduct ?: return@LongPressBottomSheetContent
                         )
                     )
