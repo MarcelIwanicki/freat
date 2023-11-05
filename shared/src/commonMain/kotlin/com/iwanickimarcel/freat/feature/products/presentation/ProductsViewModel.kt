@@ -6,9 +6,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 class ProductsViewModel(
-    productDataSource: ProductDataSource
+    private val productDataSource: ProductDataSource
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(ProductsState())
@@ -41,8 +42,29 @@ class ProductsViewModel(
                 )
             }
 
-            else -> {
+            is ProductsEvent.OnDeleteProductPress -> {
+                _state.value = _state.value.copy(
+                    productToDelete = event.product,
+                    longPressedProduct = null
+                )
+            }
 
+            is ProductsEvent.OnDeleteProductMenuDismiss -> {
+                _state.value = _state.value.copy(
+                    productToDelete = null
+                )
+            }
+
+            is ProductsEvent.OnDeleteProductConfirm -> {
+                val product = _state.value.productToDelete ?: return
+
+                viewModelScope.launch {
+                    productDataSource.deleteProduct(product.name)
+                }
+
+                _state.value = _state.value.copy(
+                    productToDelete = null
+                )
             }
         }
     }

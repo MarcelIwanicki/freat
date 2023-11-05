@@ -16,6 +16,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AddAPhoto
 import androidx.compose.material.icons.outlined.AddChart
 import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -24,6 +25,7 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -32,7 +34,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -68,6 +69,44 @@ fun ProductsScreen(
         navigator.push(AddProduct)
     }
 
+    state.productToDelete?.let {
+        AlertDialog(
+            onDismissRequest = {
+                viewModel.onEvent(ProductsEvent.OnDeleteProductMenuDismiss)
+            },
+            title = {
+                Text(
+                    text = buildString {
+                        append("Delete ")
+                        append(it.name)
+                        append("?")
+                    }
+                )
+            },
+            text = {
+                Text(text = "You will not be able to recover it")
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        viewModel.onEvent(ProductsEvent.OnDeleteProductConfirm)
+                    }
+                ) {
+                    Text("Delete")
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = {
+                        viewModel.onEvent(ProductsEvent.OnDeleteProductMenuDismiss)
+                    }
+                ) {
+                    Text("Cancel")
+                }
+            }
+        )
+    }
+
     state.longPressedProduct?.let {
         ModalBottomSheet(
             onDismissRequest = {
@@ -76,7 +115,16 @@ fun ProductsScreen(
             sheetState = bottomSheetState,
             windowInsets = BottomSheetDefaults.windowInsets
         ) {
-            LongPressBottomSheetContent(state)
+            LongPressBottomSheetContent(
+                productsState = state,
+                onDeleteProductPressed = {
+                    viewModel.onEvent(
+                        ProductsEvent.OnDeleteProductPress(
+                            state.longPressedProduct ?: return@LongPressBottomSheetContent
+                        )
+                    )
+                }
+            )
         }
     }
 

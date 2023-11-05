@@ -13,7 +13,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.outlined.Search
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,6 +23,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun LongPressBottomSheetContent(
     productsState: ProductsState,
+    onDeleteProductPressed: () -> Unit
 ) {
     val deleteProductText = buildString {
         append("Delete ")
@@ -43,7 +43,7 @@ fun LongPressBottomSheetContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable {
-
+                    onDeleteProductPressed()
                 }
                 .padding(
                     horizontal = 32.dp,
