@@ -2,6 +2,7 @@ package com.iwanickimarcel.freat.di
 
 import android.content.Context
 import androidx.compose.runtime.Composable
+import com.iwanickimarcel.freat.core.data.ImageStorage
 import com.iwanickimarcel.freat.core.data.ProductsDatabaseDriverFactory
 import com.iwanickimarcel.freat.core.presentation.ImagePicker
 import com.iwanickimarcel.freat.core.presentation.ImagePickerFactory
@@ -16,7 +17,8 @@ actual class AppModule(
         SqlDelightProductDataSource(
             database = ProductsDatabase(
                 driver = ProductsDatabaseDriverFactory(context).create()
-            )
+            ),
+            imageStorage = ImageStorage(context)
         )
     }
 

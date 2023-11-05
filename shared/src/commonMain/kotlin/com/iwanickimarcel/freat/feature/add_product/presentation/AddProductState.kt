@@ -9,5 +9,6 @@ data class AddProductState(
     val amountError: String? = null,
     val amountUnit: AmountUnit = AmountUnit.MilliGram,
     val amountUnitMenuExpanded: Boolean = false,
+    val photoBytes: ByteArray? = null,
     val success: Boolean = false
 )

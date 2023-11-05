@@ -1,5 +1,6 @@
 package com.iwanickimarcel.freat.feature.products.presentation
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -21,15 +22,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import com.iwanickimarcel.freat.core.presentation.rememberBitmapFromBytes
 
 @Composable
 fun AddProductPlaceholder(
     modifier: Modifier = Modifier,
     text: String,
     icon: ImageVector,
+    photoBytes: ByteArray? = null,
     onClick: () -> Unit
 ) {
+    val bitmap = rememberBitmapFromBytes(photoBytes)
+
     Column(
         modifier = modifier
             .background(MaterialTheme.colorScheme.surface)
@@ -41,19 +47,30 @@ fun AddProductPlaceholder(
     ) {
         Spacer(Modifier.height(16.dp))
 
-        Box(
-            modifier = Modifier
-                .size(120.dp)
-                .clip(RoundedCornerShape(percent = 35))
-                .background(MaterialTheme.colorScheme.tertiaryContainer),
-            contentAlignment = Alignment.Center
-        ) {
-            Icon(
-                imageVector = icon,
+        bitmap?.let {
+            Image(
+                bitmap = it,
                 contentDescription = text,
-                modifier = Modifier.size(25.dp),
-                tint = MaterialTheme.colorScheme.onTertiaryContainer
+                modifier = Modifier
+                    .size(120.dp)
+                    .clip(RoundedCornerShape(percent = 35)),
+                contentScale = ContentScale.Crop
             )
+        } ?: run {
+            Box(
+                modifier = Modifier
+                    .size(120.dp)
+                    .clip(RoundedCornerShape(percent = 35))
+                    .background(MaterialTheme.colorScheme.tertiaryContainer),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = text,
+                    modifier = Modifier.size(25.dp),
+                    tint = MaterialTheme.colorScheme.onTertiaryContainer
+                )
+            }
         }
 
         Spacer(Modifier.height(16.dp))

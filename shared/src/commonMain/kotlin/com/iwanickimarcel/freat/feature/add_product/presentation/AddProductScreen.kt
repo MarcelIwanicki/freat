@@ -1,7 +1,6 @@
 package com.iwanickimarcel.freat.feature.add_product.presentation
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -64,7 +63,11 @@ fun AddProductScreen(
     val imagePicker = appModule.imagePicker
 
     imagePicker.registerPicker {
-        Log.d("IBWDAIUAWDBIU", "AddProductScreen: $it")
+        viewModel.onEvent(AddProductEvent.OnPhotoSelected(it))
+    }
+
+    if (state.success) {
+        navigator.pop()
     }
 
     Scaffold(
@@ -97,10 +100,14 @@ fun AddProductScreen(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Spacer(modifier = Modifier.height(64.dp))
-
                     AddProductPlaceholder(
-                        text = "Add a photo",
+                        text = if (state.photoBytes == null) {
+                            "Add a photo"
+                        } else {
+                            "Edit photo"
+                        },
                         icon = Icons.Outlined.AddAPhoto,
+                        photoBytes = state.photoBytes,
                         modifier = Modifier.fillMaxWidth()
                             .padding(8.dp)
                     ) {
@@ -203,7 +210,11 @@ fun AddProductScreen(
                                     DropdownMenuItem(
                                         text = { Text(selectionOption) },
                                         onClick = {
-                                            viewModel.onEvent(AddProductEvent.OnAmountUnitChanged(selectionOption))
+                                            viewModel.onEvent(
+                                                AddProductEvent.OnAmountUnitChanged(
+                                                    selectionOption
+                                                )
+                                            )
                                         },
                                         contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
                                     )
