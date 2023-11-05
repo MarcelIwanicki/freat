@@ -2,7 +2,6 @@ package com.iwanickimarcel.freat.feature.products.presentation
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,6 +19,7 @@ import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -27,10 +27,13 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
@@ -59,6 +62,8 @@ fun ProductsScreen(
         skipPartiallyExpanded = true
     )
 
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
+
     if (state.addProductPressed) {
         navigator.push(AddProduct)
     }
@@ -76,43 +81,51 @@ fun ProductsScreen(
     }
 
     Scaffold(
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
-            Column(modifier = Modifier.height(84.dp)) {
-                Spacer(modifier = Modifier.height(22.dp))
-                TopAppBar(
-                    title = {},
-                    actions = {
-                        Box(modifier = Modifier.padding(horizontal = 16.dp)) {
-                            OutlinedTextField(
-                                value = "",
-                                placeholder = {
-                                    Text(text = "Search for products...")
-                                },
-                                onValueChange = { },
-                                shape = RoundedCornerShape(20.dp),
-                                modifier = Modifier.fillMaxWidth(),
-                                leadingIcon = {
-                                    Icon(
-                                        imageVector = Icons.Outlined.Search,
-                                        contentDescription = "Search for products"
-                                    )
-                                }
+            TopAppBar(
+                modifier = Modifier.padding(16.dp),
+                title = {},
+                actions = {
+                    OutlinedTextField(
+                        value = "",
+                        placeholder = {
+                            Text(text = "Search for products...")
+                        },
+                        onValueChange = { },
+                        shape = RoundedCornerShape(20.dp),
+                        modifier = Modifier.fillMaxWidth(),
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Outlined.Search,
+                                contentDescription = "Search for products"
                             )
                         }
-                    },
-                    scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(),
+                    )
+                },
+                scrollBehavior = scrollBehavior,
+                colors = TopAppBarDefaults.topAppBarColors(
+                    scrolledContainerColor = MaterialTheme.colorScheme.background
                 )
-            }
+            )
         },
-        content = {
+        content = { paddingValues ->
             Column(
-                modifier = Modifier.padding(it)
+                modifier = Modifier.padding(
+                    bottom = paddingValues.calculateBottomPadding()
+                )
             ) {
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(2),
                     modifier = Modifier.fillMaxSize(),
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
+                    repeat(2) {
+                        item {
+                            Spacer(modifier = Modifier.height(paddingValues.calculateTopPadding() / 1.5f))
+                        }
+                    }
+
                     item {
                         AddProductPlaceholder(
                             text = "Add product",
