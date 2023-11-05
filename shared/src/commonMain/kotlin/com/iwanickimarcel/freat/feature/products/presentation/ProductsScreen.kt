@@ -1,6 +1,7 @@
 package com.iwanickimarcel.freat.feature.products.presentation
 
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -45,7 +46,7 @@ import com.iwanickimarcel.freat.navigation.Products
 import dev.icerock.moko.mvvm.compose.getViewModel
 import dev.icerock.moko.mvvm.compose.viewModelFactory
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun ProductsScreen(
     appModule: AppModule
@@ -239,9 +240,14 @@ fun ProductsScreen(
                             product = product,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .clickable {
-                                    viewModel.onEvent(ProductsEvent.OnProductLongPress(product))
-                                }
+                                .combinedClickable(
+                                    onClick = {
+                                        viewModel.onEvent(ProductsEvent.OnEditProductPress(product))
+                                    },
+                                    onLongClick = {
+                                        viewModel.onEvent(ProductsEvent.OnProductLongPress(product))
+                                    }
+                                )
                                 .padding(8.dp)
                         )
                     }
