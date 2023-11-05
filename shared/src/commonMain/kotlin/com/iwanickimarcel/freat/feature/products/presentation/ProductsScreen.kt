@@ -1,6 +1,5 @@
 package com.iwanickimarcel.freat.feature.products.presentation
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -42,7 +41,6 @@ import com.iwanickimarcel.freat.navigation.Products
 import dev.icerock.moko.mvvm.compose.getViewModel
 import dev.icerock.moko.mvvm.compose.viewModelFactory
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductsScreen(
@@ -79,13 +77,12 @@ fun ProductsScreen(
 
     Scaffold(
         topBar = {
-            Column(modifier = Modifier.fillMaxSize()) {
-                Spacer(modifier = Modifier.height(8.dp))
-
+            Column(modifier = Modifier.height(84.dp)) {
+                Spacer(modifier = Modifier.height(22.dp))
                 TopAppBar(
                     title = {},
                     actions = {
-                        Box(modifier = Modifier.padding(16.dp)) {
+                        Box(modifier = Modifier.padding(horizontal = 16.dp)) {
                             OutlinedTextField(
                                 value = "",
                                 placeholder = {
@@ -108,8 +105,9 @@ fun ProductsScreen(
             }
         },
         content = {
-            Column {
-                Spacer(modifier = Modifier.height(64.dp))
+            Column(
+                modifier = Modifier.padding(it)
+            ) {
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(2),
                     modifier = Modifier.fillMaxSize(),
@@ -151,7 +149,7 @@ fun ProductsScreen(
                             },
                             modifier = Modifier
                                 .fillMaxSize()
-                                .padding(horizontal = 8.dp),
+                                .padding(horizontal = 16.dp),
                             fontWeight = FontWeight.Bold
                         )
                     }
