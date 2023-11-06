@@ -18,12 +18,20 @@ class ProductsViewModel(
         productDataSource.getProducts()
     ) { state, products ->
         state.copy(
-            products = products
+            products = products.filter {
+                it.name.lowercase().contains(state.searchQuery.lowercase())
+            }
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), ProductsState())
 
     fun onEvent(event: ProductsEvent) {
         when (event) {
+            is ProductsEvent.OnSearchQuery -> {
+                _state.value = _state.value.copy(
+                    searchQuery = event.query
+                )
+            }
+
             is ProductsEvent.OnProductLongPress -> {
                 _state.value = _state.value.copy(
                     longPressedProduct = event.product

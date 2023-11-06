@@ -51,7 +51,7 @@ fun BottomNavigationBar(
             outlinedIcon = Icons.Outlined.FoodBank
         ),
         BottomNavigationItem(
-            screen = Products,
+            screen = Products(),
             title = "Products",
             filledIcon = Icons.Filled.Fastfood,
             outlinedIcon = Icons.Outlined.Fastfood

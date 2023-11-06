@@ -24,10 +24,15 @@ object Recipes : Screen {
     }
 }
 
-object Products : Screen {
+data class Products(
+    val searchQuery: String? = null
+) : Screen {
     @Composable
     override fun Content() {
-        ProductsScreen(appModule)
+        ProductsScreen(
+            appModule = appModule,
+            searchQuery = searchQuery
+        )
     }
 }
 

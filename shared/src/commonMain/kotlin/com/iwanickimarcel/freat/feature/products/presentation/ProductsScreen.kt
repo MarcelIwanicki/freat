@@ -52,7 +52,8 @@ import dev.icerock.moko.mvvm.compose.viewModelFactory
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun ProductsScreen(
-    appModule: AppModule
+    appModule: AppModule,
+    searchQuery: String?,
 ) {
     val navigator = LocalNavigator.current ?: return
     val viewModel = getViewModel(
@@ -68,6 +69,12 @@ fun ProductsScreen(
     )
 
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
+
+    searchQuery?.let {
+        LaunchedEffect(Unit) {
+            viewModel.onEvent(ProductsEvent.OnSearchQuery(it))
+        }
+    }
 
     if (state.addProductPressed) {
         LaunchedEffect(Unit) {
@@ -161,7 +168,7 @@ fun ProductsScreen(
                 title = {},
                 actions = {
                     OutlinedTextField(
-                        value = "",
+                        value = state.searchQuery,
                         readOnly = true,
                         enabled = false,
                         placeholder = {
@@ -272,7 +279,7 @@ fun ProductsScreen(
             }
         },
         bottomBar = {
-            BottomNavigationBar(Products)
+            BottomNavigationBar(Products())
         }
     )
 

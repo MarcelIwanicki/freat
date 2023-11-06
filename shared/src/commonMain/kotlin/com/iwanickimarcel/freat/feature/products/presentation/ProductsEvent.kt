@@ -3,6 +3,7 @@ package com.iwanickimarcel.freat.feature.products.presentation
 import com.iwanickimarcel.freat.feature.products.domain.Product
 
 sealed interface ProductsEvent {
+    data class OnSearchQuery(val query: String) : ProductsEvent
     object OnAddProductClick : ProductsEvent
     object OnSearchBarClick : ProductsEvent
     data class OnProductLongPress(val product: Product) : ProductsEvent

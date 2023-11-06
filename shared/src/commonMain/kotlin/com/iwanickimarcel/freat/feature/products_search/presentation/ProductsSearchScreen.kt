@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ArrowBackIos
 import androidx.compose.material.icons.outlined.History
@@ -32,10 +34,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.iwanickimarcel.freat.di.AppModule
 import com.iwanickimarcel.freat.feature.products_search.domain.ProductsSearchHistoryItem
+import com.iwanickimarcel.freat.navigation.Products
 import dev.icerock.moko.mvvm.compose.getViewModel
 import dev.icerock.moko.mvvm.compose.viewModelFactory
 
@@ -62,6 +67,14 @@ fun ProductsSearchScreen(
     if (state.isBackPressed) {
         LaunchedEffect(Unit) {
             navigator.pop()
+        }
+    }
+
+    if (state.isSearchConfirmed) {
+        LaunchedEffect(Unit) {
+            navigator.replace(
+                Products(searchQuery = state.query)
+            )
         }
     }
 
@@ -96,7 +109,16 @@ fun ProductsSearchScreen(
                                 }
                             )
 
-                        }
+                        },
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.Text,
+                            imeAction = ImeAction.Search
+                        ),
+                        keyboardActions = KeyboardActions(
+                            onSearch = {
+                                viewModel.onEvent(ProductsSearchEvent.OnSearchConfirm)
+                            }
+                        )
                     )
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
