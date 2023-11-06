@@ -78,6 +78,14 @@ fun ProductsSearchScreen(
         }
     }
 
+    state.itemPressedName?.let {
+        LaunchedEffect(Unit) {
+            navigator.replace(
+                Products(searchQuery = it)
+            )
+        }
+    }
+
     Scaffold(
         topBar = {
             TopAppBar(
