@@ -1,6 +1,5 @@
 package com.iwanickimarcel.freat.feature.add_product.presentation
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,8 +9,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AddAPhoto
 import androidx.compose.material.icons.outlined.ArrowBackIos
@@ -45,7 +46,6 @@ import dev.icerock.moko.mvvm.compose.getViewModel
 import dev.icerock.moko.mvvm.compose.viewModelFactory
 
 @OptIn(ExperimentalMaterial3Api::class)
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun AddProductScreen(
     appModule: AppModule,
@@ -107,14 +107,19 @@ fun AddProductScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(16.dp),
+                    .padding(
+                        top = it.calculateTopPadding() + 16.dp,
+                        bottom = it.calculateBottomPadding() + 16.dp,
+                        start = 16.dp,
+                        end = 16.dp,
+                    )
+                    .verticalScroll(rememberScrollState()),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Spacer(modifier = Modifier.height(64.dp))
                     AddProductPlaceholder(
                         text = if (state.photoBytes == null) {
                             "Add a photo"
@@ -239,6 +244,7 @@ fun AddProductScreen(
                     }
 
                 }
+                Spacer(modifier = Modifier.height(32.dp))
                 Button(
                     modifier = Modifier
                         .height(48.dp)
