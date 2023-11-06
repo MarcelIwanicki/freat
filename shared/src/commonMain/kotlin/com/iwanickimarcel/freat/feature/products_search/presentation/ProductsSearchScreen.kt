@@ -1,14 +1,20 @@
 package com.iwanickimarcel.freat.feature.products_search.presentation
 
-import android.annotation.SuppressLint
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ArrowBackIos
+import androidx.compose.material.icons.outlined.History
+import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -29,11 +35,11 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.iwanickimarcel.freat.di.AppModule
+import com.iwanickimarcel.freat.feature.products_search.domain.ProductsSearchHistoryItem
 import dev.icerock.moko.mvvm.compose.getViewModel
 import dev.icerock.moko.mvvm.compose.viewModelFactory
 
 @OptIn(ExperimentalMaterial3Api::class)
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun ProductsSearchScreen(
     appModule: AppModule
@@ -66,12 +72,12 @@ fun ProductsSearchScreen(
                 title = {},
                 actions = {
                     OutlinedTextField(
-                        value = "",
+                        value = state.query,
                         placeholder = {
                             Text(text = "Search for products...")
                         },
                         onValueChange = {
-
+                            viewModel.onEvent(ProductsSearchEvent.OnQueryChange(it))
                         },
                         shape = RoundedCornerShape(20.dp),
                         modifier = Modifier
@@ -100,10 +106,38 @@ fun ProductsSearchScreen(
         },
         content = {
             LazyColumn(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(it),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
+                items(state.items) {
+                    Row(
+                        modifier = Modifier
+                            .clickable {
+                                viewModel.onEvent(ProductsSearchEvent.OnItemPress(it.name))
+                            }
+                            .fillMaxWidth()
+                            .padding(
+                                horizontal = 16.dp,
+                                vertical = 8.dp
+                            )
 
+                    ) {
+                        Icon(
+                            imageVector = if (it.type == ProductsSearchHistoryItem.Type.Search) {
+                                Icons.Outlined.Search
+                            } else {
+                                Icons.Outlined.History
+                            },
+                            contentDescription = it.name
+                        )
+                        Spacer(modifier = Modifier.width(16.dp))
+                        Text(
+                            text = it.name
+                        )
+                    }
+                }
             }
         }
     )

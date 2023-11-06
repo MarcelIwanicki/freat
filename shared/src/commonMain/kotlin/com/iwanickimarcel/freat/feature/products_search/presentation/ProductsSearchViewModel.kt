@@ -25,12 +25,14 @@ class ProductsSearchViewModel(
     ) { state, historyItems, products ->
 
         val items = historyItems.filter {
-            it.name.contains(state.query)
+            it.name.lowercase().contains(state.query.lowercase())
         } + products.map {
             it.toProductsSearchHistoryItem()
-        }.filter {
-            it.name.contains(state.query)
-        }
+        }.filter { historyItem ->
+            historyItem.name.lowercase().contains(state.query.lowercase()) && !historyItems.any {
+                it.name == historyItem.name
+            }
+        }.take(10)
 
         state.copy(
             items = items
