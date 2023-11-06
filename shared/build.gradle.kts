@@ -76,8 +76,12 @@ android {
 sqldelight {
     databases {
         create("ProductsDatabase") {
-            packageName.set("com.iwanickimarcel.freat.database")
-            srcDirs.setFrom("src/commonMain/sqldelight")
+            packageName.set("com.iwanickimarcel.freat.products_database")
+            srcDirs.setFrom("src/commonMain/sqldelight_products")
+        }
+        create("ProductsSearchHistoryDatabase") {
+            packageName.set("com.iwanickimarcel.freat.products_search_history_database")
+            srcDirs.setFrom("src/commonMain/sqldelight_products_search_history")
         }
     }
 }

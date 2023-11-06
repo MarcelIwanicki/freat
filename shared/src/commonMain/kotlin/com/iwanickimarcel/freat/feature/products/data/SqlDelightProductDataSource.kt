@@ -3,9 +3,9 @@ package com.iwanickimarcel.freat.feature.products.data
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import com.iwanickimarcel.freat.core.data.ImageStorage
-import com.iwanickimarcel.freat.database.ProductsDatabase
 import com.iwanickimarcel.freat.feature.products.domain.Product
 import com.iwanickimarcel.freat.feature.products.domain.ProductDataSource
+import com.iwanickimarcel.freat.products_database.ProductsDatabase
 import kotlinx.coroutines.async
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.flow.Flow

@@ -151,6 +151,7 @@ fun ProductsScreen(
                 actions = {
                     OutlinedTextField(
                         value = "",
+                        readOnly = true,
                         placeholder = {
                             Text(text = "Search for products...")
                         },

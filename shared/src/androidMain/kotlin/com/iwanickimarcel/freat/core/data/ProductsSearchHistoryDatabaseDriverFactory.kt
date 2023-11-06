@@ -5,14 +5,14 @@ import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import com.iwanickimarcel.freat.products_database.ProductsDatabase
 
-actual class ProductsDatabaseDriverFactory(
+actual class ProductsSearchHistoryDatabaseDriverFactory(
     private val context: Context
 ) {
     actual fun create(): SqlDriver {
         return AndroidSqliteDriver(
             ProductsDatabase.Schema,
             context,
-            "product.db"
+            "products_search_history.db"
         )
     }
 }

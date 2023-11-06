@@ -1,0 +1,17 @@
+CREATE TABLE productsSearchHistoryEntity (
+    name TEXT NOT NULL PRIMARY KEY,
+    createdAt INTEGER NOT NULL
+);
+
+getLatestProductsSearchHistoryEntities:
+SELECT *
+FROM productsSearchHistoryEntity
+ORDER BY createdAt DESC
+LIMIT :limit;
+
+insertProductsSearchHistoryEntity:
+INSERT OR REPLACE
+INTO productsSearchHistoryEntity(
+    name,
+    createdAt
+) VALUES (?, ?);
