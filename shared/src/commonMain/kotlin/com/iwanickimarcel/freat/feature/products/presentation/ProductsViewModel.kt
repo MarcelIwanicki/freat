@@ -42,6 +42,12 @@ class ProductsViewModel(
                 )
             }
 
+            is ProductsEvent.OnSearchBarClick -> {
+                _state.value = _state.value.copy(
+                    searchBarPressed = true
+                )
+            }
+
             is ProductsEvent.OnDeleteProductPress -> {
                 _state.value = _state.value.copy(
                     productToDelete = event.product,

@@ -1,6 +1,7 @@
 package com.iwanickimarcel.freat.feature.products.presentation
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -32,6 +33,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -43,6 +45,7 @@ import com.iwanickimarcel.freat.di.AppModule
 import com.iwanickimarcel.freat.navigation.AddProduct
 import com.iwanickimarcel.freat.navigation.BottomNavigationBar
 import com.iwanickimarcel.freat.navigation.Products
+import com.iwanickimarcel.freat.navigation.ProductsSearch
 import dev.icerock.moko.mvvm.compose.getViewModel
 import dev.icerock.moko.mvvm.compose.viewModelFactory
 
@@ -67,7 +70,15 @@ fun ProductsScreen(
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
 
     if (state.addProductPressed) {
-        navigator.push(AddProduct())
+        LaunchedEffect(Unit) {
+            navigator.push(AddProduct())
+        }
+    }
+
+    if (state.searchBarPressed) {
+        LaunchedEffect(Unit) {
+            navigator.push(ProductsSearch)
+        }
     }
 
     state.productToDelete?.let {
@@ -152,12 +163,17 @@ fun ProductsScreen(
                     OutlinedTextField(
                         value = "",
                         readOnly = true,
+                        enabled = false,
                         placeholder = {
                             Text(text = "Search for products...")
                         },
                         onValueChange = { },
                         shape = RoundedCornerShape(20.dp),
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable {
+                                viewModel.onEvent(ProductsEvent.OnSearchBarClick)
+                            },
                         leadingIcon = {
                             Icon(
                                 imageVector = Icons.Outlined.Search,

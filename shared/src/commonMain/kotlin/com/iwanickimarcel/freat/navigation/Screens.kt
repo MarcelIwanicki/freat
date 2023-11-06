@@ -6,6 +6,7 @@ import com.iwanickimarcel.freat.appModule
 import com.iwanickimarcel.freat.feature.add_product.presentation.AddProductScreen
 import com.iwanickimarcel.freat.feature.home.presentation.HomeScreen
 import com.iwanickimarcel.freat.feature.products.presentation.ProductsScreen
+import com.iwanickimarcel.freat.feature.products_search.presentation.ProductsSearchScreen
 import com.iwanickimarcel.freat.feature.recipes.presentation.RecipesScreen
 import com.iwanickimarcel.freat.feature.settings.presentation.SettingsScreen
 
@@ -39,6 +40,13 @@ data class AddProduct(
             appModule = appModule,
             editProductName = productName
         )
+    }
+}
+
+object ProductsSearch : Screen {
+    @Composable
+    override fun Content() {
+        ProductsSearchScreen(appModule)
     }
 }
 
