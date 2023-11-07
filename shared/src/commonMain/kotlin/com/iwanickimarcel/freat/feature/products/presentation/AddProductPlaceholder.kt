@@ -61,14 +61,14 @@ fun AddProductPlaceholder(
                 modifier = Modifier
                     .size(120.dp)
                     .clip(RoundedCornerShape(percent = 35))
-                    .background(MaterialTheme.colorScheme.tertiaryContainer),
+                    .background(MaterialTheme.colorScheme.primaryContainer),
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
                     imageVector = icon,
                     contentDescription = text,
                     modifier = Modifier.size(25.dp),
-                    tint = MaterialTheme.colorScheme.onTertiaryContainer
+                    tint = MaterialTheme.colorScheme.onPrimaryContainer
                 )
             }
         }
@@ -82,13 +82,13 @@ fun AddProductPlaceholder(
         ) {
             Text(
                 text = text,
-                color = MaterialTheme.colorScheme.onTertiaryContainer,
+                color = MaterialTheme.colorScheme.onBackground,
             )
             Icon(
                 imageVector = Icons.Filled.Add,
                 contentDescription = text,
                 modifier = Modifier.size(35.dp),
-                tint = MaterialTheme.colorScheme.onTertiaryContainer
+                tint = MaterialTheme.colorScheme.onBackground
             )
         }
     }
