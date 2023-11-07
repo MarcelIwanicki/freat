@@ -1,6 +1,7 @@
 package com.iwanickimarcel.freat.core.data
 
 import android.content.Context
+import com.iwanickimarcel.freat.core.presentation.scaleFitXY
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.UUID
@@ -12,7 +13,10 @@ actual class ImageStorage(
         return withContext(Dispatchers.IO) {
             val fileName = UUID.randomUUID().toString() + ".jpg"
             context.openFileOutput(fileName, Context.MODE_PRIVATE).use {
-                it.write(bytes)
+                val scaledBytes = bytes.scaleFitXY(
+                    500, 500
+                )
+                it.write(scaledBytes)
             }
             fileName
         }

@@ -171,7 +171,7 @@ fun AddProductScreen(
                     ) {
                         OutlinedTextField(
                             modifier = Modifier
-                                .width(244.dp)
+                                .fillMaxWidth(0.65f)
                                 .height(68.dp),
                             value = state.amount?.toString() ?: "",
                             placeholder = {

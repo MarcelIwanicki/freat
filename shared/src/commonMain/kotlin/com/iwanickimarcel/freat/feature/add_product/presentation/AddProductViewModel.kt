@@ -95,11 +95,11 @@ class AddProductViewModel(
                                     photoBytes = photoBytes,
                                 )
                             )
+                            _state.value = _state.value.copy(
+                                success = true
+                            )
                         }
-
-                        _state.value = _state.value.copy(
-                            success = true
-                        )
+                        
                         return@with
                     }
 
