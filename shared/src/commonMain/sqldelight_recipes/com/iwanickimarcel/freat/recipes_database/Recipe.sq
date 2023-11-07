@@ -1,0 +1,97 @@
+CREATE TABLE recipeEntity (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    createdAt INTEGER NOT NULL,
+    imagePath TEXT
+);
+
+CREATE TABLE recipeProductsEntity (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    recipeId INTEGER NOT NULL,
+    productName TEXT NOT NULL
+);
+
+CREATE TABLE tagEntity (
+    name TEXT NOT NULL PRIMARY KEY
+);
+
+CREATE TABLE recipeTagsEntity (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    recipeId INTEGER NOT NULL,
+    tagName TEXT NOT NULL
+);
+
+getRecipes:
+SELECT *
+FROM recipeEntity
+ORDER BY name ASC;
+
+insertRecipe:
+INSERT OR REPLACE
+INTO recipeEntity(
+    id,
+    name,
+    createdAt,
+    imagePath
+) VALUES (?, ?, ?, ?);
+
+deleteRecipe:
+DELETE FROM recipeEntity
+WHERE id = :id;
+
+getRecipeById:
+SELECT *
+FROM recipeEntity
+WHERE id = :id;
+
+getRecipeProducts:
+SELECT *
+FROM recipeProductsEntity
+WHERE recipeId = :recipeId;
+
+insertRecipeProduct:
+INSERT OR REPLACE
+INTO recipeProductsEntity(
+    id,
+    recipeId,
+    productName
+) VALUES (?, ?, ?);
+
+
+deleteAllRecipeProducts:
+DELETE FROM recipeProductsEntity
+WHERE recipeId = :recipeId;
+
+getTags:
+SELECT *
+FROM tagEntity
+ORDER BY name ASC;
+
+getTagByName:
+SELECT *
+FROM tagEntity
+WHERE name = :name
+ORDER BY name ASC;
+
+insertTag:
+INSERT OR REPLACE
+INTO tagEntity(
+    name
+) VALUES (?);
+
+getRecipeTags:
+SELECT *
+FROM recipeTagsEntity
+WHERE recipeId = :recipeId;
+
+insertRecipeTag:
+INSERT OR REPLACE
+INTO recipeTagsEntity(
+    id,
+    recipeId,
+    tagName
+) VALUES (?, ?, ?);
+
+deleteAllRecipeTag:
+DELETE FROM recipeTagsEntity
+WHERE recipeId = :recipeId;
