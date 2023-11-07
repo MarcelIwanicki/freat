@@ -21,6 +21,12 @@ CREATE TABLE recipeTagsEntity (
     tagName TEXT NOT NULL
 );
 
+CREATE TABLE recipeStepEntity (
+    recipeId INTEGER NOT NULL PRIMARY KEY,
+    step INTEGER NOT NULL,
+    description TEXT NOT NULL
+);
+
 getRecipes:
 SELECT *
 FROM recipeEntity
@@ -94,4 +100,13 @@ INTO recipeTagsEntity(
 
 deleteAllRecipeTag:
 DELETE FROM recipeTagsEntity
+WHERE recipeId = :recipeId;
+
+getRecipeSteps:
+SELECT *
+FROM recipeStepEntity
+WHERE recipeId = :recipeId;
+
+deleteAllRecipeSteps:
+DELETE FROM recipeStepEntity
 WHERE recipeId = :recipeId;

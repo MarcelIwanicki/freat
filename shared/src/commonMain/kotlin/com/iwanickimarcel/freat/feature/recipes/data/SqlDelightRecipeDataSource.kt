@@ -63,10 +63,20 @@ class SqlDelightRecipeDataSource(
                                 .flattenToList()
                                 .map { it.toTag() }
 
+                            val steps = recipeQueries
+                                .getRecipeSteps(recipeEntity.id)
+                                .asFlow()
+                                .mapToList(currentCoroutineContext())
+                                .flattenToList()
+                                .map {
+                                    it.toStep()
+                                }
+
                             recipeEntity.toRecipe(
                                 imageStorage = imageStorage,
                                 products = products,
-                                tags = tags
+                                tags = tags,
+                                steps = steps
                             )
                         }
                     }.map { it.await() }
@@ -107,10 +117,20 @@ class SqlDelightRecipeDataSource(
             .flattenToList()
             .map { it.toTag() }
 
+        val steps = recipeQueries
+            .getRecipeSteps(recipeEntity.id)
+            .asFlow()
+            .mapToList(currentCoroutineContext())
+            .flattenToList()
+            .map {
+                it.toStep()
+            }
+
         return recipeEntity.toRecipe(
             imageStorage = imageStorage,
             products = products,
-            tags = tags
+            tags = tags,
+            steps = steps
         )
     }
 

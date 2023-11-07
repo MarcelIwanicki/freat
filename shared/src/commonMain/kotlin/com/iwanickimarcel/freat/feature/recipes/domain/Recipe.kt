@@ -7,9 +7,15 @@ data class Recipe(
     val name: String,
     val photoBytes: ByteArray?,
     val products: List<Product>,
-    val tags: List<Tag>
+    val tags: List<Tag>,
+    val steps: List<Step>
 ) {
     data class Tag(
         val name: String
+    )
+
+    data class Step(
+        val step: Int,
+        val description: String
     )
 }
