@@ -3,30 +3,23 @@ package com.iwanickimarcel.freat.feature.recipes.data
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import com.iwanickimarcel.freat.core.data.ImageStorage
-import com.iwanickimarcel.freat.core.extensions.flattenToList
-import com.iwanickimarcel.freat.feature.products.data.toProduct
 import com.iwanickimarcel.freat.feature.recipes.domain.Recipe
 import com.iwanickimarcel.freat.feature.recipes.domain.RecipeDataSource
-import com.iwanickimarcel.freat.products_database.ProductsDatabase
 import com.iwanickimarcel.freat.recipes_database.RecipesDatabase
-import kotlinx.coroutines.async
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.supervisorScope
 import kotlinx.datetime.Clock
 
 class SqlDelightRecipeDataSource(
     recipesDatabase: RecipesDatabase,
-    productsDatabase: ProductsDatabase,
     private val imageStorage: ImageStorage
 ) : RecipeDataSource {
 
     private val recipeQueries = recipesDatabase.recipeQueries
-    private val productQueries = productsDatabase.productQueries
 
     override fun getRecipes(): Flow<List<Recipe>> = flow {
         val recipes = recipeQueries
@@ -34,103 +27,91 @@ class SqlDelightRecipeDataSource(
             .asFlow()
             .mapToList(currentCoroutineContext())
             .map { recipeEntities ->
-                supervisorScope {
-                    recipeEntities.map { recipeEntity ->
-                        async {
-                            val recipeProductsEntities = recipeQueries
-                                .getRecipeProducts(recipeEntity.id)
-                                .asFlow()
-                                .mapToList(currentCoroutineContext())
-                                .flattenToList()
-
-                            val products = recipeProductsEntities
-                                .map { productQueries.getProductByName(it.productName) }
-                                .asFlow()
-                                .mapToList(currentCoroutineContext())
-                                .flattenToList()
-                                .map { it.toProduct(imageStorage) }
-
-                            val recipeTagsEntities = recipeQueries
-                                .getRecipeTags(recipeEntity.id)
-                                .asFlow()
-                                .mapToList(currentCoroutineContext())
-                                .flattenToList()
-
-                            val tags = recipeTagsEntities
-                                .map { recipeQueries.getTagByName(it.tagName) }
-                                .asFlow()
-                                .mapToList(currentCoroutineContext())
-                                .flattenToList()
-                                .map { it.toTag() }
-
-                            val steps = recipeQueries
-                                .getRecipeSteps(recipeEntity.id)
-                                .asFlow()
-                                .mapToList(currentCoroutineContext())
-                                .flattenToList()
-                                .map {
-                                    it.toStep()
-                                }
-
-                            recipeEntity.toRecipe(
-                                imageStorage = imageStorage,
-                                products = products,
-                                tags = tags,
-                                steps = steps
-                            )
+                recipeEntities.map { recipeEntity ->
+                    val products = recipeQueries
+                        .getRecipeProducts(recipeEntity.id)
+                        .asFlow()
+                        .mapToList(currentCoroutineContext())
+                        .map { recipeProductsEntity ->
+                            recipeProductsEntity.map {
+                                it.toProduct()
+                            }
                         }
-                    }.map { it.await() }
+
+                    val tags = recipeQueries
+                        .getRecipeTags(recipeEntity.id)
+                        .asFlow()
+                        .mapToList(currentCoroutineContext())
+                        .map { recipeTagsEntity ->
+                            recipeTagsEntity.map {
+                                it.toTag()
+                            }
+                        }
+
+                    val steps = recipeQueries
+                        .getRecipeSteps(recipeEntity.id)
+                        .asFlow()
+                        .mapToList(currentCoroutineContext())
+                        .map { recipeStepEntity ->
+                            recipeStepEntity.map {
+                                it.toStep()
+                            }
+                        }
+
+                    recipeEntity.toRecipe(
+                        imageStorage = imageStorage,
+                        products = products.first(),
+                        tags = tags.first(),
+                        steps = steps.first()
+                    )
                 }
             }
 
         emitAll(recipes)
     }
 
+
     override suspend fun getRecipeById(id: Long): Recipe {
         val recipeEntity = recipeQueries
             .getRecipeById(id)
             .executeAsOne()
 
-        val recipeProductsEntities = recipeQueries
-            .getRecipeProducts(id)
+        val products = recipeQueries
+            .getRecipeProducts(recipeEntity.id)
             .asFlow()
             .mapToList(currentCoroutineContext())
-            .flattenToList()
+            .map { recipeProductsEntity ->
+                recipeProductsEntity.map {
+                    it.toProduct()
+                }
+            }
 
-        val products = recipeProductsEntities
-            .map { productQueries.getProductByName(it.productName) }
+        val tags = recipeQueries
+            .getRecipeTags(recipeEntity.id)
             .asFlow()
             .mapToList(currentCoroutineContext())
-            .flattenToList()
-            .map { it.toProduct(imageStorage) }
-
-        val recipeTagsEntities = recipeQueries
-            .getRecipeTags(id)
-            .asFlow()
-            .mapToList(currentCoroutineContext())
-            .flattenToList()
-
-        val tags = recipeTagsEntities
-            .map { recipeQueries.getTagByName(it.tagName) }
-            .asFlow()
-            .mapToList(currentCoroutineContext())
-            .flattenToList()
-            .map { it.toTag() }
+            .map { recipeTagsEntity ->
+                recipeTagsEntity.map {
+                    it.toTag()
+                }
+            }
 
         val steps = recipeQueries
             .getRecipeSteps(recipeEntity.id)
             .asFlow()
             .mapToList(currentCoroutineContext())
-            .flattenToList()
-            .map {
-                it.toStep()
+            .map { recipeStepEntity ->
+                recipeStepEntity.map {
+                    it.toStep()
+                }
             }
+
 
         return recipeEntity.toRecipe(
             imageStorage = imageStorage,
-            products = products,
-            tags = tags,
-            steps = steps
+            products = products.first(),
+            tags = tags.first(),
+            steps = steps.first()
         )
     }
 
@@ -139,54 +120,27 @@ class SqlDelightRecipeDataSource(
             imageStorage.saveImage(it)
         }
 
-        val allProducts = productQueries
-            .getProducts()
-            .asFlow()
-            .mapToList(currentCoroutineContext())
-            .map { entities ->
-                supervisorScope {
-                    entities.map {
-                        async {
-                            it.toProduct(imageStorage)
-                        }
-                    }.map { it.await() }
-                }
-            }.flattenToList()
-
-        val allTags = recipeQueries
-            .getTags()
-            .asFlow()
-            .mapToList(currentCoroutineContext())
-            .map { entities ->
-                supervisorScope {
-                    entities.map {
-                        async {
-                            it.toTag()
-                        }
-                    }
-                }.map { it.await() }
-            }.flattenToList()
-
-        val productsToAdd = recipe.products.filterNot {
-            allProducts.contains(it)
-        }
-
-        val tagsToAdd = recipe.tags.filterNot {
-            allTags.contains(it)
-        }
-
-        productsToAdd.forEach {
-            productQueries.insertProcuct(
-                name = it.name,
-                amount = it.amount.amount,
-                amountUnitId = it.amount.unit.ordinal.toLong(),
-                createdAt = Clock.System.now().toEpochMilliseconds(),
-                imagePath = imagePath,
+        recipe.products.forEach {
+            recipeQueries.insertRecipeProduct(
+                id = null,
+                recipeId = recipe.id,
+                productName = it.name,
+                productAmount = it.amount.amount,
+                productAmountUnitId = it.amount.unit.ordinal.toLong()
             )
         }
 
-        tagsToAdd.forEach {
+        recipe.tags.forEach {
             recipeQueries.insertTag(it.name)
+            recipeQueries.insertRecipeTag(
+                id = null,
+                recipeId = recipe.id,
+                tagName = it.name
+            )
+        }
+
+        recipe.steps.forEach {
+
         }
 
         recipeQueries.insertRecipe(

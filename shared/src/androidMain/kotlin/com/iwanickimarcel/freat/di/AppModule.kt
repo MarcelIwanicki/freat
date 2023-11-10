@@ -59,7 +59,6 @@ actual class AppModule(
     actual val recipeDataSource: RecipeDataSource by lazy {
         SqlDelightRecipeDataSource(
             recipesDatabase = recipesDatabase,
-            productsDatabase = productsDatabase,
             imageStorage = imageStorage
         )
     }

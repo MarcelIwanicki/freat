@@ -8,7 +8,9 @@ CREATE TABLE recipeEntity (
 CREATE TABLE recipeProductsEntity (
     id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     recipeId INTEGER NOT NULL,
-    productName TEXT NOT NULL
+    productName TEXT NOT NULL,
+    productAmount REAL NOT NULL,
+    productAmountUnitId INTEGER NOT NULL
 );
 
 CREATE TABLE tagEntity (
@@ -60,8 +62,10 @@ INSERT OR REPLACE
 INTO recipeProductsEntity(
     id,
     recipeId,
-    productName
-) VALUES (?, ?, ?);
+    productName,
+    productAmount,
+    productAmountUnitId
+) VALUES (?, ?, ?, ?, ?);
 
 
 deleteAllRecipeProducts:
@@ -106,6 +110,14 @@ getRecipeSteps:
 SELECT *
 FROM recipeStepEntity
 WHERE recipeId = :recipeId;
+
+insertRecipeStep:
+INSERT OR REPLACE
+INTO recipeStepEntity(
+    recipeId,
+    step,
+    description
+) VALUES (?, ?, ?);
 
 deleteAllRecipeSteps:
 DELETE FROM recipeStepEntity

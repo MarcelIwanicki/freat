@@ -20,7 +20,7 @@ object Home : Screen {
 object Recipes : Screen {
     @Composable
     override fun Content() {
-        RecipesScreen()
+        RecipesScreen(appModule)
     }
 }
 

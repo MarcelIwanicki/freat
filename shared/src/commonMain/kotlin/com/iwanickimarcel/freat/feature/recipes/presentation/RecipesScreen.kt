@@ -1,9 +1,11 @@
 package com.iwanickimarcel.freat.feature.recipes.presentation
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -13,733 +15,171 @@ import androidx.compose.foundation.lazy.staggeredgrid.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.outlined.Favorite
+import androidx.compose.material3.ElevatedFilterChip
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import cafe.adriel.voyager.navigator.LocalNavigator
+import com.iwanickimarcel.freat.di.AppModule
 import com.iwanickimarcel.freat.feature.products.domain.Product
 import com.iwanickimarcel.freat.feature.products.domain.g
+import com.iwanickimarcel.freat.feature.products.domain.mg
+import com.iwanickimarcel.freat.feature.products.domain.ml
 import com.iwanickimarcel.freat.feature.recipes.domain.Recipe
 import com.iwanickimarcel.freat.navigation.BottomNavigationBar
 import com.iwanickimarcel.freat.navigation.Recipes
+import dev.icerock.moko.mvvm.compose.getViewModel
+import dev.icerock.moko.mvvm.compose.viewModelFactory
 
-@Composable
-fun RecipesScreen() {
 
-    val fakeRecipes = remember {
-        listOf(
-            Recipe(
-                id = 0,
-                name = "Chicken nuggets",
-                photoBytes = null,
-                products = listOf(
-                    Product(
-                        name = "Apple",
-                        amount = 20.0.g,
-                        photoBytes = null
-                    ),
-                    Product(
-                        name = "Banana",
-                        amount = 100.0.g,
-                        photoBytes = null
-                    )
-                ),
-                steps = listOf(
-                    Recipe.Step(
-                        step = 1,
-                        description = "Open oven"
-                    ),
-                    Recipe.Step(
-                        step = 2,
-                        description = "Insert chicken"
-                    )
-                ),
-                tags = listOf(
-                    Recipe.Tag("Chicken"),
-                    Recipe.Tag("Nuggets"),
-                    Recipe.Tag("Quick"),
-                )
+val fakeRecipesData = listOf(
+    Recipe(
+        id = 0,
+        name = "Chinese chicken",
+        photoBytes = null,
+        products = listOf(
+            Product(
+                name = "Chicken breast",
+                amount = 300.0.g,
+                photoBytes = null
             ),
-            Recipe(
-                id = 1,
-                name = "Cooked banana",
-                photoBytes = null,
-                products = listOf(
-                    Product(
-                        name = "Banana",
-                        amount = 20.0.g,
-                        photoBytes = null
-                    ),
-                    Product(
-                        name = "Peanut butter",
-                        amount = 100.0.g,
-                        photoBytes = null
-                    )
-                ),
-                steps = listOf(
-                    Recipe.Step(
-                        step = 1,
-                        description = "Open oven"
-                    ),
-                    Recipe.Step(
-                        step = 2,
-                        description = "Insert banana"
-                    )
-                ),
-                tags = listOf(
-                    Recipe.Tag("Peanut"),
-                    Recipe.Tag("butter"),
-                    Recipe.Tag("banana"),
-                )
+            Product(
+                name = "Salt",
+                amount = 50.0.mg,
+                photoBytes = null
             ),
-            Recipe(
-                id = 2,
-                name = "Smoked salmon",
-                photoBytes = null,
-                products = listOf(
-                    Product(
-                        name = "Salmon",
-                        amount = 20.0.g,
-                        photoBytes = null
-                    ),
-                    Product(
-                        name = "Potato",
-                        amount = 100.0.g,
-                        photoBytes = null
-                    )
-                ),
-                steps = listOf(
-                    Recipe.Step(
-                        step = 1,
-                        description = "Open smoker"
-                    ),
-                    Recipe.Step(
-                        step = 2,
-                        description = "Insert Salmon"
-                    ),
-                    Recipe.Step(
-                        step = 2,
-                        description = "Insert Potato"
-                    ),
-                ),
-                tags = listOf(
-                    Recipe.Tag("Smoked"),
-                    Recipe.Tag("Salmon"),
-                    Recipe.Tag("Potato"),
-                )
-            ),
-            Recipe(
-                id = 3,
-                name = "Chicken nuggets",
-                photoBytes = null,
-                products = listOf(
-                    Product(
-                        name = "Apple",
-                        amount = 20.0.g,
-                        photoBytes = null
-                    ),
-                    Product(
-                        name = "Banana",
-                        amount = 100.0.g,
-                        photoBytes = null
-                    )
-                ),
-                steps = listOf(
-                    Recipe.Step(
-                        step = 1,
-                        description = "Open oven"
-                    ),
-                    Recipe.Step(
-                        step = 2,
-                        description = "Insert chicken"
-                    )
-                ),
-                tags = listOf(
-                    Recipe.Tag("Chicken"),
-                    Recipe.Tag("Nuggets"),
-                    Recipe.Tag("Quick"),
-                )
-            ),
-            Recipe(
-                id = 4,
-                name = "Cooked banana",
-                photoBytes = null,
-                products = listOf(
-                    Product(
-                        name = "Banana",
-                        amount = 20.0.g,
-                        photoBytes = null
-                    ),
-                    Product(
-                        name = "Peanut butter",
-                        amount = 100.0.g,
-                        photoBytes = null
-                    )
-                ),
-                steps = listOf(
-                    Recipe.Step(
-                        step = 1,
-                        description = "Open oven"
-                    ),
-                    Recipe.Step(
-                        step = 2,
-                        description = "Insert banana"
-                    )
-                ),
-                tags = listOf(
-                    Recipe.Tag("Peanut"),
-                    Recipe.Tag("butter"),
-                    Recipe.Tag("banana"),
-                )
-            ),
-            Recipe(
-                id = 5,
-                name = "Smoked salmon",
-                photoBytes = null,
-                products = listOf(
-                    Product(
-                        name = "Salmon",
-                        amount = 20.0.g,
-                        photoBytes = null
-                    ),
-                    Product(
-                        name = "Potato",
-                        amount = 100.0.g,
-                        photoBytes = null
-                    )
-                ),
-                steps = listOf(
-                    Recipe.Step(
-                        step = 1,
-                        description = "Open smoker"
-                    ),
-                    Recipe.Step(
-                        step = 2,
-                        description = "Insert Salmon"
-                    ),
-                    Recipe.Step(
-                        step = 2,
-                        description = "Insert Potato"
-                    ),
-                ),
-                tags = listOf(
-                    Recipe.Tag("Smoked"),
-                    Recipe.Tag("Salmon"),
-                    Recipe.Tag("Potato"),
-                )
-            ),
-            Recipe(
-                id = 6,
-                name = "Smoked salmon",
-                photoBytes = null,
-                products = listOf(
-                    Product(
-                        name = "Salmon",
-                        amount = 20.0.g,
-                        photoBytes = null
-                    ),
-                    Product(
-                        name = "Potato",
-                        amount = 100.0.g,
-                        photoBytes = null
-                    )
-                ),
-                steps = listOf(
-                    Recipe.Step(
-                        step = 1,
-                        description = "Open smoker"
-                    ),
-                    Recipe.Step(
-                        step = 2,
-                        description = "Insert Salmon"
-                    ),
-                    Recipe.Step(
-                        step = 2,
-                        description = "Insert Potato"
-                    ),
-                ),
-                tags = listOf(
-                    Recipe.Tag("Smoked"),
-                    Recipe.Tag("Salmon"),
-                    Recipe.Tag("Potato"),
-                )
-            ),
-            Recipe(
-                id = 6,
-                name = "Smoked salmon",
-                photoBytes = null,
-                products = listOf(
-                    Product(
-                        name = "Salmon",
-                        amount = 20.0.g,
-                        photoBytes = null
-                    ),
-                    Product(
-                        name = "Potato",
-                        amount = 100.0.g,
-                        photoBytes = null
-                    )
-                ),
-                steps = listOf(
-                    Recipe.Step(
-                        step = 1,
-                        description = "Open smoker"
-                    ),
-                    Recipe.Step(
-                        step = 2,
-                        description = "Insert Salmon"
-                    ),
-                    Recipe.Step(
-                        step = 2,
-                        description = "Insert Potato"
-                    ),
-                ),
-                tags = listOf(
-                    Recipe.Tag("Smoked"),
-                    Recipe.Tag("Salmon"),
-                    Recipe.Tag("Potato"),
-                )
-            ),
-            Recipe(
-                id = 6,
-                name = "Smoked salmon",
-                photoBytes = null,
-                products = listOf(
-                    Product(
-                        name = "Salmon",
-                        amount = 20.0.g,
-                        photoBytes = null
-                    ),
-                    Product(
-                        name = "Potato",
-                        amount = 100.0.g,
-                        photoBytes = null
-                    )
-                ),
-                steps = listOf(
-                    Recipe.Step(
-                        step = 1,
-                        description = "Open smoker"
-                    ),
-                    Recipe.Step(
-                        step = 2,
-                        description = "Insert Salmon"
-                    ),
-                    Recipe.Step(
-                        step = 2,
-                        description = "Insert Potato"
-                    ),
-                ),
-                tags = listOf(
-                    Recipe.Tag("Smoked"),
-                    Recipe.Tag("Salmon"),
-                    Recipe.Tag("Potato"),
-                )
-            ),
-            Recipe(
-                id = 6,
-                name = "Smoked salmon",
-                photoBytes = null,
-                products = listOf(
-                    Product(
-                        name = "Salmon",
-                        amount = 20.0.g,
-                        photoBytes = null
-                    ),
-                    Product(
-                        name = "Potato",
-                        amount = 100.0.g,
-                        photoBytes = null
-                    )
-                ),
-                steps = listOf(
-                    Recipe.Step(
-                        step = 1,
-                        description = "Open smoker"
-                    ),
-                    Recipe.Step(
-                        step = 2,
-                        description = "Insert Salmon"
-                    ),
-                    Recipe.Step(
-                        step = 2,
-                        description = "Insert Potato"
-                    ),
-                ),
-                tags = listOf(
-                    Recipe.Tag("Smoked"),
-                    Recipe.Tag("Salmon"),
-                    Recipe.Tag("Potato"),
-                )
-            ),
-            Recipe(
-                id = 6,
-                name = "Smoked salmon",
-                photoBytes = null,
-                products = listOf(
-                    Product(
-                        name = "Salmon",
-                        amount = 20.0.g,
-                        photoBytes = null
-                    ),
-                    Product(
-                        name = "Potato",
-                        amount = 100.0.g,
-                        photoBytes = null
-                    )
-                ),
-                steps = listOf(
-                    Recipe.Step(
-                        step = 1,
-                        description = "Open smoker"
-                    ),
-                    Recipe.Step(
-                        step = 2,
-                        description = "Insert Salmon"
-                    ),
-                    Recipe.Step(
-                        step = 2,
-                        description = "Insert Potato"
-                    ),
-                ),
-                tags = listOf(
-                    Recipe.Tag("Smoked"),
-                    Recipe.Tag("Salmon"),
-                    Recipe.Tag("Potato"),
-                )
-            ),
-            Recipe(
-                id = 6,
-                name = "Smoked salmon",
-                photoBytes = null,
-                products = listOf(
-                    Product(
-                        name = "Salmon",
-                        amount = 20.0.g,
-                        photoBytes = null
-                    ),
-                    Product(
-                        name = "Potato",
-                        amount = 100.0.g,
-                        photoBytes = null
-                    )
-                ),
-                steps = listOf(
-                    Recipe.Step(
-                        step = 1,
-                        description = "Open smoker"
-                    ),
-                    Recipe.Step(
-                        step = 2,
-                        description = "Insert Salmon"
-                    ),
-                    Recipe.Step(
-                        step = 2,
-                        description = "Insert Potato"
-                    ),
-                ),
-                tags = listOf(
-                    Recipe.Tag("Smoked"),
-                    Recipe.Tag("Salmon"),
-                    Recipe.Tag("Potato"),
-                )
-            ),
-            Recipe(
-                id = 6,
-                name = "Smoked salmon",
-                photoBytes = null,
-                products = listOf(
-                    Product(
-                        name = "Salmon",
-                        amount = 20.0.g,
-                        photoBytes = null
-                    ),
-                    Product(
-                        name = "Potato",
-                        amount = 100.0.g,
-                        photoBytes = null
-                    )
-                ),
-                steps = listOf(
-                    Recipe.Step(
-                        step = 1,
-                        description = "Open smoker"
-                    ),
-                    Recipe.Step(
-                        step = 2,
-                        description = "Insert Salmon"
-                    ),
-                    Recipe.Step(
-                        step = 2,
-                        description = "Insert Potato"
-                    ),
-                ),
-                tags = listOf(
-                    Recipe.Tag("Smoked"),
-                    Recipe.Tag("Salmon"),
-                    Recipe.Tag("Potato"),
-                )
-            ),
-            Recipe(
-                id = 6,
-                name = "Smoked salmon",
-                photoBytes = null,
-                products = listOf(
-                    Product(
-                        name = "Salmon",
-                        amount = 20.0.g,
-                        photoBytes = null
-                    ),
-                    Product(
-                        name = "Potato",
-                        amount = 100.0.g,
-                        photoBytes = null
-                    )
-                ),
-                steps = listOf(
-                    Recipe.Step(
-                        step = 1,
-                        description = "Open smoker"
-                    ),
-                    Recipe.Step(
-                        step = 2,
-                        description = "Insert Salmon"
-                    ),
-                    Recipe.Step(
-                        step = 2,
-                        description = "Insert Potato"
-                    ),
-                ),
-                tags = listOf(
-                    Recipe.Tag("Smoked"),
-                    Recipe.Tag("Salmon"),
-                    Recipe.Tag("Potato"),
-                )
-            ),
-            Recipe(
-                id = 6,
-                name = "Smoked salmon",
-                photoBytes = null,
-                products = listOf(
-                    Product(
-                        name = "Salmon",
-                        amount = 20.0.g,
-                        photoBytes = null
-                    ),
-                    Product(
-                        name = "Potato",
-                        amount = 100.0.g,
-                        photoBytes = null
-                    )
-                ),
-                steps = listOf(
-                    Recipe.Step(
-                        step = 1,
-                        description = "Open smoker"
-                    ),
-                    Recipe.Step(
-                        step = 2,
-                        description = "Insert Salmon"
-                    ),
-                    Recipe.Step(
-                        step = 2,
-                        description = "Insert Potato"
-                    ),
-                ),
-                tags = listOf(
-                    Recipe.Tag("Smoked"),
-                    Recipe.Tag("Salmon"),
-                    Recipe.Tag("Potato"),
-                )
-            ),
-            Recipe(
-                id = 6,
-                name = "Smoked salmon",
-                photoBytes = null,
-                products = listOf(
-                    Product(
-                        name = "Salmon",
-                        amount = 20.0.g,
-                        photoBytes = null
-                    ),
-                    Product(
-                        name = "Potato",
-                        amount = 100.0.g,
-                        photoBytes = null
-                    )
-                ),
-                steps = listOf(
-                    Recipe.Step(
-                        step = 1,
-                        description = "Open smoker"
-                    ),
-                    Recipe.Step(
-                        step = 2,
-                        description = "Insert Salmon"
-                    ),
-                    Recipe.Step(
-                        step = 2,
-                        description = "Insert Potato"
-                    ),
-                ),
-                tags = listOf(
-                    Recipe.Tag("Smoked"),
-                    Recipe.Tag("Salmon"),
-                    Recipe.Tag("Potato"),
-                )
-            ),
-
-            Recipe(
-                id = 6,
-                name = "Smoked salmon",
-                photoBytes = null,
-                products = listOf(
-                    Product(
-                        name = "Salmon",
-                        amount = 20.0.g,
-                        photoBytes = null
-                    ),
-                    Product(
-                        name = "Potato",
-                        amount = 100.0.g,
-                        photoBytes = null
-                    )
-                ),
-                steps = listOf(
-                    Recipe.Step(
-                        step = 1,
-                        description = "Open smoker"
-                    ),
-                    Recipe.Step(
-                        step = 2,
-                        description = "Insert Salmon"
-                    ),
-                    Recipe.Step(
-                        step = 2,
-                        description = "Insert Potato"
-                    ),
-                ),
-                tags = listOf(
-                    Recipe.Tag("Smoked"),
-                    Recipe.Tag("Salmon"),
-                    Recipe.Tag("Potato"),
-                )
-            ),
-            Recipe(
-                id = 6,
-                name = "Smoked salmon",
-                photoBytes = null,
-                products = listOf(
-                    Product(
-                        name = "Salmon",
-                        amount = 20.0.g,
-                        photoBytes = null
-                    ),
-                    Product(
-                        name = "Potato",
-                        amount = 100.0.g,
-                        photoBytes = null
-                    )
-                ),
-                steps = listOf(
-                    Recipe.Step(
-                        step = 1,
-                        description = "Open smoker"
-                    ),
-                    Recipe.Step(
-                        step = 2,
-                        description = "Insert Salmon"
-                    ),
-                    Recipe.Step(
-                        step = 2,
-                        description = "Insert Potato"
-                    ),
-                ),
-                tags = listOf(
-                    Recipe.Tag("Smoked"),
-                    Recipe.Tag("Salmon"),
-                    Recipe.Tag("Potato"),
-                )
-            ),
-            Recipe(
-                id = 6,
-                name = "Smoked salmon",
-                photoBytes = null,
-                products = listOf(
-                    Product(
-                        name = "Salmon",
-                        amount = 20.0.g,
-                        photoBytes = null
-                    ),
-                    Product(
-                        name = "Potato",
-                        amount = 100.0.g,
-                        photoBytes = null
-                    )
-                ),
-                steps = listOf(
-                    Recipe.Step(
-                        step = 1,
-                        description = "Open smoker"
-                    ),
-                    Recipe.Step(
-                        step = 2,
-                        description = "Insert Salmon"
-                    ),
-                    Recipe.Step(
-                        step = 2,
-                        description = "Insert Potato"
-                    ),
-                ),
-                tags = listOf(
-                    Recipe.Tag("Smoked"),
-                    Recipe.Tag("Salmon"),
-                    Recipe.Tag("Potato"),
-                )
-            ),
-            Recipe(
-                id = 6,
-                name = "Smoked salmon",
-                photoBytes = null,
-                products = listOf(
-                    Product(
-                        name = "Salmon",
-                        amount = 20.0.g,
-                        photoBytes = null
-                    ),
-                    Product(
-                        name = "Potato",
-                        amount = 100.0.g,
-                        photoBytes = null
-                    )
-                ),
-                steps = listOf(
-                    Recipe.Step(
-                        step = 1,
-                        description = "Open smoker"
-                    ),
-                    Recipe.Step(
-                        step = 2,
-                        description = "Insert Salmon"
-                    ),
-                    Recipe.Step(
-                        step = 2,
-                        description = "Insert Potato"
-                    ),
-                ),
-                tags = listOf(
-                    Recipe.Tag("Smoked"),
-                    Recipe.Tag("Salmon"),
-                    Recipe.Tag("Potato"),
-                )
-            ),
+        ),
+        tags = listOf(
+            Recipe.Tag("Chicken"),
+            Recipe.Tag("Chinese"),
+            Recipe.Tag("Quick"),
+            Recipe.Tag("Low calory"),
+        ),
+        steps = listOf(
+            Recipe.Step(1, "Do something"),
+            Recipe.Step(2, "Cook chicken"),
+            Recipe.Step(3, "Add something to chicken"),
         )
+    ),
+    Recipe(
+        id = 1,
+        name = "Raw beef",
+        photoBytes = null,
+        products = listOf(
+            Product(
+                name = "Beef",
+                amount = 400.0.g,
+                photoBytes = null
+            ),
+            Product(
+                name = "Salt",
+                amount = 10.0.mg,
+                photoBytes = null
+            ),
+        ),
+        tags = listOf(
+            Recipe.Tag("Raw"),
+            Recipe.Tag("Beef"),
+            Recipe.Tag("Quick"),
+            Recipe.Tag("High calory"),
+        ),
+        steps = listOf(
+            Recipe.Step(1, "Get raw beef"),
+            Recipe.Step(2, "Put raw beef on the table"),
+        )
+    ),
+    Recipe(
+        id = 2,
+        name = "Polish pork chop",
+        photoBytes = null,
+        products = listOf(
+            Product(
+                name = "Pork",
+                amount = 300.0.g,
+                photoBytes = null
+            ),
+            Product(
+                name = "Salt",
+                amount = 50.0.mg,
+                photoBytes = null
+            ),
+            Product(
+                name = "Wheat flour",
+                amount = 100.0.g,
+                photoBytes = null
+            ),
+        ),
+        tags = listOf(
+            Recipe.Tag("Pork"),
+            Recipe.Tag("Pork chop"),
+            Recipe.Tag("Traditional"),
+        ),
+        steps = listOf(
+            Recipe.Step(1, "Do something"),
+            Recipe.Step(2, "Prepare the pork"),
+            Recipe.Step(3, "Do the chop"),
+            Recipe.Step(4, "Do the chop once again"),
+        )
+    ),
+    Recipe(
+        id = 3,
+        name = "Salted water",
+        photoBytes = null,
+        products = listOf(
+            Product(
+                name = "Water",
+                amount = 200.0.ml,
+                photoBytes = null
+            ),
+            Product(
+                name = "Salt",
+                amount = 10.0.mg,
+                photoBytes = null
+            ),
+        ),
+        tags = listOf(
+            Recipe.Tag("Pure"),
+        ),
+        steps = listOf(
+            Recipe.Step(1, "Get water"),
+            Recipe.Step(2, "Put salt into the water"),
+        )
+    ),
+)
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun RecipesScreen(
+    appModule: AppModule
+) {
+    val navigator = LocalNavigator.current ?: return
+    val viewModel = getViewModel(
+        key = "recipes-screen",
+        factory = viewModelFactory {
+            RecipesViewModel(appModule.recipeDataSource)
+        }
+    )
+    val state by viewModel.state.collectAsState()
+
+    LaunchedEffect(Unit) {
+        fakeRecipesData.forEach {
+            appModule.recipeDataSource.insertRecipe(it)
+        }
     }
 
     Scaffold(
@@ -751,8 +191,7 @@ fun RecipesScreen() {
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 verticalItemSpacing = 16.dp
             ) {
-
-                itemsIndexed(fakeRecipes) { index, item ->
+                itemsIndexed(state.recipes) { index, item ->
                     val offset = index % 5
                     val height = if (offset == 1 || offset == 3) {
                         256.dp
@@ -760,17 +199,61 @@ fun RecipesScreen() {
                         120.dp
                     }
 
-                    Box(
+                    Column(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(height)
                             .clip(RoundedCornerShape(10.dp))
                             .background(MaterialTheme.colorScheme.secondaryContainer)
+                            .clickable {
 
+                            }
+                            .padding(8.dp),
+                        verticalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Text(
-                            text = index.toString()
-                        )
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            item.tags.firstOrNull()?.let {
+                                ElevatedFilterChip(
+                                    selected = false,
+                                    onClick = { },
+                                    label = {
+                                        Text(it.name)
+                                    },
+                                    shape = RoundedCornerShape(16.dp),
+                                    colors = FilterChipDefaults.filterChipColors(
+                                        containerColor = MaterialTheme.colorScheme.tertiary,
+                                        labelColor = MaterialTheme.colorScheme.onTertiary
+                                    )
+                                )
+                            }
+
+                            IconButton(
+                                onClick = {
+
+                                },
+                                content = {
+                                    Icon(
+                                        imageVector = Icons.Outlined.Favorite,
+                                        contentDescription = "Favorite",
+                                    )
+                                }
+                            )
+                        }
+
+                        Column {
+                            Text(
+                                text = item.name,
+                                fontWeight = FontWeight.Bold
+                            )
+                            Text(
+                                text = "You have 90% of ingredients",
+                                fontSize = 10.sp
+                            )
+                        }
                     }
                 }
             }
