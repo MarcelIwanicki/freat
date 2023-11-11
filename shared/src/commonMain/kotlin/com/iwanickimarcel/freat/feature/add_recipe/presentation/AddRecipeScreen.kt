@@ -35,6 +35,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -45,6 +47,8 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import com.iwanickimarcel.freat.core.presentation.ImagePicker
 import com.iwanickimarcel.freat.di.AppModule
 import com.iwanickimarcel.freat.feature.products.presentation.AddProductPlaceholder
+import dev.icerock.moko.mvvm.compose.getViewModel
+import dev.icerock.moko.mvvm.compose.viewModelFactory
 
 data class PagerScreenItem(
     val index: Int,
@@ -59,7 +63,20 @@ fun AddRecipeScreen(
     editRecipeId: Int?
 ) {
     val navigator = LocalNavigator.current ?: return
+
+    val viewModel = getViewModel(
+        key = "add-recipe-screen",
+        factory = viewModelFactory {
+            AddRecipeViewModel()
+        }
+    )
+    val state by viewModel.state.collectAsState()
+
     val imagePicker = appModule.imagePicker
+
+    imagePicker.registerPicker {
+        viewModel.onEvent(AddRecipeEvent.OnPhotoSelected(it))
+    }
 
     val pagerScreens = remember {
         listOf(
@@ -67,28 +84,31 @@ fun AddRecipeScreen(
                 index = 0,
                 title = "Basic info",
                 content = {
-                    BasicInfoScreen(imagePicker = imagePicker)
+                    BasicInfoScreen(
+                        imagePicker = imagePicker,
+                        addRecipeState = state,
+                        onNameChanged = {
+                            viewModel.onEvent(AddRecipeEvent.OnNameChanged(it))
+                        }
+                    )
                 }
             ),
             PagerScreenItem(
                 index = 1,
                 title = "Ingredients",
                 content = {
-                    BasicInfoScreen(imagePicker = imagePicker)
                 }
             ),
             PagerScreenItem(
                 index = 2,
                 title = "Steps",
                 content = {
-                    BasicInfoScreen(imagePicker = imagePicker)
                 }
             ),
             PagerScreenItem(
                 index = 3,
                 title = "Tags",
                 content = {
-                    BasicInfoScreen(imagePicker = imagePicker)
                 }
             ),
         )
@@ -197,12 +217,10 @@ fun AddRecipeScreen(
 
 @Composable
 fun BasicInfoScreen(
-    imagePicker: ImagePicker
+    imagePicker: ImagePicker,
+    addRecipeState: AddRecipeState,
+    onNameChanged: (String) -> Unit
 ) {
-    val fakeNameError: String? = null
-    val fakeName: String? = null
-    val fakePhotoBytes: ByteArray? = null
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -215,13 +233,13 @@ fun BasicInfoScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             AddProductPlaceholder(
-                text = if (fakePhotoBytes == null) {
+                text = if (addRecipeState.photoBytes == null) {
                     "Add a photo"
                 } else {
                     "Edit photo"
                 },
                 icon = Icons.Outlined.AddAPhoto,
-                photoBytes = fakePhotoBytes,
+                photoBytes = addRecipeState.photoBytes,
                 modifier = Modifier.fillMaxWidth()
                     .padding(8.dp)
             ) {
@@ -229,15 +247,15 @@ fun BasicInfoScreen(
             }
             Spacer(modifier = Modifier.height(16.dp))
             OutlinedTextField(
-                value = fakeName ?: "",
+                value = addRecipeState.name ?: "",
                 placeholder = {
                     Text(text = "Insert name of the item...")
                 },
                 label = {
-                    Text(text = fakeNameError ?: "Name")
+                    Text(text = addRecipeState.nameError ?: "Name")
                 },
                 onValueChange = {
-//                    viewModel.onEvent(AddProductEvent.OnNameChanged(it))
+                    onNameChanged(it)
                 },
                 shape = RoundedCornerShape(20.dp),
                 modifier = Modifier
@@ -254,7 +272,7 @@ fun BasicInfoScreen(
                     keyboardType = KeyboardType.Text,
                     imeAction = ImeAction.Next
                 ),
-                isError = fakeNameError != null
+                isError = addRecipeState.nameError != null
             )
         }
     }
