@@ -26,7 +26,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -36,131 +35,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.iwanickimarcel.freat.di.AppModule
-import com.iwanickimarcel.freat.feature.products.domain.Product
-import com.iwanickimarcel.freat.feature.products.domain.g
-import com.iwanickimarcel.freat.feature.products.domain.mg
-import com.iwanickimarcel.freat.feature.products.domain.ml
-import com.iwanickimarcel.freat.feature.recipes.domain.Recipe
+import com.iwanickimarcel.freat.navigation.AddRecipe
 import com.iwanickimarcel.freat.navigation.BottomNavigationBar
 import com.iwanickimarcel.freat.navigation.Recipes
 import dev.icerock.moko.mvvm.compose.getViewModel
 import dev.icerock.moko.mvvm.compose.viewModelFactory
-
-
-val fakeRecipesData = listOf(
-    Recipe(
-        id = 0,
-        name = "Chinese chicken",
-        photoBytes = null,
-        products = listOf(
-            Product(
-                name = "Chicken breast",
-                amount = 300.0.g,
-                photoBytes = null
-            ),
-            Product(
-                name = "Salt",
-                amount = 50.0.mg,
-                photoBytes = null
-            ),
-        ),
-        tags = listOf(
-            Recipe.Tag("Chicken"),
-            Recipe.Tag("Chinese"),
-            Recipe.Tag("Quick"),
-            Recipe.Tag("Low calory"),
-        ),
-        steps = listOf(
-            Recipe.Step(1, "Do something"),
-            Recipe.Step(2, "Cook chicken"),
-            Recipe.Step(3, "Add something to chicken"),
-        )
-    ),
-    Recipe(
-        id = 1,
-        name = "Raw beef",
-        photoBytes = null,
-        products = listOf(
-            Product(
-                name = "Beef",
-                amount = 400.0.g,
-                photoBytes = null
-            ),
-            Product(
-                name = "Salt",
-                amount = 10.0.mg,
-                photoBytes = null
-            ),
-        ),
-        tags = listOf(
-            Recipe.Tag("Raw"),
-            Recipe.Tag("Beef"),
-            Recipe.Tag("Quick"),
-            Recipe.Tag("High calory"),
-        ),
-        steps = listOf(
-            Recipe.Step(1, "Get raw beef"),
-            Recipe.Step(2, "Put raw beef on the table"),
-        )
-    ),
-    Recipe(
-        id = 2,
-        name = "Polish pork chop",
-        photoBytes = null,
-        products = listOf(
-            Product(
-                name = "Pork",
-                amount = 300.0.g,
-                photoBytes = null
-            ),
-            Product(
-                name = "Salt",
-                amount = 50.0.mg,
-                photoBytes = null
-            ),
-            Product(
-                name = "Wheat flour",
-                amount = 100.0.g,
-                photoBytes = null
-            ),
-        ),
-        tags = listOf(
-            Recipe.Tag("Pork"),
-            Recipe.Tag("Pork chop"),
-            Recipe.Tag("Traditional"),
-        ),
-        steps = listOf(
-            Recipe.Step(1, "Do something"),
-            Recipe.Step(2, "Prepare the pork"),
-            Recipe.Step(3, "Do the chop"),
-            Recipe.Step(4, "Do the chop once again"),
-        )
-    ),
-    Recipe(
-        id = 3,
-        name = "Salted water",
-        photoBytes = null,
-        products = listOf(
-            Product(
-                name = "Water",
-                amount = 200.0.ml,
-                photoBytes = null
-            ),
-            Product(
-                name = "Salt",
-                amount = 10.0.mg,
-                photoBytes = null
-            ),
-        ),
-        tags = listOf(
-            Recipe.Tag("Pure"),
-        ),
-        steps = listOf(
-            Recipe.Step(1, "Get water"),
-            Recipe.Step(2, "Put salt into the water"),
-        )
-    ),
-)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -175,12 +54,6 @@ fun RecipesScreen(
         }
     )
     val state by viewModel.state.collectAsState()
-
-    LaunchedEffect(Unit) {
-        fakeRecipesData.forEach {
-            appModule.recipeDataSource.insertRecipe(it)
-        }
-    }
 
     Scaffold(
         content = {
@@ -264,7 +137,7 @@ fun RecipesScreen(
         floatingActionButton = {
             ExtendedFloatingActionButton(
                 onClick = {
-
+                    navigator.push(AddRecipe())
                 },
                 text = {
                     Text(text = "Add recipe")
