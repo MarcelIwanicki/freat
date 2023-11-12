@@ -8,7 +8,7 @@ data class ProductsState(
     val productToDelete: Product? = null,
     val productToEdit: Product? = null,
     val searchQuery: String = "",
-    val addProductPressed: Boolean = false,
+    val addProductOpen: Boolean = false,
     val searchBarPressed: Boolean = false,
     val errorMessage: String? = null,
 )

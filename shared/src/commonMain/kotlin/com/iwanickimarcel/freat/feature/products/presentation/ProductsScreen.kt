@@ -42,7 +42,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.iwanickimarcel.freat.di.AppModule
-import com.iwanickimarcel.freat.navigation.AddProduct
+import com.iwanickimarcel.freat.feature.add_product.presentation.AddProductScreen
 import com.iwanickimarcel.freat.navigation.BottomNavigationBar
 import com.iwanickimarcel.freat.navigation.Products
 import com.iwanickimarcel.freat.navigation.ProductsSearch
@@ -76,9 +76,21 @@ fun ProductsScreen(
         }
     }
 
-    if (state.addProductPressed) {
-        LaunchedEffect(Unit) {
-            navigator.push(AddProduct())
+    if (state.addProductOpen) {
+        ModalBottomSheet(
+            onDismissRequest = {
+                viewModel.onEvent(ProductsEvent.OnAddProductDismiss)
+            },
+            sheetState = bottomSheetState,
+            windowInsets = BottomSheetDefaults.windowInsets
+        ) {
+            AddProductScreen(
+                appModule = appModule,
+                editProductName = null,
+                onDismiss = {
+                    viewModel.onEvent(ProductsEvent.OnAddProductDismiss)
+                }
+            )
         }
     }
 
@@ -127,9 +139,21 @@ fun ProductsScreen(
     }
 
     state.productToEdit?.let {
-        navigator.push(
-            AddProduct(it.name)
-        )
+        ModalBottomSheet(
+            onDismissRequest = {
+                viewModel.onEvent(ProductsEvent.OnEditProductDismiss)
+            },
+            sheetState = bottomSheetState,
+            windowInsets = BottomSheetDefaults.windowInsets
+        ) {
+            AddProductScreen(
+                appModule = appModule,
+                editProductName = it.name,
+                onDismiss = {
+                    viewModel.onEvent(ProductsEvent.OnEditProductDismiss)
+                }
+            )
+        }
     }
 
     state.longPressedProduct?.let {

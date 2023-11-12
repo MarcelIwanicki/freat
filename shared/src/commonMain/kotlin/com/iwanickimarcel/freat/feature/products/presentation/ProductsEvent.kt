@@ -8,6 +8,8 @@ sealed interface ProductsEvent {
     object OnSearchBarClick : ProductsEvent
     data class OnProductLongPress(val product: Product) : ProductsEvent
     object OnProductLongPressDismiss : ProductsEvent
+    object OnAddProductDismiss : ProductsEvent
+    object OnEditProductDismiss : ProductsEvent
     data class OnDeleteProductPress(val product: Product) : ProductsEvent
     object OnDeleteProductMenuDismiss : ProductsEvent
     object OnDeleteProductConfirm : ProductsEvent

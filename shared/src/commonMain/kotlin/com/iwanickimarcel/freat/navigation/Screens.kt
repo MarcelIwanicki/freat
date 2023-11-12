@@ -3,7 +3,6 @@ package com.iwanickimarcel.freat.navigation
 import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.core.screen.Screen
 import com.iwanickimarcel.freat.appModule
-import com.iwanickimarcel.freat.feature.add_product.presentation.AddProductScreen
 import com.iwanickimarcel.freat.feature.add_recipe.presentation.AddRecipeScreen
 import com.iwanickimarcel.freat.feature.home.presentation.HomeScreen
 import com.iwanickimarcel.freat.feature.products.presentation.ProductsScreen
@@ -45,18 +44,6 @@ data class Products(
         ProductsScreen(
             appModule = appModule,
             searchQuery = searchQuery
-        )
-    }
-}
-
-data class AddProduct(
-    val productName: String? = null
-) : Screen {
-    @Composable
-    override fun Content() {
-        AddProductScreen(
-            appModule = appModule,
-            editProductName = productName
         )
     }
 }

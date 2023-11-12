@@ -38,7 +38,6 @@ fun AddProductPlaceholder(
 
     Column(
         modifier = modifier
-            .background(MaterialTheme.colorScheme.surface)
             .clickable {
                 onClick()
             },

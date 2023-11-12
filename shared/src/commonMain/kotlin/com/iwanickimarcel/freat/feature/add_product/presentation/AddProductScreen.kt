@@ -15,8 +15,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.outlined.AddAPhoto
-import androidx.compose.material.icons.outlined.ArrowBackIos
 import androidx.compose.material.icons.outlined.Book
 import androidx.compose.material.icons.outlined.Numbers
 import androidx.compose.material3.Button
@@ -41,7 +41,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import cafe.adriel.voyager.navigator.LocalNavigator
 import com.iwanickimarcel.freat.di.AppModule
 import com.iwanickimarcel.freat.feature.products.presentation.AddProductPlaceholder
 import dev.icerock.moko.mvvm.compose.getViewModel
@@ -52,9 +51,8 @@ import dev.icerock.moko.mvvm.compose.viewModelFactory
 fun AddProductScreen(
     appModule: AppModule,
     editProductName: String?,
+    onDismiss: () -> Unit
 ) {
-    val navigator = LocalNavigator.current ?: return
-
     val viewModel = getViewModel(
         key = "add-product-screen",
         factory = viewModelFactory {
@@ -77,7 +75,7 @@ fun AddProductScreen(
     }
 
     if (state.success) {
-        navigator.pop()
+        onDismiss()
     }
 
     Scaffold(
@@ -95,23 +93,25 @@ fun AddProductScreen(
                 },
                 navigationIcon = {
                     IconButton(
-                        onClick = { navigator.pop() }
+                        onClick = {
+                            onDismiss()
+                        }
                     ) {
                         Icon(
-                            imageVector = Icons.Outlined.ArrowBackIos,
+                            imageVector = Icons.Filled.Close,
                             contentDescription = "Go back"
                         )
                     }
                 }
             )
         },
-        content = {
+        content = { paddingValues ->
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(
-                        top = it.calculateTopPadding() + 16.dp,
-                        bottom = it.calculateBottomPadding() + 16.dp,
+                        top = paddingValues.calculateTopPadding(),
+                        bottom = paddingValues.calculateBottomPadding(),
                         start = 16.dp,
                         end = 16.dp,
                     )

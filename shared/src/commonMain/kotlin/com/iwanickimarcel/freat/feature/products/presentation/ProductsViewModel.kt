@@ -46,7 +46,7 @@ class ProductsViewModel(
 
             is ProductsEvent.OnAddProductClick -> {
                 _state.value = _state.value.copy(
-                    addProductPressed = true
+                    addProductOpen = true
                 )
             }
 
@@ -85,6 +85,18 @@ class ProductsViewModel(
                 _state.value = _state.value.copy(
                     productToEdit = event.product,
                     longPressedProduct = null
+                )
+            }
+
+            is ProductsEvent.OnAddProductDismiss -> {
+                _state.value = _state.value.copy(
+                    addProductOpen = false
+                )
+            }
+
+            is ProductsEvent.OnEditProductDismiss -> {
+                _state.value = _state.value.copy(
+                    productToEdit = null
                 )
             }
         }
