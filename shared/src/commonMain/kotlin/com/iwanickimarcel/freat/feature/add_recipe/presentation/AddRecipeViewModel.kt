@@ -40,6 +40,14 @@ class AddRecipeViewModel : ViewModel() {
                     addIngredientOpen = false
                 )
             }
+
+            is AddRecipeEvent.OnAddIngredientAdded -> {
+                _state.value = _state.value.copy(
+                    ingredients = _state.value.ingredients.toMutableList().apply {
+                        add(event.ingredient)
+                    }
+                )
+            }
         }
     }
 }

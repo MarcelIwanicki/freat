@@ -38,6 +38,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.iwanickimarcel.freat.di.AppModule
+import com.iwanickimarcel.freat.feature.add_ingredient.presentation.AddIngredientScreen
 import dev.icerock.moko.mvvm.compose.getViewModel
 import dev.icerock.moko.mvvm.compose.viewModelFactory
 
@@ -129,7 +130,7 @@ fun AddRecipeScreen(
         ) {
             AddIngredientScreen(
                 onIngredientAdded = {
-
+                    viewModel.onEvent(AddRecipeEvent.OnAddIngredientAdded(it))
                 },
                 onDismiss = {
                     viewModel.onEvent(AddRecipeEvent.OnAddIngredientDismiss)
