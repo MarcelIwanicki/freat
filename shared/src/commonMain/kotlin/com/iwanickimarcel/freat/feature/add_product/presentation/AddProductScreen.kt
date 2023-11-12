@@ -1,5 +1,6 @@
 package com.iwanickimarcel.freat.feature.add_product.presentation
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -36,6 +37,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -247,8 +249,10 @@ fun AddProductScreen(
                 Spacer(modifier = Modifier.height(32.dp))
                 Button(
                     modifier = Modifier
+                        .fillMaxWidth()
                         .height(48.dp)
-                        .fillMaxWidth(),
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(MaterialTheme.colorScheme.primary),
                     onClick = {
                         viewModel.onEvent(AddProductEvent.OnAddProductClick)
                     }
@@ -256,7 +260,8 @@ fun AddProductScreen(
                     Text(
                         editProductName?.let {
                             "Save changes"
-                        } ?: "Add product"
+                        } ?: "Add product",
+                        color = MaterialTheme.colorScheme.onPrimary
                     )
                 }
             }

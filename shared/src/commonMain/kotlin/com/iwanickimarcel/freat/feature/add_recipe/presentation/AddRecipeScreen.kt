@@ -5,9 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -15,22 +13,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.outlined.AddAPhoto
 import androidx.compose.material.icons.outlined.ArrowBackIos
-import androidx.compose.material.icons.outlined.Book
 import androidx.compose.material3.ElevatedFilterChip
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -40,13 +32,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
-import com.iwanickimarcel.freat.core.presentation.ImagePicker
 import com.iwanickimarcel.freat.di.AppModule
-import com.iwanickimarcel.freat.feature.products.presentation.AddProductPlaceholder
 import dev.icerock.moko.mvvm.compose.getViewModel
 import dev.icerock.moko.mvvm.compose.viewModelFactory
 
@@ -97,6 +85,14 @@ fun AddRecipeScreen(
                 index = 1,
                 title = "Ingredients",
                 content = {
+                    IngredientsScreen(
+                        addRecipeState = state,
+                        onAddIngredientPressed = {
+                        },
+                        onIngredientAdded = {
+
+                        }
+                    )
                 }
             ),
             PagerScreenItem(
@@ -213,67 +209,4 @@ fun AddRecipeScreen(
             }
         }
     )
-}
-
-@Composable
-fun BasicInfoScreen(
-    imagePicker: ImagePicker,
-    addRecipeState: AddRecipeState,
-    onNameChanged: (String) -> Unit
-) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(PaddingValues(16.dp))
-            .verticalScroll(rememberScrollState()),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceBetween
-    ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            AddProductPlaceholder(
-                text = if (addRecipeState.photoBytes == null) {
-                    "Add a photo"
-                } else {
-                    "Edit photo"
-                },
-                icon = Icons.Outlined.AddAPhoto,
-                photoBytes = addRecipeState.photoBytes,
-                modifier = Modifier.fillMaxWidth()
-                    .padding(8.dp)
-            ) {
-                imagePicker.pickImage()
-            }
-            Spacer(modifier = Modifier.height(16.dp))
-            OutlinedTextField(
-                value = addRecipeState.name ?: "",
-                placeholder = {
-                    Text(text = "Insert name of the item...")
-                },
-                label = {
-                    Text(text = addRecipeState.nameError ?: "Name")
-                },
-                onValueChange = {
-                    onNameChanged(it)
-                },
-                shape = RoundedCornerShape(20.dp),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(68.dp),
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Outlined.Book,
-                        contentDescription = "Name"
-                    )
-                },
-                maxLines = 1,
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Text,
-                    imeAction = ImeAction.Next
-                ),
-                isError = addRecipeState.nameError != null
-            )
-        }
-    }
 }
