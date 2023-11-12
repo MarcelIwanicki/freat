@@ -28,6 +28,18 @@ class AddRecipeViewModel : ViewModel() {
                     photoBytes = event.photoBytes
                 )
             }
+
+            is AddRecipeEvent.OnAddIngredientPress -> {
+                _state.value = _state.value.copy(
+                    addIngredientOpen = true
+                )
+            }
+
+            is AddRecipeEvent.OnAddIngredientDismiss -> {
+                _state.value = _state.value.copy(
+                    addIngredientOpen = false
+                )
+            }
         }
     }
 }

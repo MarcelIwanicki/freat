@@ -17,15 +17,18 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.outlined.ArrowBackIos
+import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ElevatedFilterChip
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -60,6 +63,10 @@ fun AddRecipeScreen(
     )
     val state by viewModel.state.collectAsState()
 
+    val bottomSheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true
+    )
+
     val imagePicker = appModule.imagePicker
 
     imagePicker.registerPicker {
@@ -88,10 +95,8 @@ fun AddRecipeScreen(
                     IngredientsScreen(
                         addRecipeState = state,
                         onAddIngredientPressed = {
+                            viewModel.onEvent(AddRecipeEvent.OnAddIngredientPress)
                         },
-                        onIngredientAdded = {
-
-                        }
                     )
                 }
             ),
@@ -113,6 +118,25 @@ fun AddRecipeScreen(
     val pagerState = rememberPagerState(
         pageCount = { pagerScreens.size }
     )
+
+    if (state.addIngredientOpen) {
+        ModalBottomSheet(
+            onDismissRequest = {
+                viewModel.onEvent(AddRecipeEvent.OnAddIngredientDismiss)
+            },
+            sheetState = bottomSheetState,
+            windowInsets = BottomSheetDefaults.windowInsets
+        ) {
+            AddIngredientScreen(
+                onIngredientAdded = {
+
+                },
+                onDismiss = {
+                    viewModel.onEvent(AddRecipeEvent.OnAddIngredientDismiss)
+                }
+            )
+        }
+    }
 
     Scaffold(
         topBar = {

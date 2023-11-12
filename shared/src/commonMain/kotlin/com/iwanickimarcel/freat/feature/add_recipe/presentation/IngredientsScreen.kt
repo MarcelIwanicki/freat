@@ -24,7 +24,6 @@ import com.iwanickimarcel.freat.feature.products.domain.Product
 fun IngredientsScreen(
     addRecipeState: AddRecipeState,
     onAddIngredientPressed: () -> Unit,
-    onIngredientAdded: (Product) -> Unit
 ) {
     LazyColumn(
         modifier = Modifier

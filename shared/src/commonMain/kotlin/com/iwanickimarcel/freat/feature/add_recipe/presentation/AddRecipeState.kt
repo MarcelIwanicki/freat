@@ -9,5 +9,6 @@ data class AddRecipeState(
     val photoBytes: ByteArray? = null,
     val ingredients: List<Product> = emptyList(),
     val steps: List<Recipe.Step> = emptyList(),
-    val tags: List<Recipe.Tag> = emptyList()
+    val tags: List<Recipe.Tag> = emptyList(),
+    val addIngredientOpen: Boolean = false,
 )

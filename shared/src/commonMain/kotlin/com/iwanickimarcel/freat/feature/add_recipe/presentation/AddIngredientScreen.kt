@@ -3,7 +3,7 @@ package com.iwanickimarcel.freat.feature.add_recipe.presentation
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.ArrowBackIos
+import androidx.compose.material.icons.outlined.Close
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -17,7 +17,8 @@ import com.iwanickimarcel.freat.feature.products.domain.Product
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddIngredientScreen(
-    onIngredientAdded: (Product) -> Unit
+    onIngredientAdded: (Product) -> Unit,
+    onDismiss: () -> Unit
 ) {
 
     Scaffold(
@@ -30,10 +31,12 @@ fun AddIngredientScreen(
                 },
                 navigationIcon = {
                     IconButton(
-                        onClick = { }
+                        onClick = {
+                            onDismiss()
+                        }
                     ) {
                         Icon(
-                            imageVector = Icons.Outlined.ArrowBackIos,
+                            imageVector = Icons.Outlined.Close,
                             contentDescription = "Go back"
                         )
                     }
