@@ -39,6 +39,7 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.iwanickimarcel.freat.di.AppModule
 import com.iwanickimarcel.freat.feature.add_ingredient.presentation.AddIngredientScreen
+import com.iwanickimarcel.freat.feature.add_step.presentation.AddStepScreen
 import dev.icerock.moko.mvvm.compose.getViewModel
 import dev.icerock.moko.mvvm.compose.viewModelFactory
 
@@ -105,6 +106,12 @@ fun AddRecipeScreen(
                 index = 2,
                 title = "Steps",
                 content = {
+                    StepsScreen(
+                        addRecipeState = state,
+                        onAddStepPressed = {
+                            viewModel.onEvent(AddRecipeEvent.OnAddStepPress)
+                        }
+                    )
                 }
             ),
             PagerScreenItem(
@@ -130,10 +137,30 @@ fun AddRecipeScreen(
         ) {
             AddIngredientScreen(
                 onIngredientAdded = {
-                    viewModel.onEvent(AddRecipeEvent.OnAddIngredientAdded(it))
+                    viewModel.onEvent(AddRecipeEvent.OnIngredientAdded(it))
                 },
                 onDismiss = {
                     viewModel.onEvent(AddRecipeEvent.OnAddIngredientDismiss)
+                }
+            )
+        }
+    }
+
+    if (state.addStepOpen) {
+        ModalBottomSheet(
+            onDismissRequest = {
+                viewModel.onEvent(AddRecipeEvent.OnAddStepDismiss)
+            },
+            sheetState = bottomSheetState,
+            windowInsets = BottomSheetDefaults.windowInsets
+        ) {
+            AddStepScreen(
+                stepsCount = state.steps.size,
+                onStepAdded = {
+                    viewModel.onEvent(AddRecipeEvent.OnStepAdded(it))
+                },
+                onDismiss = {
+                    viewModel.onEvent(AddRecipeEvent.OnAddStepDismiss)
                 }
             )
         }

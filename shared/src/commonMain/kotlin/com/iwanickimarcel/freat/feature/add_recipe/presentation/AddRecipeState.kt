@@ -11,4 +11,5 @@ data class AddRecipeState(
     val steps: List<Recipe.Step> = emptyList(),
     val tags: List<Recipe.Tag> = emptyList(),
     val addIngredientOpen: Boolean = false,
+    val addStepOpen: Boolean = false,
 )

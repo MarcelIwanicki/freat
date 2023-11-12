@@ -41,10 +41,30 @@ class AddRecipeViewModel : ViewModel() {
                 )
             }
 
-            is AddRecipeEvent.OnAddIngredientAdded -> {
+            is AddRecipeEvent.OnIngredientAdded -> {
                 _state.value = _state.value.copy(
                     ingredients = _state.value.ingredients.toMutableList().apply {
                         add(event.ingredient)
+                    }
+                )
+            }
+
+            is AddRecipeEvent.OnAddStepPress -> {
+                _state.value = _state.value.copy(
+                    addStepOpen = true
+                )
+            }
+
+            is AddRecipeEvent.OnAddStepDismiss -> {
+                _state.value = _state.value.copy(
+                    addStepOpen = false
+                )
+            }
+
+            is AddRecipeEvent.OnStepAdded -> {
+                _state.value = _state.value.copy(
+                    steps = _state.value.steps.toMutableList().apply {
+                        add(event.step)
                     }
                 )
             }
