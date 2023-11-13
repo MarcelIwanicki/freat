@@ -118,6 +118,7 @@ fun AddRecipeScreen(
                 index = 3,
                 title = "Tags",
                 content = {
+                    TagsScreen()
                 }
             ),
         )

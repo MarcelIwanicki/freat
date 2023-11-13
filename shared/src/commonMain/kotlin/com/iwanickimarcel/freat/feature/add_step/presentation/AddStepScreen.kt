@@ -103,6 +103,7 @@ fun AddStepScreen(
                     Spacer(modifier = Modifier.height(16.dp))
                     OutlinedTextField(
                         value = state.step ?: "",
+                        singleLine = false,
                         placeholder = {
                             Text(text = "Insert step...")
                         },
