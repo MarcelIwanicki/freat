@@ -1,32 +1,55 @@
 package com.iwanickimarcel.freat.feature.add_recipe.presentation
 
-import android.content.Context
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.AssistChip
-import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.InputChip
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.onSizeChanged
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusManager
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onKeyEvent
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
@@ -39,89 +62,242 @@ fun TagsScreen() {
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        var text by remember { mutableStateOf("") }
+        var textFieldValue by remember { mutableStateOf(TextFieldValue("")) }
         var chipItems by remember { mutableStateOf(emptyList<String>()) }
-        var textFieldHeight by remember { mutableIntStateOf(0) }
+        val focusRequester = remember { FocusRequester() }
+        val interaction = remember { MutableInteractionSource() }
+        val rowInteraction = remember { MutableInteractionSource() }
 
         Box(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp)
+                .border(
+                    width = 2.dp,
+                    shape = RoundedCornerShape(16.dp),
+                    color = MaterialTheme.colorScheme.primary
+                )
         ) {
-            ChipList(chipItems) { height ->
-                textFieldHeight = height
-            }
-            OutlinedTextField(
-                value = TextFieldValue(
-                    text = text,
-                    selection = TextRange(text.length)
-                ),
-                onValueChange = {
-                    text = it.text
-                },
-                label = { Text("Type tag name and press Enter") },
-                keyboardOptions = KeyboardOptions.Default.copy(
-                    imeAction = ImeAction.Done,
-                    keyboardType = KeyboardType.Text
-                ),
-
-                keyboardActions = KeyboardActions(
-                    onDone = {
-                        if (text.isNotBlank()) {
-                            chipItems = chipItems + text
-                            text = ""
-                        }
+            TagTextField(
+                textFieldValue = textFieldValue,
+                onValueChanged = {
+                    if (it.text.isEmpty()) {
+                        return@TagTextField
                     }
-                ),
+
+                    val values = it.text.split(" ", "\n")
+
+                    textFieldValue = if (values.size >= 2) {
+                        chipItems = chipItems.toMutableList().apply {
+                            add(values[0])
+                        }
+                        textFieldValue.copy(text = "")
+                    } else {
+                        it
+                    }
+                },
+                focusRequester = focusRequester,
+                textFieldInteraction = interaction,
+                label = null,
+                placeholder = "Insert tags here...",
+                rowInteraction = rowInteraction,
+                listOfChips = chipItems,
+                modifier = Modifier
+                    .onKeyEvent {
+                        if (it.key.keyCode == Key.Backspace.keyCode && textFieldValue.text.isEmpty()) {
+                            chipItems = chipItems.toMutableList().apply {
+                                if (isNotEmpty()) {
+                                    removeLast()
+                                }
+                            }
+                        }
+                        false
+                    },
+                onChipClick = { chipIndex ->
+                    chipItems = chipItems.toMutableList().apply {
+                        removeAt(chipIndex)
+                    }
+                }
+            )
+        }
+    }
+}
+
+@OptIn(ExperimentalComposeUiApi::class)
+@Composable
+fun TagTextField(
+    modifier: Modifier = Modifier,
+    textFieldValue: TextFieldValue,
+    onValueChanged: (TextFieldValue) -> Unit,
+    focusRequester: FocusRequester,
+    textFieldInteraction: MutableInteractionSource,
+    label: String?,
+    placeholder: String,
+    readOnly: Boolean = false,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default.copy(
+        keyboardType = KeyboardType.Text,
+        imeAction = ImeAction.Default
+    ),
+    rowInteraction: MutableInteractionSource,
+    listOfChips: List<String> = emptyList(),
+    onChipClick: (Int) -> Unit
+) {
+    val focusManager = LocalFocusManager.current
+    val keyboardManager = LocalSoftwareKeyboardController.current
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+            .padding(
+                vertical = 10.dp,
+                horizontal = 20.dp
+            )
+            .clickable(
+                indication = null,
+                interactionSource = rowInteraction,
+                onClick = {
+                    focusRequester.requestFocus()
+                    keyboardManager?.show()
+                }
+            )
+    ) {
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+        ) {
+
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 16.dp)
-                    .height(
-                        textFieldHeight.takeIf { it > 0 }?.let {
-                            it + 16
-                        }?.dp ?: 64.dp
+                    .wrapContentHeight(),
+                verticalArrangement = Arrangement.Center
+            ) {
+
+                if (label != null) {
+                    Text(
+                        text = "$label:",
+                        style = MaterialTheme.typography.bodySmall.copy(
+                            fontWeight = FontWeight.Bold
+                        )
                     )
-            )
+                }
+
+                TextFieldContent(
+                    textFieldValue = textFieldValue,
+                    placeholder = placeholder,
+                    onValueChanged = onValueChanged,
+                    focusRequester = focusRequester,
+                    textFieldInteraction = textFieldInteraction,
+                    readOnly = readOnly,
+                    keyboardOptions = keyboardOptions,
+                    focusManager = focusManager,
+                    listOfChips = listOfChips,
+                    modifier = modifier,
+                    onChipClick = onChipClick
+                )
+            }
         }
     }
 }
 
-
-@OptIn(ExperimentalLayoutApi::class)
+@OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun ChipList(chipItems: List<String>, onHeightMeasured: (Int) -> Unit) {
-    val context = LocalContext.current
+fun TextFieldContent(
+    textFieldValue: TextFieldValue,
+    placeholder: String,
+    onValueChanged: (TextFieldValue) -> Unit,
+    focusRequester: FocusRequester,
+    textFieldInteraction: MutableInteractionSource,
+    readOnly: Boolean,
+    keyboardOptions: KeyboardOptions,
+    focusManager: FocusManager,
+    listOfChips: List<String>,
+    modifier: Modifier,
+    onChipClick: (Int) -> Unit
+) {
+    Box {
 
-    FlowRow(
-        Modifier
-            .fillMaxWidth()
-            .padding(
-                top = 12.dp,
-                bottom = 8.dp,
-                start = 8.dp,
-                end = 8.dp
+        if (textFieldValue.text.isEmpty() && listOfChips.isEmpty()) {
+            Text(
+                text = placeholder,
+                modifier = Modifier.align(alignment = Alignment.CenterStart)
             )
-            .wrapContentHeight(align = Alignment.Top)
-            .onSizeChanged {
-                onHeightMeasured(it.height.toDp(context))
-            },
-        horizontalArrangement = Arrangement.Start,
-    ) {
-        chipItems.forEach {
-            AssistChip(
-                modifier = Modifier
-                    .padding(horizontal = 4.dp)
-                    .align(alignment = Alignment.CenterVertically),
-                onClick = {
+        }
 
+        FlowRow(
+            modifier = Modifier
+                .wrapContentHeight()
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+
+            repeat(times = listOfChips.size) { index ->
+                InputChip(
+                    onClick = { onChipClick(index) },
+                    modifier = Modifier.wrapContentWidth(),
+                    label = {
+                        Text(text = listOfChips[index])
+                    },
+                    selected = false,
+                    trailingIcon = {
+                        Box(
+                            modifier = Modifier
+                                .clip(CircleShape)
+                                .padding(3.dp)
+                        ) {
+                            Icon(
+                                painter = rememberVectorPainter(image = Icons.Filled.Close),
+                                contentDescription = null,
+                                modifier = Modifier.size(12.dp),
+                            )
+                        }
+                    }
+                )
+            }
+
+            BasicTextField(
+                value = textFieldValue,
+                onValueChange = onValueChanged,
+                modifier = modifier
+                    .focusRequester(focusRequester)
+                    .width(IntrinsicSize.Min),
+                singleLine = false,
+                textStyle = MaterialTheme.typography.bodySmall.copy(
+                    color = MaterialTheme.colorScheme.onBackground
+                ),
+                cursorBrush = SolidColor(MaterialTheme.colorScheme.onBackground),
+                decorationBox = { innerTextField ->
+                    Row(
+                        modifier = Modifier
+                            .wrapContentWidth()
+                            .defaultMinSize(minHeight = 48.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Start
+                    ) {
+                        Box(
+                            modifier = Modifier.wrapContentWidth(),
+                            contentAlignment = Alignment.CenterStart
+                        ) {
+                            Row(
+                                modifier = Modifier
+                                    .defaultMinSize(minWidth = 4.dp)
+                                    .wrapContentWidth(),
+                            ) {
+                                innerTextField()
+                            }
+                        }
+                    }
                 },
-                label = { Text(it) }
+                interactionSource = textFieldInteraction,
+                readOnly = readOnly,
+                keyboardOptions = keyboardOptions,
+                keyboardActions = KeyboardActions(
+                    onDone = {
+                        focusManager.clearFocus()
+                    }
+                )
             )
         }
     }
 }
-
-fun Int.toDp(context: Context): Int {
-    return (this / context.resources.displayMetrics.density).toInt()
-}
-
