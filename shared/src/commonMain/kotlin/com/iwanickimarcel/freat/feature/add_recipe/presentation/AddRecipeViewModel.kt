@@ -1,12 +1,17 @@
 package com.iwanickimarcel.freat.feature.add_recipe.presentation
 
+import com.iwanickimarcel.freat.core.extensions.generateUniqueId
 import com.iwanickimarcel.freat.feature.recipes.domain.Recipe
+import com.iwanickimarcel.freat.feature.recipes.domain.RecipeDataSource
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
-class AddRecipeViewModel : ViewModel() {
+class AddRecipeViewModel(
+    private val recipeDataSource: RecipeDataSource
+) : ViewModel() {
 
     private val _state = MutableStateFlow(AddRecipeState())
     val state = _state.stateIn(
@@ -90,6 +95,25 @@ class AddRecipeViewModel : ViewModel() {
                 _state.value = _state.value.copy(
                     tagsTextFieldValue = event.textFieldValue
                 )
+            }
+
+            is AddRecipeEvent.OnAddRecipeConfirm -> {
+                viewModelScope.launch {
+                    val recipe = Recipe(
+                        id = generateUniqueId(),
+                        name = _state.value.name ?: return@launch,
+                        photoBytes = _state.value.photoBytes ?: return@launch,
+                        products = _state.value.ingredients,
+                        tags = _state.value.tags,
+                        steps = _state.value.steps
+                    )
+
+                    recipeDataSource.insertRecipe(recipe)
+
+                    _state.value = _state.value.copy(
+                        success = true
+                    )
+                }
             }
         }
     }

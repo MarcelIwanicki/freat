@@ -30,6 +30,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -119,6 +120,9 @@ fun AddRecipeScreen(
                         onTextFieldValueChanged = {
                             viewModel.onEvent(AddRecipeEvent.OnTagTextFieldValueChanged(it))
                         },
+                        onAddRecipeConfirmed = {
+                            viewModel.onEvent(AddRecipeEvent.OnAddRecipeConfirm)
+                        }
                     )
                 }
             ),
@@ -145,6 +149,12 @@ fun AddRecipeScreen(
                     viewModel.onEvent(AddRecipeEvent.OnAddIngredientDismiss)
                 }
             )
+        }
+    }
+
+    if (state.success) {
+        LaunchedEffect(Unit) {
+            navigator.pop()
         }
     }
 

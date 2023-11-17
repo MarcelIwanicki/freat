@@ -69,7 +69,9 @@ class ViewModelModule(
         get() = getViewModel(
             key = "add-recipe-screen",
             factory = viewModelFactory {
-                AddRecipeViewModel()
+                AddRecipeViewModel(
+                    recipeDataSource = recipeDataSource
+                )
             }
         )
 

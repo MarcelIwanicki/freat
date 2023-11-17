@@ -1,5 +1,6 @@
 package com.iwanickimarcel.freat.feature.add_recipe.presentation
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -25,6 +27,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.InputChip
@@ -70,11 +73,13 @@ fun TagsScreen(
     onTagAdded: OnTagAdded,
     onTagRemoved: OnTagRemoved,
     onTextFieldValueChanged: OnTextFieldValueChanged,
+    onAddRecipeConfirmed: () -> Unit
 ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
+            .padding(16.dp),
+        verticalArrangement = Arrangement.SpaceBetween
     ) {
         val focusRequester = remember { FocusRequester() }
         val interaction = remember { MutableInteractionSource() }
@@ -128,6 +133,22 @@ fun TagsScreen(
                         index = chipIndex
                     )
                 }
+            )
+        }
+
+        Button(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(48.dp)
+                .clip(RoundedCornerShape(8.dp))
+                .background(MaterialTheme.colorScheme.primary),
+            onClick = {
+                onAddRecipeConfirmed()
+            }
+        ) {
+            Text(
+                "Add recipe",
+                color = MaterialTheme.colorScheme.onPrimary
             )
         }
     }

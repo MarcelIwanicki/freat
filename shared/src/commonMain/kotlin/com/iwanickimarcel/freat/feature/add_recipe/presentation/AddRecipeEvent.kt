@@ -16,4 +16,5 @@ sealed interface AddRecipeEvent {
     data class OnTagAdded(val tagName: String) : AddRecipeEvent
     data class OnTagRemoved(val index: Int) : AddRecipeEvent
     data class OnTagTextFieldValueChanged(val textFieldValue: TextFieldValue) : AddRecipeEvent
+    object OnAddRecipeConfirm : AddRecipeEvent
 }

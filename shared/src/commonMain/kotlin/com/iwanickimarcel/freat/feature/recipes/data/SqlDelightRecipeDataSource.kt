@@ -140,7 +140,11 @@ class SqlDelightRecipeDataSource(
         }
 
         recipe.steps.forEach {
-
+            recipeQueries.insertRecipeStep(
+                recipeId = recipe.id,
+                step = it.step.toLong(),
+                description = it.description
+            )
         }
 
         recipeQueries.insertRecipe(
