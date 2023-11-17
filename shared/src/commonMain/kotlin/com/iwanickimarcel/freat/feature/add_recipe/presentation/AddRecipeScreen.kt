@@ -108,7 +108,18 @@ fun AddRecipeScreen(
                 index = 3,
                 title = "Tags",
                 content = {
-                    TagsScreen()
+                    TagsScreen(
+                        addRecipeState = state,
+                        onTagAdded = {
+                            viewModel.onEvent(AddRecipeEvent.OnTagAdded(it))
+                        },
+                        onTagRemoved = {
+                            viewModel.onEvent(AddRecipeEvent.OnTagRemoved(it))
+                        },
+                        onTextFieldValueChanged = {
+                            viewModel.onEvent(AddRecipeEvent.OnTagTextFieldValueChanged(it))
+                        },
+                    )
                 }
             ),
         )

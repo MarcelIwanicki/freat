@@ -31,10 +31,7 @@ import androidx.compose.material3.InputChip
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -55,15 +52,30 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 
+fun interface OnTagAdded {
+    operator fun invoke(name: String)
+}
+
+fun interface OnTagRemoved {
+    operator fun invoke(index: Int)
+}
+
+fun interface OnTextFieldValueChanged {
+    operator fun invoke(value: TextFieldValue)
+}
+
 @Composable
-fun TagsScreen() {
+fun TagsScreen(
+    addRecipeState: AddRecipeState,
+    onTagAdded: OnTagAdded,
+    onTagRemoved: OnTagRemoved,
+    onTextFieldValueChanged: OnTextFieldValueChanged,
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        var textFieldValue by remember { mutableStateOf(TextFieldValue("")) }
-        var chipItems by remember { mutableStateOf(emptyList<String>()) }
         val focusRequester = remember { FocusRequester() }
         val interaction = remember { MutableInteractionSource() }
         val rowInteraction = remember { MutableInteractionSource() }
@@ -77,7 +89,7 @@ fun TagsScreen() {
                 )
         ) {
             TagTextField(
-                textFieldValue = textFieldValue,
+                textFieldValue = addRecipeState.tagsTextFieldValue,
                 onValueChanged = {
                     if (it.text.isEmpty()) {
                         return@TagTextField
@@ -85,36 +97,36 @@ fun TagsScreen() {
 
                     val values = it.text.split(" ", "\n")
 
-                    textFieldValue = if (values.size >= 2) {
-                        chipItems = chipItems.toMutableList().apply {
-                            add(values[0])
+                    onTextFieldValueChanged(
+                        value = if (values.size >= 2) {
+                            onTagAdded(values[0])
+                            addRecipeState.tagsTextFieldValue.copy(text = "")
+                        } else {
+                            it
                         }
-                        textFieldValue.copy(text = "")
-                    } else {
-                        it
-                    }
+                    )
                 },
                 focusRequester = focusRequester,
                 textFieldInteraction = interaction,
                 label = null,
                 placeholder = "Insert tags here...",
                 rowInteraction = rowInteraction,
-                listOfChips = chipItems,
+                listOfChips = addRecipeState.tags.map { it.name },
                 modifier = Modifier
                     .onKeyEvent {
-                        if (it.key.keyCode == Key.Backspace.keyCode && textFieldValue.text.isEmpty()) {
-                            chipItems = chipItems.toMutableList().apply {
-                                if (isNotEmpty()) {
-                                    removeLast()
-                                }
+                        if (it.key.keyCode == Key.Backspace.keyCode && addRecipeState.tagsTextFieldValue.text.isEmpty()) {
+                            if (addRecipeState.tags.isNotEmpty()) {
+                                onTagRemoved(
+                                    index = addRecipeState.tags.lastIndex
+                                )
                             }
                         }
                         false
                     },
                 onChipClick = { chipIndex ->
-                    chipItems = chipItems.toMutableList().apply {
-                        removeAt(chipIndex)
-                    }
+                    onTagRemoved(
+                        index = chipIndex
+                    )
                 }
             )
         }

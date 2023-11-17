@@ -1,5 +1,6 @@
 package com.iwanickimarcel.freat.feature.add_recipe.presentation
 
+import androidx.compose.ui.text.input.TextFieldValue
 import com.iwanickimarcel.freat.feature.products.domain.Product
 import com.iwanickimarcel.freat.feature.recipes.domain.Recipe
 
@@ -12,4 +13,7 @@ sealed interface AddRecipeEvent {
     object OnAddStepPress : AddRecipeEvent
     object OnAddStepDismiss : AddRecipeEvent
     data class OnStepAdded(val step: Recipe.Step) : AddRecipeEvent
+    data class OnTagAdded(val tagName: String) : AddRecipeEvent
+    data class OnTagRemoved(val index: Int) : AddRecipeEvent
+    data class OnTagTextFieldValueChanged(val textFieldValue: TextFieldValue) : AddRecipeEvent
 }

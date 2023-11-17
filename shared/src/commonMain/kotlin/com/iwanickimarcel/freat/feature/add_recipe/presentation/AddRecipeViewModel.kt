@@ -1,5 +1,6 @@
 package com.iwanickimarcel.freat.feature.add_recipe.presentation
 
+import com.iwanickimarcel.freat.feature.recipes.domain.Recipe
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -66,6 +67,28 @@ class AddRecipeViewModel : ViewModel() {
                     steps = _state.value.steps.toMutableList().apply {
                         add(event.step)
                     }
+                )
+            }
+
+            is AddRecipeEvent.OnTagAdded -> {
+                _state.value = _state.value.copy(
+                    tags = _state.value.tags.toMutableList().apply {
+                        add(Recipe.Tag(event.tagName))
+                    }
+                )
+            }
+
+            is AddRecipeEvent.OnTagRemoved -> {
+                _state.value = _state.value.copy(
+                    tags = _state.value.tags.toMutableList().apply {
+                        removeAt(event.index)
+                    }
+                )
+            }
+
+            is AddRecipeEvent.OnTagTextFieldValueChanged -> {
+                _state.value = _state.value.copy(
+                    tagsTextFieldValue = event.textFieldValue
                 )
             }
         }
