@@ -41,27 +41,22 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
-import com.iwanickimarcel.freat.di.AppModule
+import com.iwanickimarcel.freat.core.presentation.ImagePicker
 import com.iwanickimarcel.freat.feature.add_product.presentation.AddProductScreen
+import com.iwanickimarcel.freat.feature.add_product.presentation.AddProductViewModel
 import com.iwanickimarcel.freat.navigation.BottomNavigationBar
 import com.iwanickimarcel.freat.navigation.Products
 import com.iwanickimarcel.freat.navigation.ProductsSearch
-import dev.icerock.moko.mvvm.compose.getViewModel
-import dev.icerock.moko.mvvm.compose.viewModelFactory
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun ProductsScreen(
-    appModule: AppModule,
+    viewModel: ProductsViewModel,
+    addProductViewModel: AddProductViewModel,
+    imagePicker: ImagePicker,
     searchQuery: String?,
 ) {
     val navigator = LocalNavigator.current ?: return
-    val viewModel = getViewModel(
-        key = "products-screen",
-        factory = viewModelFactory {
-            ProductsViewModel(appModule.productDataSource)
-        }
-    )
     val state by viewModel.state.collectAsState()
 
     val bottomSheetState = rememberModalBottomSheetState(
@@ -85,7 +80,8 @@ fun ProductsScreen(
             windowInsets = BottomSheetDefaults.windowInsets
         ) {
             AddProductScreen(
-                appModule = appModule,
+                viewModel = addProductViewModel,
+                imagePicker = imagePicker,
                 editProductName = null,
                 onDismiss = {
                     viewModel.onEvent(ProductsEvent.OnAddProductDismiss)
@@ -147,7 +143,8 @@ fun ProductsScreen(
             windowInsets = BottomSheetDefaults.windowInsets
         ) {
             AddProductScreen(
-                appModule = appModule,
+                viewModel = addProductViewModel,
+                imagePicker = imagePicker,
                 editProductName = it.name,
                 onDismiss = {
                     viewModel.onEvent(ProductsEvent.OnEditProductDismiss)

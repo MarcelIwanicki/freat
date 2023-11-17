@@ -15,11 +15,11 @@ import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Clock
 
 class SqlDelightRecipeDataSource(
-    recipesDatabase: RecipesDatabase,
+    database: RecipesDatabase,
     private val imageStorage: ImageStorage
 ) : RecipeDataSource {
 
-    private val recipeQueries = recipesDatabase.recipeQueries
+    private val recipeQueries = database.recipeQueries
 
     override fun getRecipes(): Flow<List<Recipe>> = flow {
         val recipes = recipeQueries

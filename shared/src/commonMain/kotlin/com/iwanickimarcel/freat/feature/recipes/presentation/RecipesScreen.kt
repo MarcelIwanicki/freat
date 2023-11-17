@@ -34,25 +34,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.LocalNavigator
-import com.iwanickimarcel.freat.di.AppModule
 import com.iwanickimarcel.freat.navigation.AddRecipe
 import com.iwanickimarcel.freat.navigation.BottomNavigationBar
 import com.iwanickimarcel.freat.navigation.Recipes
-import dev.icerock.moko.mvvm.compose.getViewModel
-import dev.icerock.moko.mvvm.compose.viewModelFactory
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RecipesScreen(
-    appModule: AppModule
+    viewModel: RecipesViewModel
 ) {
     val navigator = LocalNavigator.current ?: return
-    val viewModel = getViewModel(
-        key = "recipes-screen",
-        factory = viewModelFactory {
-            RecipesViewModel(appModule.recipeDataSource)
-        }
-    )
     val state by viewModel.state.collectAsState()
 
     Scaffold(

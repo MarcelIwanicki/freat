@@ -2,7 +2,7 @@ package com.iwanickimarcel.freat.navigation
 
 import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.core.screen.Screen
-import com.iwanickimarcel.freat.appModule
+import com.iwanickimarcel.freat.di.appModule
 import com.iwanickimarcel.freat.feature.add_recipe.presentation.AddRecipeScreen
 import com.iwanickimarcel.freat.feature.home.presentation.HomeScreen
 import com.iwanickimarcel.freat.feature.products.presentation.ProductsScreen
@@ -20,7 +20,9 @@ object Home : Screen {
 object Recipes : Screen {
     @Composable
     override fun Content() {
-        RecipesScreen(appModule)
+        RecipesScreen(
+            viewModel = appModule.viewModelModule.recipesViewModel
+        )
     }
 }
 
@@ -30,7 +32,8 @@ data class AddRecipe(
     @Composable
     override fun Content() {
         AddRecipeScreen(
-            appModule = appModule,
+            viewModel = appModule.viewModelModule.addRecipeViewModel,
+            imagePicker = appModule.imageModule.imagePicker,
             editRecipeId = recipeId
         )
     }
@@ -42,7 +45,9 @@ data class Products(
     @Composable
     override fun Content() {
         ProductsScreen(
-            appModule = appModule,
+            viewModel = appModule.viewModelModule.productsViewModel,
+            addProductViewModel = appModule.viewModelModule.addProductViewModel,
+            imagePicker = appModule.imageModule.imagePicker,
             searchQuery = searchQuery
         )
     }
@@ -51,7 +56,9 @@ data class Products(
 object ProductsSearch : Screen {
     @Composable
     override fun Content() {
-        ProductsSearchScreen(appModule)
+        ProductsSearchScreen(
+            viewModel = appModule.viewModelModule.productsSearchViewModel
+        )
     }
 }
 

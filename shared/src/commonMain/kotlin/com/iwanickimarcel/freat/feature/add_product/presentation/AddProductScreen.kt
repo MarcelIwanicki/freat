@@ -41,28 +41,18 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import com.iwanickimarcel.freat.di.AppModule
+import com.iwanickimarcel.freat.core.presentation.ImagePicker
 import com.iwanickimarcel.freat.feature.products.presentation.AddProductPlaceholder
-import dev.icerock.moko.mvvm.compose.getViewModel
-import dev.icerock.moko.mvvm.compose.viewModelFactory
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddProductScreen(
-    appModule: AppModule,
+    viewModel: AddProductViewModel,
+    imagePicker: ImagePicker,
     editProductName: String?,
     onDismiss: () -> Unit
 ) {
-    val viewModel = getViewModel(
-        key = "add-product-screen",
-        factory = viewModelFactory {
-            AddProductViewModel(appModule.productDataSource)
-        }
-    )
-
     val state by viewModel.state.collectAsState()
-
-    val imagePicker = appModule.imagePicker
 
     imagePicker.registerPicker {
         viewModel.onEvent(AddProductEvent.OnPhotoSelected(it))

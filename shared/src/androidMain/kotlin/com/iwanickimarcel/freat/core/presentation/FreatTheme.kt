@@ -2,7 +2,6 @@ package com.iwanickimarcel.freat.core.presentation
 
 import android.app.Activity
 import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
@@ -16,7 +15,6 @@ import com.iwanickimarcel.freat.ui.theme.DarkColors
 import com.iwanickimarcel.freat.ui.theme.LightColors
 import com.iwanickimarcel.freat.ui.theme.Typography
 
-@RequiresApi(Build.VERSION_CODES.Q)
 @Composable
 actual fun FreatTheme(
     darkTheme: Boolean,

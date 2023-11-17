@@ -37,11 +37,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
-import com.iwanickimarcel.freat.di.AppModule
+import com.iwanickimarcel.freat.core.presentation.ImagePicker
 import com.iwanickimarcel.freat.feature.add_ingredient.presentation.AddIngredientScreen
 import com.iwanickimarcel.freat.feature.add_step.presentation.AddStepScreen
-import dev.icerock.moko.mvvm.compose.getViewModel
-import dev.icerock.moko.mvvm.compose.viewModelFactory
 
 data class PagerScreenItem(
     val index: Int,
@@ -52,24 +50,16 @@ data class PagerScreenItem(
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun AddRecipeScreen(
-    appModule: AppModule,
-    editRecipeId: Int?
+    viewModel: AddRecipeViewModel,
+    imagePicker: ImagePicker,
+    editRecipeId: Int?,
 ) {
     val navigator = LocalNavigator.current ?: return
-
-    val viewModel = getViewModel(
-        key = "add-recipe-screen",
-        factory = viewModelFactory {
-            AddRecipeViewModel()
-        }
-    )
     val state by viewModel.state.collectAsState()
 
     val bottomSheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true
     )
-
-    val imagePicker = appModule.imagePicker
 
     imagePicker.registerPicker {
         viewModel.onEvent(AddRecipeEvent.OnPhotoSelected(it))
