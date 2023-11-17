@@ -5,6 +5,7 @@ import com.iwanickimarcel.freat.feature.products.domain.Product
 import com.iwanickimarcel.freat.feature.recipes.domain.Recipe
 
 data class AddRecipeState(
+    val editId: Long? = null,
     val name: String? = null,
     val nameError: String? = null,
     val photoBytes: ByteArray? = null,

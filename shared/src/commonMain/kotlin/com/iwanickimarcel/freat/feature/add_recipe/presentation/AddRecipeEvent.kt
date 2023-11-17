@@ -5,6 +5,7 @@ import com.iwanickimarcel.freat.feature.products.domain.Product
 import com.iwanickimarcel.freat.feature.recipes.domain.Recipe
 
 sealed interface AddRecipeEvent {
+    data class OnEditRecipeProvided(val id: Long) : AddRecipeEvent
     data class OnNameChanged(val name: String) : AddRecipeEvent
     data class OnPhotoSelected(val photoBytes: ByteArray) : AddRecipeEvent
     object OnAddIngredientPress : AddRecipeEvent

@@ -57,7 +57,7 @@ data class PagerScreenItem(
 fun AddRecipeScreen(
     viewModel: AddRecipeViewModel,
     imagePicker: ImagePicker,
-    editRecipeId: Int?,
+    editRecipeId: Long?,
 ) {
     val navigator = LocalNavigator.current ?: return
     val state by viewModel.state.collectAsState()
@@ -198,6 +198,12 @@ fun AddRecipeScreen(
                     viewModel.onEvent(AddRecipeEvent.OnAddStepDismiss)
                 }
             )
+        }
+    }
+
+    editRecipeId?.let {
+        LaunchedEffect(Unit) {
+            viewModel.onEvent(AddRecipeEvent.OnEditRecipeProvided(it))
         }
     }
 

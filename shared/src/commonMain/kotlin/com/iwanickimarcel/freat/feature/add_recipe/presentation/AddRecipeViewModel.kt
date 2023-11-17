@@ -23,6 +23,20 @@ class AddRecipeViewModel(
 
     fun onEvent(event: AddRecipeEvent) {
         when (event) {
+            is AddRecipeEvent.OnEditRecipeProvided -> {
+                viewModelScope.launch {
+                    val recipe = recipeDataSource.getRecipeById(event.id)
+                    _state.value = _state.value.copy(
+                        editId = recipe.id,
+                        name = recipe.name,
+                        photoBytes = recipe.photoBytes,
+                        ingredients = recipe.products,
+                        steps = recipe.steps,
+                        tags = recipe.tags
+                    )
+                }
+            }
+
             is AddRecipeEvent.OnNameChanged -> {
                 _state.value = _state.value.copy(
                     name = event.name,

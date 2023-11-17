@@ -27,7 +27,7 @@ object Recipes : Screen {
 }
 
 data class AddRecipe(
-    val recipeId: Int? = null
+    val recipeId: Long? = null
 ) : Screen {
     @Composable
     override fun Content() {
