@@ -34,6 +34,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -41,6 +42,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import com.iwanickimarcel.freat.core.presentation.ImagePicker
 import com.iwanickimarcel.freat.feature.add_ingredient.presentation.AddIngredientScreen
 import com.iwanickimarcel.freat.feature.add_step.presentation.AddStepScreen
+import kotlinx.coroutines.launch
 
 data class PagerScreenItem(
     val index: Int,
@@ -62,6 +64,12 @@ fun AddRecipeScreen(
         skipPartiallyExpanded = true
     )
 
+    val pagerState = rememberPagerState(
+        pageCount = { 4 }
+    )
+
+    val scope = rememberCoroutineScope()
+
     imagePicker.registerPicker {
         viewModel.onEvent(AddRecipeEvent.OnPhotoSelected(it))
     }
@@ -77,6 +85,11 @@ fun AddRecipeScreen(
                         addRecipeState = state,
                         onNameChanged = {
                             viewModel.onEvent(AddRecipeEvent.OnNameChanged(it))
+                        },
+                        onNextClick = {
+                            scope.launch {
+                                pagerState.scrollToPage(pagerState.currentPage + 1)
+                            }
                         }
                     )
                 }
@@ -90,6 +103,11 @@ fun AddRecipeScreen(
                         onAddIngredientPressed = {
                             viewModel.onEvent(AddRecipeEvent.OnAddIngredientPress)
                         },
+                        onNextClick = {
+                            scope.launch {
+                                pagerState.scrollToPage(pagerState.currentPage + 1)
+                            }
+                        }
                     )
                 }
             ),
@@ -101,6 +119,11 @@ fun AddRecipeScreen(
                         addRecipeState = state,
                         onAddStepPressed = {
                             viewModel.onEvent(AddRecipeEvent.OnAddStepPress)
+                        },
+                        onNextClick = {
+                            scope.launch {
+                                pagerState.scrollToPage(pagerState.currentPage + 1)
+                            }
                         }
                     )
                 }
@@ -128,10 +151,6 @@ fun AddRecipeScreen(
             ),
         )
     }
-
-    val pagerState = rememberPagerState(
-        pageCount = { pagerScreens.size }
-    )
 
     if (state.addIngredientOpen) {
         ModalBottomSheet(

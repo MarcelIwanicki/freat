@@ -90,7 +90,7 @@ fun TagsScreen(
                 .border(
                     width = 2.dp,
                     shape = RoundedCornerShape(16.dp),
-                    color = MaterialTheme.colorScheme.primary
+                    color = MaterialTheme.colorScheme.secondary
                 )
         ) {
             TagTextField(

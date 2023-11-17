@@ -15,7 +15,10 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AddAPhoto
 import androidx.compose.material.icons.outlined.Book
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,7 +34,8 @@ import com.iwanickimarcel.freat.feature.products.presentation.AddProductPlacehol
 fun BasicInfoScreen(
     imagePicker: ImagePicker,
     addRecipeState: AddRecipeState,
-    onNameChanged: (String) -> Unit
+    onNameChanged: (String) -> Unit,
+    onNextClick: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -85,6 +89,23 @@ fun BasicInfoScreen(
                     imeAction = ImeAction.Next
                 ),
                 isError = addRecipeState.nameError != null
+            )
+        }
+        Button(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(48.dp),
+            onClick = {
+                onNextClick()
+            },
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.secondary
+            ),
+            shape = RoundedCornerShape(8.dp)
+        ) {
+            Text(
+                "Next",
+                color = MaterialTheme.colorScheme.onSecondary
             )
         }
     }
