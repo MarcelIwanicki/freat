@@ -26,6 +26,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -59,6 +61,8 @@ fun AddRecipeScreen(
 ) {
     val navigator = LocalNavigator.current ?: return
     val state by viewModel.state.collectAsState()
+
+    val snackbarHostState = remember { SnackbarHostState() }
 
     val bottomSheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true
@@ -197,7 +201,18 @@ fun AddRecipeScreen(
         }
     }
 
+    state.finalErrorMessage?.let {
+        LaunchedEffect(Unit) {
+            scope.launch {
+                snackbarHostState.showSnackbar(it)
+            }
+        }
+    }
+
     Scaffold(
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
+        },
         topBar = {
             TopAppBar(
                 title = {

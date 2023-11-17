@@ -15,4 +15,5 @@ data class AddRecipeState(
     val addIngredientOpen: Boolean = false,
     val addStepOpen: Boolean = false,
     val success: Boolean = false,
+    val finalErrorMessage: String? = null,
 )
