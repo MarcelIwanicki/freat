@@ -240,7 +240,11 @@ fun AddRecipeScreen(
                         ) {
                             ElevatedFilterChip(
                                 selected = isCurrentPage || isChecked,
-                                onClick = { },
+                                onClick = {
+                                    scope.launch {
+                                        pagerState.scrollToPage(iteration)
+                                    }
+                                },
                                 label = {
                                     if (isChecked) {
                                         Icon(
