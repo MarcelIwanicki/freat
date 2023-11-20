@@ -219,7 +219,7 @@ fun RecipesScreen(
                                     viewModel.onEvent(RecipesEvent.OnRecipeLongPress(item))
                                 }
                             )
-                            .padding(8.dp),
+                            .padding(12.dp),
                         verticalArrangement = Arrangement.SpaceBetween
                     ) {
                         Row(
