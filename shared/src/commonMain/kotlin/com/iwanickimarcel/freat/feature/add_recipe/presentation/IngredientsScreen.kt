@@ -51,7 +51,7 @@ fun IngredientsScreen(
                         .border(
                             width = 1.dp,
                             color = MaterialTheme.colorScheme.onBackground,
-                            shape = RoundedCornerShape(8.dp)
+                            shape = RoundedCornerShape(16.dp)
                         )
                         .padding(8.dp),
                     verticalAlignment = Alignment.CenterVertically
@@ -72,11 +72,11 @@ fun IngredientsScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(48.dp)
-                        .clip(RoundedCornerShape(8.dp))
+                        .clip(RoundedCornerShape(16.dp))
                         .border(
                             width = 1.dp,
                             color = MaterialTheme.colorScheme.onSecondaryContainer,
-                            shape = RoundedCornerShape(8.dp)
+                            shape = RoundedCornerShape(16.dp)
                         )
                         .background(MaterialTheme.colorScheme.secondaryContainer),
                     onClick = {
@@ -102,7 +102,7 @@ fun IngredientsScreen(
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.secondary
             ),
-            shape = RoundedCornerShape(8.dp)
+            shape = RoundedCornerShape(16.dp)
         ) {
             Text(
                 "Next",

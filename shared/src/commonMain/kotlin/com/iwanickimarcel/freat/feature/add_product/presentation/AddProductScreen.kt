@@ -241,7 +241,7 @@ fun AddProductScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(48.dp)
-                        .clip(RoundedCornerShape(8.dp))
+                        .clip(RoundedCornerShape(16.dp))
                         .background(MaterialTheme.colorScheme.primary),
                     onClick = {
                         viewModel.onEvent(AddProductEvent.OnAddProductClick)
