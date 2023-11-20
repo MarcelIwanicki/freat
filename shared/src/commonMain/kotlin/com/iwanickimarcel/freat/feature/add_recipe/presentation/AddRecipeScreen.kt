@@ -224,7 +224,10 @@ fun AddRecipeScreen(
                 title = {
                     Text(
                         editRecipeId?.let {
-                            "Edit recipe"
+                            buildString {
+                                append("Edit ")
+                                append(state.name ?: "recipe")
+                            }
                         } ?: "Add recipe"
                     )
                 },

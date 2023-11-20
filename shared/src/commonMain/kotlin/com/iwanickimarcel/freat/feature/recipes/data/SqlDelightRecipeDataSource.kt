@@ -3,6 +3,7 @@ package com.iwanickimarcel.freat.feature.recipes.data
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import com.iwanickimarcel.freat.core.data.ImageStorage
+import com.iwanickimarcel.freat.core.extensions.combineIndexes
 import com.iwanickimarcel.freat.feature.recipes.domain.Recipe
 import com.iwanickimarcel.freat.feature.recipes.domain.RecipeDataSource
 import com.iwanickimarcel.freat.recipes_database.RecipesDatabase
@@ -122,7 +123,7 @@ class SqlDelightRecipeDataSource(
 
         recipe.products.forEach {
             recipeQueries.insertRecipeProduct(
-                id = null,
+                id = combineIndexes(recipe.id, it.name),
                 recipeId = recipe.id,
                 productName = it.name,
                 productAmount = it.amount.amount,
@@ -133,7 +134,7 @@ class SqlDelightRecipeDataSource(
         recipe.tags.forEach {
             recipeQueries.insertTag(it.name)
             recipeQueries.insertRecipeTag(
-                id = null,
+                id = combineIndexes(recipe.id, it.name),
                 recipeId = recipe.id,
                 tagName = it.name
             )
@@ -141,6 +142,7 @@ class SqlDelightRecipeDataSource(
 
         recipe.steps.forEach {
             recipeQueries.insertRecipeStep(
+                id = combineIndexes(recipe.id, it.step),
                 recipeId = recipe.id,
                 step = it.step.toLong(),
                 description = it.description

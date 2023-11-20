@@ -24,7 +24,8 @@ CREATE TABLE recipeTagsEntity (
 );
 
 CREATE TABLE recipeStepEntity (
-    recipeId INTEGER NOT NULL PRIMARY KEY,
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    recipeId INTEGER NOT NULL,
     step INTEGER NOT NULL,
     description TEXT NOT NULL
 );
@@ -109,15 +110,17 @@ WHERE recipeId = :recipeId;
 getRecipeSteps:
 SELECT *
 FROM recipeStepEntity
-WHERE recipeId = :recipeId;
+WHERE recipeId = :recipeId
+ORDER BY step ASC;
 
 insertRecipeStep:
 INSERT OR REPLACE
 INTO recipeStepEntity(
+    id,
     recipeId,
     step,
     description
-) VALUES (?, ?, ?);
+) VALUES (?, ?, ?, ?);
 
 deleteAllRecipeSteps:
 DELETE FROM recipeStepEntity

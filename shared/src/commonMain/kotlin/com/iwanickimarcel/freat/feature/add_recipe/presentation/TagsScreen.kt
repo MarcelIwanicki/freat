@@ -147,7 +147,11 @@ fun TagsScreen(
             }
         ) {
             Text(
-                "Add recipe",
+                if (addRecipeState.editId != null) {
+                    "Save changes"
+                } else {
+                    "Add recipe"
+                },
                 color = MaterialTheme.colorScheme.onPrimary
             )
         }

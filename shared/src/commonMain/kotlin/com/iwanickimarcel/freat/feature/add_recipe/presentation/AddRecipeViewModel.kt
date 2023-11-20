@@ -133,7 +133,7 @@ class AddRecipeViewModel(
                 if (validations.all { it == null }) {
                     viewModelScope.launch {
                         val recipe = Recipe(
-                            id = generateUniqueId(),
+                            id = editId ?: generateUniqueId(),
                             name = name ?: return@launch,
                             photoBytes = photoBytes,
                             products = ingredients,
@@ -141,6 +141,9 @@ class AddRecipeViewModel(
                             steps = steps
                         )
 
+                        if (editId != null) {
+                            recipeDataSource.deleteRecipe(editId)
+                        }
                         recipeDataSource.insertRecipe(recipe)
 
                         _state.value = _state.value.copy(

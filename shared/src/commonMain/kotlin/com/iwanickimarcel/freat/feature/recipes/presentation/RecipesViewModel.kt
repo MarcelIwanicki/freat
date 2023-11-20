@@ -67,8 +67,6 @@ class RecipesViewModel(
                     longPressedRecipe = null
                 )
             }
-
-            else -> {}
         }
     }
 }
