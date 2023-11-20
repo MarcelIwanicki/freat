@@ -3,6 +3,8 @@ package com.iwanickimarcel.freat.feature.recipes.presentation
 import com.iwanickimarcel.freat.feature.recipes.domain.Recipe
 
 sealed interface RecipesEvent {
+    data class OnSearchQuery(val query: String) : RecipesEvent
+    object OnSearchBarClick : RecipesEvent
     data class OnRecipeLongPress(val recipe: Recipe) : RecipesEvent
     object OnRecipeLongPressDismiss : RecipesEvent
     data class OnDeleteRecipePress(val recipe: Recipe) : RecipesEvent

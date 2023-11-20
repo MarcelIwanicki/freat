@@ -8,6 +8,7 @@ import com.iwanickimarcel.freat.feature.home.presentation.HomeScreen
 import com.iwanickimarcel.freat.feature.products.presentation.ProductsScreen
 import com.iwanickimarcel.freat.feature.products_search.presentation.ProductsSearchScreen
 import com.iwanickimarcel.freat.feature.recipes.presentation.RecipesScreen
+import com.iwanickimarcel.freat.feature.recipes_search.presentation.RecipesSearchScreen
 import com.iwanickimarcel.freat.feature.settings.presentation.SettingsScreen
 
 object Home : Screen {
@@ -17,11 +18,14 @@ object Home : Screen {
     }
 }
 
-object Recipes : Screen {
+data class Recipes(
+    val searchQuery: String? = null
+) : Screen {
     @Composable
     override fun Content() {
         RecipesScreen(
-            viewModel = appModule.viewModelModule.recipesViewModel
+            viewModel = appModule.viewModelModule.recipesViewModel,
+            searchQuery = searchQuery
         )
     }
 }
@@ -58,6 +62,15 @@ object ProductsSearch : Screen {
     override fun Content() {
         ProductsSearchScreen(
             viewModel = appModule.viewModelModule.productsSearchViewModel
+        )
+    }
+}
+
+object RecipesSearch : Screen {
+    @Composable
+    override fun Content() {
+        RecipesSearchScreen(
+            viewModel = appModule.viewModelModule.recipesSearchViewModel
         )
     }
 }

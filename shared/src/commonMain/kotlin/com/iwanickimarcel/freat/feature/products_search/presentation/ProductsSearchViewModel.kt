@@ -21,7 +21,6 @@ class ProductsSearchViewModel(
         _state,
         productsSearchHistoryDataSource.getLatestProductsSearchHistoryItems(4),
         productDataSource.getProducts()
-
     ) { state, historyItems, products ->
 
         val items = historyItems.filter {

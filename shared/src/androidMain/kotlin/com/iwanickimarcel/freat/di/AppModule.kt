@@ -27,7 +27,8 @@ actual class AppModule(
         ViewModelModule(
             productDataSource = dataSourceModule.productDataSource,
             productsSearchHistoryDataSource = dataSourceModule.productsSearchHistoryDataSource,
-            recipeDataSource = dataSourceModule.recipeDataSource
+            recipeDataSource = dataSourceModule.recipeDataSource,
+            recipesSearchHistoryDataSource = dataSourceModule.recipesSearchHistoryDataSource
         )
     }
 }

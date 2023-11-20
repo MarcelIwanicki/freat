@@ -11,13 +11,16 @@ import com.iwanickimarcel.freat.feature.products_search.domain.ProductsSearchHis
 import com.iwanickimarcel.freat.feature.products_search.presentation.ProductsSearchViewModel
 import com.iwanickimarcel.freat.feature.recipes.domain.RecipeDataSource
 import com.iwanickimarcel.freat.feature.recipes.presentation.RecipesViewModel
+import com.iwanickimarcel.freat.feature.recipes_search.domain.RecipesSearchHistoryDataSource
+import com.iwanickimarcel.freat.feature.recipes_search.presentation.RecipesSearchViewModel
 import dev.icerock.moko.mvvm.compose.getViewModel
 import dev.icerock.moko.mvvm.compose.viewModelFactory
 
 class ViewModelModule(
     private val productDataSource: ProductDataSource,
     private val productsSearchHistoryDataSource: ProductsSearchHistoryDataSource,
-    private val recipeDataSource: RecipeDataSource
+    private val recipeDataSource: RecipeDataSource,
+    private val recipesSearchHistoryDataSource: RecipesSearchHistoryDataSource
 ) {
     val productsViewModel: ProductsViewModel
         @Composable
@@ -71,6 +74,18 @@ class ViewModelModule(
             factory = viewModelFactory {
                 AddRecipeViewModel(
                     recipeDataSource = recipeDataSource
+                )
+            }
+        )
+
+    val recipesSearchViewModel: RecipesSearchViewModel
+        @Composable
+        get() = getViewModel(
+            key = "recipes-search-screen",
+            factory = viewModelFactory {
+                RecipesSearchViewModel(
+                    recipeDataSource = recipeDataSource,
+                    recipesSearchHistoryDataSource = recipesSearchHistoryDataSource
                 )
             }
         )

@@ -2,6 +2,7 @@ package com.iwanickimarcel.freat.feature.recipes.presentation
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,6 +18,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.outlined.Favorite
+import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ElevatedFilterChip
@@ -27,16 +29,21 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -44,11 +51,13 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import com.iwanickimarcel.freat.navigation.AddRecipe
 import com.iwanickimarcel.freat.navigation.BottomNavigationBar
 import com.iwanickimarcel.freat.navigation.Recipes
+import com.iwanickimarcel.freat.navigation.RecipesSearch
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun RecipesScreen(
-    viewModel: RecipesViewModel
+    viewModel: RecipesViewModel,
+    searchQuery: String?
 ) {
     val navigator = LocalNavigator.current ?: return
     val state by viewModel.state.collectAsState()
@@ -56,6 +65,20 @@ fun RecipesScreen(
     val bottomSheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true
     )
+
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
+
+    searchQuery?.let {
+        LaunchedEffect(Unit) {
+            viewModel.onEvent(RecipesEvent.OnSearchQuery(it))
+        }
+    }
+
+    if (state.searchBarPressed) {
+        LaunchedEffect(Unit) {
+            navigator.push(RecipesSearch)
+        }
+    }
 
     state.recipeToDelete?.let {
         AlertDialog(
@@ -132,6 +155,40 @@ fun RecipesScreen(
     }
 
     Scaffold(
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            TopAppBar(
+                modifier = Modifier.padding(16.dp),
+                title = {},
+                actions = {
+                    OutlinedTextField(
+                        value = state.searchQuery,
+                        readOnly = true,
+                        enabled = false,
+                        placeholder = {
+                            Text(text = "Search for recipes...")
+                        },
+                        onValueChange = { },
+                        shape = RoundedCornerShape(20.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable {
+                                viewModel.onEvent(RecipesEvent.OnSearchBarClick)
+                            },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Outlined.Search,
+                                contentDescription = "Search for recipes"
+                            )
+                        }
+                    )
+                },
+                scrollBehavior = scrollBehavior,
+                colors = TopAppBarDefaults.topAppBarColors(
+                    scrolledContainerColor = MaterialTheme.colorScheme.background
+                )
+            )
+        },
         content = {
             LazyVerticalStaggeredGrid(
                 modifier = Modifier.padding(it),
@@ -213,7 +270,7 @@ fun RecipesScreen(
             }
         },
         bottomBar = {
-            BottomNavigationBar(Recipes)
+            BottomNavigationBar(Recipes())
         },
         floatingActionButton = {
             ExtendedFloatingActionButton(

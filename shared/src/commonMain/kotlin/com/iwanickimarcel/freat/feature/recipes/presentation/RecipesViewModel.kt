@@ -18,12 +18,26 @@ class RecipesViewModel(
         recipeDataSource.getRecipes()
     ) { state, recipes ->
         state.copy(
-            recipes = recipes
+            recipes = recipes.filter {
+                it.name.lowercase().contains(state.searchQuery.lowercase())
+            }
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), RecipesState())
 
     fun onEvent(event: RecipesEvent) {
         when (event) {
+            is RecipesEvent.OnSearchQuery -> {
+                _state.value = _state.value.copy(
+                    searchQuery = event.query
+                )
+            }
+
+            is RecipesEvent.OnSearchBarClick -> {
+                _state.value = _state.value.copy(
+                    searchBarPressed = true
+                )
+            }
+
             is RecipesEvent.OnRecipeLongPress -> {
                 _state.value = _state.value.copy(
                     longPressedRecipe = event.recipe
