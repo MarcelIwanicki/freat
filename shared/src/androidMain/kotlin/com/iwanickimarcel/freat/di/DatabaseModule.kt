@@ -4,9 +4,11 @@ import android.content.Context
 import com.iwanickimarcel.freat.core.data.ProductsDatabaseDriverFactory
 import com.iwanickimarcel.freat.core.data.ProductsSearchHistoryDatabaseDriverFactory
 import com.iwanickimarcel.freat.core.data.RecipesDatabaseDriverFactory
+import com.iwanickimarcel.freat.core.data.RecipesSearchHistoryDatabaseDriverFactory
 import com.iwanickimarcel.freat.products_database.ProductsDatabase
 import com.iwanickimarcel.freat.products_search_history_database.ProductsSearchHistoryDatabase
 import com.iwanickimarcel.freat.recipes_database.RecipesDatabase
+import com.iwanickimarcel.freat.recipes_search_history_database.RecipesSearchHistoryDatabase
 
 actual class DatabaseModule(
     private val context: Context
@@ -26,6 +28,12 @@ actual class DatabaseModule(
     actual val recipesDatabase: RecipesDatabase by lazy {
         RecipesDatabase(
             driver = RecipesDatabaseDriverFactory(context).create()
+        )
+    }
+
+    actual val recipesSearchHistoryDatabase: RecipesSearchHistoryDatabase by lazy {
+        RecipesSearchHistoryDatabase(
+            driver = RecipesSearchHistoryDatabaseDriverFactory(context).create()
         )
     }
 }

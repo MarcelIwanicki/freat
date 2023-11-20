@@ -1,0 +1,17 @@
+CREATE TABLE recipesSearchHistoryEntity (
+    query TEXT NOT NULL PRIMARY KEY,
+    createdAt INTEGER NOT NULL
+);
+
+getLatestRecipesSearchHistoryEntities:
+SELECT *
+FROM recipesSearchHistoryEntity
+ORDER BY createdAt DESC
+LIMIT :limit;
+
+insertRecipesSearchHistoryEntity:
+INSERT OR REPLACE
+INTO recipesSearchHistoryEntity(
+    query,
+    createdAt
+) VALUES (?, ?);

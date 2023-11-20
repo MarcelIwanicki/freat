@@ -18,6 +18,7 @@ actual class AppModule(
             productsDatabase = databaseModule.productsDatabase,
             productsSearchHistoryDatabase = databaseModule.productsSearchHistoryDatabase,
             recipesDatabase = databaseModule.recipesDatabase,
+            recipesSearchHistoryDatabase = databaseModule.recipesSearchHistoryDatabase,
             imageStorage = imageModule.imageStorage
         )
     }

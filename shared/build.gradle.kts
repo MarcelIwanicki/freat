@@ -87,6 +87,10 @@ sqldelight {
             packageName.set("com.iwanickimarcel.freat.recipes_database")
             srcDirs.setFrom("src/commonMain/sqldelight_recipes")
         }
+        create("RecipesSearchHistoryDatabase") {
+            packageName.set("com.iwanickimarcel.freat.recipes_search_history_database")
+            srcDirs.setFrom("src/commonMain/sqldelight_recipes_search_history")
+        }
     }
 }
 
