@@ -43,6 +43,7 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.iwanickimarcel.freat.core.presentation.ImagePicker
 import com.iwanickimarcel.freat.feature.add_ingredient.presentation.AddIngredientScreen
+import com.iwanickimarcel.freat.feature.add_ingredient.presentation.AddIngredientViewModel
 import com.iwanickimarcel.freat.feature.add_step.presentation.AddStepScreen
 import kotlinx.coroutines.launch
 
@@ -56,6 +57,7 @@ data class PagerScreenItem(
 @Composable
 fun AddRecipeScreen(
     viewModel: AddRecipeViewModel,
+    addIngredientViewModel: AddIngredientViewModel,
     imagePicker: ImagePicker,
     editRecipeId: Long?,
 ) {
@@ -165,6 +167,7 @@ fun AddRecipeScreen(
             windowInsets = BottomSheetDefaults.windowInsets
         ) {
             AddIngredientScreen(
+                viewModel = addIngredientViewModel,
                 onIngredientAdded = {
                     viewModel.onEvent(AddRecipeEvent.OnIngredientAdded(it))
                 },

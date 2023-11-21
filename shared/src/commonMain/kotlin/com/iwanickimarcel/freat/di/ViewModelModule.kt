@@ -41,7 +41,8 @@ class ViewModelModule(
             key = "add-product-screen",
             factory = viewModelFactory {
                 AddProductViewModel(
-                    productDataSource = productDataSource
+                    productDataSource = productDataSource,
+                    validateProduct = useCaseModule.validateProduct
                 )
             }
         )
@@ -100,7 +101,9 @@ class ViewModelModule(
         get() = getViewModel(
             key = "add-recipe-screen",
             factory = viewModelFactory {
-                AddIngredientViewModel()
+                AddIngredientViewModel(
+                    validateProduct = useCaseModule.validateProduct
+                )
             }
         )
 

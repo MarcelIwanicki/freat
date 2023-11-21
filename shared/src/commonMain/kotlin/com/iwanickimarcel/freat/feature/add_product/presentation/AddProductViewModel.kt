@@ -1,9 +1,7 @@
 package com.iwanickimarcel.freat.feature.add_product.presentation
 
-import com.iwanickimarcel.freat.feature.add_product.domain.ProductValidator
-import com.iwanickimarcel.freat.feature.products.domain.Amount
+import com.iwanickimarcel.freat.feature.add_product.domain.ValidateProduct
 import com.iwanickimarcel.freat.feature.products.domain.AmountUnit
-import com.iwanickimarcel.freat.feature.products.domain.Product
 import com.iwanickimarcel.freat.feature.products.domain.ProductDataSource
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,7 +10,8 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class AddProductViewModel(
-    private val productDataSource: ProductDataSource
+    private val productDataSource: ProductDataSource,
+    private val validateProduct: ValidateProduct
 ) : ViewModel() {
 
     companion object {
@@ -81,40 +80,30 @@ class AddProductViewModel(
                 )
             }
 
-            is AddProductEvent.OnAddProductClick -> {
-                with(_state.value) {
-                    val nameValidation = ProductValidator.validateName(name)
-                    val amountValidation = ProductValidator.validateAmount(amount)
-
-                    if (nameValidation == null && amountValidation == null) {
-                        viewModelScope.launch {
-                            productDataSource.insertProduct(
-                                Product(
-                                    name = name ?: return@launch,
-                                    amount = Amount(amount ?: return@launch, amountUnit),
-                                    photoBytes = photoBytes,
-                                )
-                            )
+            is AddProductEvent.OnAddProductClick -> with(_state.value) {
+                viewModelScope.launch {
+                    validateProduct(
+                        name = name,
+                        amount = amount,
+                        amountUnit = amountUnit,
+                        photoBytes = photoBytes,
+                        onProductAdded = productDataSource::insertProduct,
+                        onSuccess = {
                             _state.value = _state.value.copy(
                                 success = true
                             )
+                        },
+                        onAmountError = {
+                            _state.value = _state.value.copy(
+                                amountError = it
+                            )
+                        },
+                        onNameError = {
+                            _state.value = _state.value.copy(
+                                nameError = it
+                            )
                         }
-                        
-                        return@with
-                    }
-
-                    nameValidation?.let {
-                        _state.value = _state.value.copy(
-                            nameError = it
-                        )
-                    }
-
-                    amountValidation?.let {
-                        _state.value = _state.value.copy(
-                            amountError = it
-                        )
-                    }
-
+                    )
                 }
             }
         }

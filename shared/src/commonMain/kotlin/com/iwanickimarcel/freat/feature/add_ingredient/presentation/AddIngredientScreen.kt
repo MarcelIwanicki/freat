@@ -40,22 +40,14 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.iwanickimarcel.freat.feature.products.domain.Product
-import dev.icerock.moko.mvvm.compose.getViewModel
-import dev.icerock.moko.mvvm.compose.viewModelFactory
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddIngredientScreen(
+    viewModel: AddIngredientViewModel,
     onIngredientAdded: (Product) -> Unit,
     onDismiss: () -> Unit
 ) {
-    val viewModel = getViewModel(
-        key = "add-ingredient-screen",
-        factory = viewModelFactory {
-            AddIngredientViewModel()
-        }
-    )
-
     val state by viewModel.state.collectAsState()
 
     if (state.success) {

@@ -37,6 +37,7 @@ data class AddRecipe(
     override fun Content() {
         AddRecipeScreen(
             viewModel = appModule.viewModelModule.addRecipeViewModel,
+            addIngredientViewModel = appModule.viewModelModule.addIngredientViewModel,
             imagePicker = appModule.imageModule.imagePicker,
             editRecipeId = recipeId
         )

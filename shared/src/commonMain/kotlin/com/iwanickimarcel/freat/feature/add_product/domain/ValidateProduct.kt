@@ -8,8 +8,8 @@ import kotlinx.coroutines.withContext
 
 class ValidateProduct {
     suspend operator fun invoke(
-        name: String,
-        amount: Double,
+        name: String?,
+        amount: Double?,
         amountUnit: AmountUnit,
         photoBytes: ByteArray?,
         onProductAdded: suspend (Product) -> Unit,
@@ -24,8 +24,8 @@ class ValidateProduct {
             withContext(Dispatchers.IO) {
                 onProductAdded(
                     Product(
-                        name = name,
-                        amount = Amount(amount, amountUnit),
+                        name = name ?: return@withContext,
+                        amount = Amount(amount ?: return@withContext, amountUnit),
                         photoBytes = photoBytes,
                     )
                 )
