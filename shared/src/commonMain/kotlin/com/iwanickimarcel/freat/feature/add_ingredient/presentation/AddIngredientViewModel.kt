@@ -15,7 +15,7 @@ class AddIngredientViewModel(
 ) : ViewModel() {
 
     companion object {
-        val STOP_TIMEOUT = 5000.milliseconds
+        private val STOP_TIMEOUT = 5000.milliseconds
         val AMOUNT_UNIT_OPTIONS = AmountUnit.values().map { it.abbreviation }
     }
 

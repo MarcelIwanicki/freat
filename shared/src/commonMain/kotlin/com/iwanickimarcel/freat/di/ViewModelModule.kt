@@ -79,7 +79,8 @@ class ViewModelModule(
             key = "add-recipe-screen",
             factory = viewModelFactory {
                 AddRecipeViewModel(
-                    recipeDataSource = recipeDataSource
+                    recipeDataSource = recipeDataSource,
+                    validateRecipe = useCaseModule.validateRecipe
                 )
             }
         )

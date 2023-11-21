@@ -6,8 +6,10 @@ import com.iwanickimarcel.freat.feature.products.domain.ProductDataSource
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.WhileSubscribed
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.milliseconds
 
 class AddProductViewModel(
     private val productDataSource: ProductDataSource,
@@ -15,13 +17,14 @@ class AddProductViewModel(
 ) : ViewModel() {
 
     companion object {
+        private val STOP_TIMEOUT = 5000.milliseconds
         val AMOUNT_UNIT_OPTIONS = AmountUnit.values().map { it.abbreviation }
     }
 
     private val _state = MutableStateFlow(AddProductState())
     val state = _state.stateIn(
         viewModelScope,
-        SharingStarted.WhileSubscribed(5000L),
+        SharingStarted.WhileSubscribed(STOP_TIMEOUT),
         AddProductState()
     )
 

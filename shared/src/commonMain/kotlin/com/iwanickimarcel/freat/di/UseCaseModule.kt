@@ -1,6 +1,7 @@
 package com.iwanickimarcel.freat.di
 
 import com.iwanickimarcel.freat.feature.add_product.domain.ValidateProduct
+import com.iwanickimarcel.freat.feature.add_recipe.domain.ValidateRecipe
 import com.iwanickimarcel.freat.feature.recipes.domain.FilterRecipesByQuery
 import com.iwanickimarcel.freat.feature.recipes.domain.GetRecipesWithOwnedProductsPercent
 
@@ -15,5 +16,9 @@ class UseCaseModule {
 
     val validateProduct: ValidateProduct by lazy {
         ValidateProduct()
+    }
+
+    val validateRecipe: ValidateRecipe by lazy {
+        ValidateRecipe()
     }
 }

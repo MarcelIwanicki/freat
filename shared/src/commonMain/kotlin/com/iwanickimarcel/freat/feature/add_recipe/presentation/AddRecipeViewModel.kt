@@ -1,23 +1,29 @@
 package com.iwanickimarcel.freat.feature.add_recipe.presentation
 
-import com.iwanickimarcel.freat.core.extensions.generateUniqueId
-import com.iwanickimarcel.freat.feature.add_recipe.domain.RecipeValidator
+import com.iwanickimarcel.freat.feature.add_recipe.domain.ValidateRecipe
 import com.iwanickimarcel.freat.feature.recipes.domain.Recipe
 import com.iwanickimarcel.freat.feature.recipes.domain.RecipeDataSource
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.WhileSubscribed
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.milliseconds
 
 class AddRecipeViewModel(
-    private val recipeDataSource: RecipeDataSource
+    private val recipeDataSource: RecipeDataSource,
+    private val validateRecipe: ValidateRecipe
 ) : ViewModel() {
+
+    companion object {
+        private val STOP_TIMEOUT = 5000.milliseconds
+    }
 
     private val _state = MutableStateFlow(AddRecipeState())
     val state = _state.stateIn(
         viewModelScope,
-        SharingStarted.WhileSubscribed(5000L),
+        SharingStarted.WhileSubscribed(STOP_TIMEOUT),
         AddRecipeState()
     )
 
@@ -123,41 +129,26 @@ class AddRecipeViewModel(
             }
 
             is AddRecipeEvent.OnAddRecipeConfirm -> with(_state.value) {
-                val validations = listOf(
-                    RecipeValidator.validateName(name),
-                    RecipeValidator.validateIngredients(ingredients),
-                    RecipeValidator.validateSteps(steps),
-                    RecipeValidator.validateTags(tags)
-                )
-
-                if (validations.all { it == null }) {
-                    viewModelScope.launch {
-                        val recipe = Recipe(
-                            id = editId ?: generateUniqueId(),
-                            name = name ?: return@launch,
-                            photoBytes = photoBytes,
-                            products = ingredients,
-                            tags = tags,
-                            steps = steps,
-                            ownedProductsPercent = 0
-                        )
-
-                        if (editId != null) {
-                            recipeDataSource.deleteRecipe(editId)
+                viewModelScope.launch {
+                    validateRecipe(
+                        editId = editId,
+                        name = name,
+                        ingredients = ingredients,
+                        steps = steps,
+                        tags = tags,
+                        photoBytes = photoBytes,
+                        onDeleteRecipe = recipeDataSource::deleteRecipe,
+                        onInsertRecipe = recipeDataSource::insertRecipe,
+                        onSuccess = {
+                            _state.value = _state.value.copy(
+                                success = true
+                            )
+                        },
+                        onError = {
+                            _state.value = _state.value.copy(
+                                finalErrorMessage = it
+                            )
                         }
-                        recipeDataSource.insertRecipe(recipe)
-
-                        _state.value = _state.value.copy(
-                            success = true
-                        )
-                    }
-
-                    return@with
-                }
-
-                validations.find { it != null }?.let {
-                    _state.value = _state.value.copy(
-                        finalErrorMessage = it
                     )
                 }
             }
