@@ -1,19 +1,26 @@
 package com.iwanickimarcel.freat.feature.add_step.presentation
 
-import com.iwanickimarcel.freat.feature.add_ingredient.domain.StepValidator
-import com.iwanickimarcel.freat.feature.recipes.domain.Recipe
+import com.iwanickimarcel.freat.feature.add_step.domain.ValidateStep
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.WhileSubscribed
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.milliseconds
 
-class AddStepViewModel : ViewModel() {
+class AddStepViewModel(
+    private val validateStep: ValidateStep
+) : ViewModel() {
+
+    companion object {
+        private val STOP_TIMEOUT = 5000.milliseconds
+    }
 
     private val _state = MutableStateFlow(AddStepState())
     val state = _state.stateIn(
         viewModelScope,
-        SharingStarted.WhileSubscribed(5000L),
+        SharingStarted.WhileSubscribed(STOP_TIMEOUT),
         AddStepState()
     )
 
@@ -26,28 +33,22 @@ class AddStepViewModel : ViewModel() {
                 )
             }
 
-            is AddStepEvent.OnAddStepClick -> {
-                with(_state.value) {
-                    val stepValidation = StepValidator.validateStep(step)
-
-                    if (stepValidation == null) {
-                        viewModelScope.launch {
-                            event.onStepAdded(
-                                Recipe.Step(
-                                    step = event.stepsCount + 1,
-                                    description = step ?: return@launch
-                                )
-                            )
+            is AddStepEvent.OnAddStepClick -> with(_state.value) {
+                viewModelScope.launch {
+                    validateStep(
+                        step = step,
+                        stepsCount = event.stepsCount,
+                        onStepAdded = event.onStepAdded,
+                        onSuccess = {
                             _state.value = _state.value.copy(
                                 success = true
                             )
+                        },
+                        onError = {
+                            _state.value = _state.value.copy(
+                                stepError = it
+                            )
                         }
-
-                        return@with
-                    }
-
-                    _state.value = _state.value.copy(
-                        stepError = stepValidation
                     )
                 }
             }

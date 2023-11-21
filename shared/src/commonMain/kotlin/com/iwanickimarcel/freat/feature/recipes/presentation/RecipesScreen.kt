@@ -56,9 +56,10 @@ import com.iwanickimarcel.freat.navigation.RecipesSearch
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun RecipesScreen(
-    viewModel: RecipesViewModel,
+    getViewModel: @Composable () -> RecipesViewModel,
     searchQuery: String?
 ) {
+    val viewModel = getViewModel()
     val navigator = LocalNavigator.current ?: return
     val state by viewModel.state.collectAsState()
 

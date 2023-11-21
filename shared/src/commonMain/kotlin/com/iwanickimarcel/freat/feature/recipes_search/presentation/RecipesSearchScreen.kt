@@ -44,10 +44,10 @@ import com.iwanickimarcel.freat.navigation.Recipes
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RecipesSearchScreen(
-    viewModel: RecipesSearchViewModel
+    getViewModel: @Composable () -> RecipesSearchViewModel
 ) {
+    val viewModel = getViewModel()
     val navigator = LocalNavigator.current ?: return
-
     val state by viewModel.state.collectAsState()
     val focusRequester = remember { FocusRequester() }
 

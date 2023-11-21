@@ -44,10 +44,10 @@ import com.iwanickimarcel.freat.navigation.Products
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductsSearchScreen(
-    viewModel: ProductsSearchViewModel
+    getViewModel: @Composable () -> ProductsSearchViewModel
 ) {
+    val viewModel = getViewModel()
     val navigator = LocalNavigator.current ?: return
-
     val state by viewModel.state.collectAsState()
 
     val focusRequester = remember { FocusRequester() }

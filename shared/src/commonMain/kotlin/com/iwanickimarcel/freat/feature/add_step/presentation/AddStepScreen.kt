@@ -14,11 +14,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Badge
-import androidx.compose.material.icons.outlined.Book
 import androidx.compose.material.icons.outlined.Close
-import androidx.compose.material.icons.outlined.Countertops
-import androidx.compose.material.icons.outlined.DoNotStep
-import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -38,23 +34,16 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.iwanickimarcel.freat.feature.recipes.domain.Recipe
-import dev.icerock.moko.mvvm.compose.getViewModel
-import dev.icerock.moko.mvvm.compose.viewModelFactory
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddStepScreen(
+    getViewModel: @Composable () -> AddStepViewModel,
     stepsCount: Int,
     onStepAdded: (Recipe.Step) -> Unit,
     onDismiss: () -> Unit
 ) {
-    val viewModel = getViewModel(
-        key = "add-step-screen",
-        factory = viewModelFactory {
-            AddStepViewModel()
-        }
-    )
-
+    val viewModel = getViewModel()
     val state by viewModel.state.collectAsState()
 
     if (state.success) {

@@ -1,4 +1,4 @@
-package com.iwanickimarcel.freat.feature.add_ingredient.domain
+package com.iwanickimarcel.freat.feature.add_step.domain
 
 typealias ValidationResult = String?
 

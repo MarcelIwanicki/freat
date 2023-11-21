@@ -45,6 +45,7 @@ import com.iwanickimarcel.freat.core.presentation.ImagePicker
 import com.iwanickimarcel.freat.feature.add_ingredient.presentation.AddIngredientScreen
 import com.iwanickimarcel.freat.feature.add_ingredient.presentation.AddIngredientViewModel
 import com.iwanickimarcel.freat.feature.add_step.presentation.AddStepScreen
+import com.iwanickimarcel.freat.feature.add_step.presentation.AddStepViewModel
 import kotlinx.coroutines.launch
 
 data class PagerScreenItem(
@@ -56,11 +57,13 @@ data class PagerScreenItem(
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun AddRecipeScreen(
-    viewModel: AddRecipeViewModel,
-    addIngredientViewModel: AddIngredientViewModel,
+    getViewModel: @Composable () -> AddRecipeViewModel,
+    getAddIngredientViewModel: @Composable () -> AddIngredientViewModel,
+    getAddStepViewModel: @Composable () -> AddStepViewModel,
     imagePicker: ImagePicker,
     editRecipeId: Long?,
 ) {
+    val viewModel = getViewModel()
     val navigator = LocalNavigator.current ?: return
     val state by viewModel.state.collectAsState()
 
@@ -167,7 +170,7 @@ fun AddRecipeScreen(
             windowInsets = BottomSheetDefaults.windowInsets
         ) {
             AddIngredientScreen(
-                viewModel = addIngredientViewModel,
+                getViewModel = getAddIngredientViewModel,
                 onIngredientAdded = {
                     viewModel.onEvent(AddRecipeEvent.OnIngredientAdded(it))
                 },
@@ -193,6 +196,7 @@ fun AddRecipeScreen(
             windowInsets = BottomSheetDefaults.windowInsets
         ) {
             AddStepScreen(
+                getViewModel = getAddStepViewModel,
                 stepsCount = state.steps.size,
                 onStepAdded = {
                     viewModel.onEvent(AddRecipeEvent.OnStepAdded(it))

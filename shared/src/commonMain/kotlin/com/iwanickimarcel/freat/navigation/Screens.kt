@@ -24,7 +24,7 @@ data class Recipes(
     @Composable
     override fun Content() {
         RecipesScreen(
-            viewModel = appModule.viewModelModule.recipesViewModel,
+            getViewModel = { appModule.viewModelModule.recipesViewModel },
             searchQuery = searchQuery
         )
     }
@@ -36,8 +36,9 @@ data class AddRecipe(
     @Composable
     override fun Content() {
         AddRecipeScreen(
-            viewModel = appModule.viewModelModule.addRecipeViewModel,
-            addIngredientViewModel = appModule.viewModelModule.addIngredientViewModel,
+            getViewModel = { appModule.viewModelModule.addRecipeViewModel },
+            getAddIngredientViewModel = { appModule.viewModelModule.addIngredientViewModel },
+            getAddStepViewModel = { appModule.viewModelModule.addStepViewModel },
             imagePicker = appModule.imageModule.imagePicker,
             editRecipeId = recipeId
         )
@@ -50,8 +51,8 @@ data class Products(
     @Composable
     override fun Content() {
         ProductsScreen(
-            viewModel = appModule.viewModelModule.productsViewModel,
-            addProductViewModel = appModule.viewModelModule.addProductViewModel,
+            getViewModel = { appModule.viewModelModule.productsViewModel },
+            getAddProductViewModel = { appModule.viewModelModule.addProductViewModel },
             imagePicker = appModule.imageModule.imagePicker,
             searchQuery = searchQuery
         )
@@ -62,7 +63,7 @@ object ProductsSearch : Screen {
     @Composable
     override fun Content() {
         ProductsSearchScreen(
-            viewModel = appModule.viewModelModule.productsSearchViewModel
+            getViewModel = { appModule.viewModelModule.productsSearchViewModel }
         )
     }
 }
@@ -71,7 +72,7 @@ object RecipesSearch : Screen {
     @Composable
     override fun Content() {
         RecipesSearchScreen(
-            viewModel = appModule.viewModelModule.recipesSearchViewModel
+            getViewModel = { appModule.viewModelModule.recipesSearchViewModel }
         )
     }
 }

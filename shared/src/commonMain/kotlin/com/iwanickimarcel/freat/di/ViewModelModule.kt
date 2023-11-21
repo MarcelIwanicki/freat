@@ -62,7 +62,7 @@ class ViewModelModule(
     val recipesViewModel: RecipesViewModel
         @Composable
         get() = getViewModel(
-            key = "products-search-screen",
+            key = "recipes-search-screen",
             factory = viewModelFactory {
                 RecipesViewModel(
                     recipeDataSource = recipeDataSource,
@@ -100,7 +100,7 @@ class ViewModelModule(
     val addIngredientViewModel: AddIngredientViewModel
         @Composable
         get() = getViewModel(
-            key = "add-recipe-screen",
+            key = "add-ingredient-screen",
             factory = viewModelFactory {
                 AddIngredientViewModel(
                     validateProduct = useCaseModule.validateProduct
@@ -111,9 +111,11 @@ class ViewModelModule(
     val addStepViewModel: AddStepViewModel
         @Composable
         get() = getViewModel(
-            key = "add-recipe-screen",
+            key = "add-step-screen",
             factory = viewModelFactory {
-                AddStepViewModel()
+                AddStepViewModel(
+                    validateStep = useCaseModule.validateStep
+                )
             }
         )
 

@@ -44,10 +44,11 @@ import com.iwanickimarcel.freat.feature.products.domain.Product
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddIngredientScreen(
-    viewModel: AddIngredientViewModel,
+    getViewModel: @Composable () -> AddIngredientViewModel,
     onIngredientAdded: (Product) -> Unit,
     onDismiss: () -> Unit
 ) {
+    val viewModel = getViewModel()
     val state by viewModel.state.collectAsState()
 
     if (state.success) {

@@ -51,11 +51,12 @@ import com.iwanickimarcel.freat.navigation.ProductsSearch
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun ProductsScreen(
-    viewModel: ProductsViewModel,
-    addProductViewModel: AddProductViewModel,
+    getViewModel: @Composable () -> ProductsViewModel,
+    getAddProductViewModel: @Composable () -> AddProductViewModel,
     imagePicker: ImagePicker,
     searchQuery: String?,
 ) {
+    val viewModel = getViewModel()
     val navigator = LocalNavigator.current ?: return
     val state by viewModel.state.collectAsState()
 
@@ -80,7 +81,7 @@ fun ProductsScreen(
             windowInsets = BottomSheetDefaults.windowInsets
         ) {
             AddProductScreen(
-                viewModel = addProductViewModel,
+                viewModel = getAddProductViewModel(),
                 imagePicker = imagePicker,
                 editProductName = null,
                 onDismiss = {
@@ -143,7 +144,7 @@ fun ProductsScreen(
             windowInsets = BottomSheetDefaults.windowInsets
         ) {
             AddProductScreen(
-                viewModel = addProductViewModel,
+                viewModel = getAddProductViewModel(),
                 imagePicker = imagePicker,
                 editProductName = it.name,
                 onDismiss = {
