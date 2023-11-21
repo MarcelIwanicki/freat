@@ -94,7 +94,8 @@ class ViewModelModule(
             factory = viewModelFactory {
                 RecipesSearchViewModel(
                     recipeDataSource = recipeDataSource,
-                    recipesSearchHistoryDataSource = recipesSearchHistoryDataSource
+                    recipesSearchHistoryDataSource = recipesSearchHistoryDataSource,
+                    filterRecipesSearchHistoryItems = useCaseModule.filterRecipesSearchHistoryItems
                 )
             }
         )

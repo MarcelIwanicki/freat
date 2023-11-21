@@ -20,23 +20,26 @@ class ProductsSearchViewModel(
 ) : ViewModel() {
 
     companion object {
+        private const val SEARCH_HISTORY_ITEMS_LIMIT = 4
         private val STOP_TIMEOUT = 5000.milliseconds
     }
 
     private val _state = MutableStateFlow(ProductsSearchState())
     val state = combine(
         _state,
-        productsSearchHistoryDataSource.getLatestProductsSearchHistoryItems(4),
+        productsSearchHistoryDataSource.getLatestProductsSearchHistoryItems(
+            SEARCH_HISTORY_ITEMS_LIMIT
+        ),
         productDataSource.getProducts()
     ) { state, historyItems, products ->
 
-        val items = filterProductsSearchHistoryItems(
-            items = historyItems,
-            products = products,
-            query = state.query
+        state.copy(
+            items = filterProductsSearchHistoryItems(
+                items = historyItems,
+                products = products,
+                query = state.query
+            )
         )
-
-        state.copy(items = items)
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(STOP_TIMEOUT), ProductsSearchState())
 
     fun onEvent(event: ProductsSearchEvent) {

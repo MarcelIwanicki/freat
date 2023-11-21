@@ -1,42 +1,44 @@
 package com.iwanickimarcel.freat.feature.recipes_search.presentation
 
 import com.iwanickimarcel.freat.feature.recipes.domain.RecipeDataSource
-import com.iwanickimarcel.freat.feature.recipes_search.data.toRecipesSearchHistoryItem
+import com.iwanickimarcel.freat.feature.recipes_search.domain.FilterRecipesSearchHistoryItems
 import com.iwanickimarcel.freat.feature.recipes_search.domain.RecipesSearchHistoryDataSource
 import com.iwanickimarcel.freat.feature.recipes_search.domain.RecipesSearchHistoryItem
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.WhileSubscribed
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.milliseconds
 
 class RecipesSearchViewModel(
     recipeDataSource: RecipeDataSource,
+    filterRecipesSearchHistoryItems: FilterRecipesSearchHistoryItems,
     private val recipesSearchHistoryDataSource: RecipesSearchHistoryDataSource
 ) : ViewModel() {
+
+    companion object {
+        private const val SEARCH_HISTORY_ITEMS_LIMIT = 4
+        private val STOP_TIMEOUT = 5000.milliseconds
+    }
 
     private val _state = MutableStateFlow(RecipesSearchState())
     val state = combine(
         _state,
-        recipesSearchHistoryDataSource.getLatestRecipesSearchHistoryItems(4),
+        recipesSearchHistoryDataSource.getLatestRecipesSearchHistoryItems(SEARCH_HISTORY_ITEMS_LIMIT),
         recipeDataSource.getRecipes()
     ) { state, historyItems, recipes ->
 
-        val items = historyItems.filter {
-            it.query.lowercase().contains(state.query.lowercase())
-        } + recipes.map {
-            it.toRecipesSearchHistoryItem()
-        }.filter { historyItem ->
-            historyItem.query.lowercase().contains(state.query.lowercase()) && !historyItems.any {
-                it.query == historyItem.query
-            }
-        }.take(10)
-
         state.copy(
-            items = items
+            items = filterRecipesSearchHistoryItems(
+                items = historyItems,
+                recipes = recipes,
+                query = state.query
+            )
         )
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), RecipesSearchState())
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(STOP_TIMEOUT), RecipesSearchState())
 
     fun onEvent(event: RecipesSearchEvent) {
         when (event) {
