@@ -55,7 +55,8 @@ class ViewModelModule(
             factory = viewModelFactory {
                 ProductsSearchViewModel(
                     productDataSource = productDataSource,
-                    productsSearchHistoryDataSource = productsSearchHistoryDataSource
+                    productsSearchHistoryDataSource = productsSearchHistoryDataSource,
+                    filterProductsSearchHistoryItems = useCaseModule.filterProductsSearchHistoryItems
                 )
             }
         )

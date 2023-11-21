@@ -1,20 +1,27 @@
 package com.iwanickimarcel.freat.feature.products_search.presentation
 
 import com.iwanickimarcel.freat.feature.products.domain.ProductDataSource
-import com.iwanickimarcel.freat.feature.products_search.data.toProductsSearchHistoryItem
+import com.iwanickimarcel.freat.feature.products_search.domain.FilterProductsSearchHistoryItems
 import com.iwanickimarcel.freat.feature.products_search.domain.ProductsSearchHistoryDataSource
 import com.iwanickimarcel.freat.feature.products_search.domain.ProductsSearchHistoryItem
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.WhileSubscribed
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.milliseconds
 
 class ProductsSearchViewModel(
     productDataSource: ProductDataSource,
-    private val productsSearchHistoryDataSource: ProductsSearchHistoryDataSource
+    filterProductsSearchHistoryItems: FilterProductsSearchHistoryItems,
+    private val productsSearchHistoryDataSource: ProductsSearchHistoryDataSource,
 ) : ViewModel() {
+
+    companion object {
+        private val STOP_TIMEOUT = 5000.milliseconds
+    }
 
     private val _state = MutableStateFlow(ProductsSearchState())
     val state = combine(
@@ -23,20 +30,14 @@ class ProductsSearchViewModel(
         productDataSource.getProducts()
     ) { state, historyItems, products ->
 
-        val items = historyItems.filter {
-            it.name.lowercase().contains(state.query.lowercase())
-        } + products.map {
-            it.toProductsSearchHistoryItem()
-        }.filter { historyItem ->
-            historyItem.name.lowercase().contains(state.query.lowercase()) && !historyItems.any {
-                it.name == historyItem.name
-            }
-        }.take(10)
-
-        state.copy(
-            items = items
+        val items = filterProductsSearchHistoryItems(
+            items = historyItems,
+            products = products,
+            query = state.query
         )
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), ProductsSearchState())
+
+        state.copy(items = items)
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(STOP_TIMEOUT), ProductsSearchState())
 
     fun onEvent(event: ProductsSearchEvent) {
         when (event) {

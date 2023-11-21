@@ -4,6 +4,7 @@ import com.iwanickimarcel.freat.feature.add_product.domain.ValidateProduct
 import com.iwanickimarcel.freat.feature.add_recipe.domain.ValidateRecipe
 import com.iwanickimarcel.freat.feature.add_step.domain.ValidateStep
 import com.iwanickimarcel.freat.feature.products.domain.FilterProductsByQuery
+import com.iwanickimarcel.freat.feature.products_search.domain.FilterProductsSearchHistoryItems
 import com.iwanickimarcel.freat.feature.recipes.domain.FilterRecipesByQuery
 import com.iwanickimarcel.freat.feature.recipes.domain.GetRecipesWithOwnedProductsPercent
 
@@ -14,6 +15,10 @@ class UseCaseModule {
 
     val filterRecipesByQuery: FilterRecipesByQuery by lazy {
         FilterRecipesByQuery()
+    }
+
+    val filterProductsSearchHistoryItems: FilterProductsSearchHistoryItems by lazy {
+        FilterProductsSearchHistoryItems()
     }
 
     val getRecipesWithOwnedProductsPercent: GetRecipesWithOwnedProductsPercent by lazy {
