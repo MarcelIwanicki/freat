@@ -30,7 +30,8 @@ class ViewModelModule(
             key = "products-screen",
             factory = viewModelFactory {
                 ProductsViewModel(
-                    productDataSource = productDataSource
+                    productDataSource = productDataSource,
+                    filterProductsByQuery = useCaseModule.filterProductsByQuery
                 )
             }
         )

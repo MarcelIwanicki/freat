@@ -1,16 +1,24 @@
 package com.iwanickimarcel.freat.feature.products.presentation
 
+import com.iwanickimarcel.freat.feature.products.domain.FilterProductsByQuery
 import com.iwanickimarcel.freat.feature.products.domain.ProductDataSource
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.WhileSubscribed
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.milliseconds
 
 class ProductsViewModel(
-    private val productDataSource: ProductDataSource
+    private val productDataSource: ProductDataSource,
+    filterProductsByQuery: FilterProductsByQuery
 ) : ViewModel() {
+
+    companion object {
+        private val STOP_TIMEOUT = 5000.milliseconds
+    }
 
     private val _state = MutableStateFlow(ProductsState())
     val state = combine(
@@ -18,11 +26,12 @@ class ProductsViewModel(
         productDataSource.getProducts()
     ) { state, products ->
         state.copy(
-            products = products.filter {
-                it.name.lowercase().contains(state.searchQuery.lowercase())
-            }
+            products = filterProductsByQuery(
+                products = products,
+                query = state.searchQuery
+            )
         )
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), ProductsState())
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(STOP_TIMEOUT), ProductsState())
 
     fun onEvent(event: ProductsEvent) {
         when (event) {
