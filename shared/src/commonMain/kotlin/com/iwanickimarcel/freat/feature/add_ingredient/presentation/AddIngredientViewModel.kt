@@ -7,19 +7,22 @@ import com.iwanickimarcel.freat.feature.products.domain.Product
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.WhileSubscribed
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.milliseconds
 
 class AddIngredientViewModel : ViewModel() {
 
     companion object {
+        val STOP_TIMEOUT = 5000.milliseconds
         val AMOUNT_UNIT_OPTIONS = AmountUnit.values().map { it.abbreviation }
     }
 
     private val _state = MutableStateFlow(AddIngredientState())
     val state = _state.stateIn(
         viewModelScope,
-        SharingStarted.WhileSubscribed(5000L),
+        SharingStarted.WhileSubscribed(STOP_TIMEOUT),
         AddIngredientState()
     )
 

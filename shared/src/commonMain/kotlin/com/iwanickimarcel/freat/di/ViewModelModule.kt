@@ -20,8 +20,10 @@ class ViewModelModule(
     private val productDataSource: ProductDataSource,
     private val productsSearchHistoryDataSource: ProductsSearchHistoryDataSource,
     private val recipeDataSource: RecipeDataSource,
-    private val recipesSearchHistoryDataSource: RecipesSearchHistoryDataSource
+    private val recipesSearchHistoryDataSource: RecipesSearchHistoryDataSource,
 ) {
+    private val useCaseModule: UseCaseModule = UseCaseModule()
+
     val productsViewModel: ProductsViewModel
         @Composable
         get() = getViewModel(
@@ -63,7 +65,9 @@ class ViewModelModule(
             factory = viewModelFactory {
                 RecipesViewModel(
                     recipeDataSource = recipeDataSource,
-                    productDataSource = productDataSource
+                    productDataSource = productDataSource,
+                    filterRecipesByQuery = useCaseModule.filterRecipesByQuery,
+                    getRecipesWithOwnedProductsPercent = useCaseModule.getRecipesWithOwnedProductsPercent
                 )
             }
         )
