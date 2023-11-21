@@ -138,7 +138,8 @@ class AddRecipeViewModel(
                             photoBytes = photoBytes,
                             products = ingredients,
                             tags = tags,
-                            steps = steps
+                            steps = steps,
+                            ownedProductsPercent = 0
                         )
 
                         if (editId != null) {

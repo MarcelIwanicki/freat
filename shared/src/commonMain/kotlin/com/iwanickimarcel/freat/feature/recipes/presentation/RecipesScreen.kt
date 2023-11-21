@@ -261,7 +261,11 @@ fun RecipesScreen(
                                 fontWeight = FontWeight.Bold
                             )
                             Text(
-                                text = "You have 90% of ingredients",
+                                text = buildString {
+                                    append("You have ")
+                                    append(item.ownedProductsPercent)
+                                    append("% of ingredients")
+                                },
                                 fontSize = 10.sp
                             )
                         }

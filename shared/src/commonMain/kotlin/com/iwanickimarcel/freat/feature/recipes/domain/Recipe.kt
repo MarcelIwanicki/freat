@@ -2,13 +2,16 @@ package com.iwanickimarcel.freat.feature.recipes.domain
 
 import com.iwanickimarcel.freat.feature.products.domain.Product
 
+typealias Percent = Int
+
 data class Recipe(
     val id: Long,
     val name: String,
     val photoBytes: ByteArray?,
     val products: List<Product>,
     val tags: List<Tag>,
-    val steps: List<Step>
+    val steps: List<Step>,
+    val ownedProductsPercent: Percent,
 ) {
     data class Tag(
         val name: String

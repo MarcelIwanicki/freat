@@ -62,7 +62,8 @@ class ViewModelModule(
             key = "products-search-screen",
             factory = viewModelFactory {
                 RecipesViewModel(
-                    recipeDataSource = recipeDataSource
+                    recipeDataSource = recipeDataSource,
+                    productDataSource = productDataSource
                 )
             }
         )

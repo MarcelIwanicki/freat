@@ -3,49 +3,54 @@ package com.iwanickimarcel.freat.feature.products.domain
 data class Amount(
     val amount: Double,
     val unit: AmountUnit
-)
-
-enum class AmountUnit(val abbreviation: String) {
-    MilliGram("mg"),
-    DecaGram("dg"),
-    Gram("g"),
-    KiloGram("kg"),
-    MilliLiter("ml"),
-    Liter("l"),
+) {
+    fun toGrams() = amount * unit.toGrams
 }
 
-val Double.mg: Amount
+enum class AmountUnit(
+    val abbreviation: String,
+    val toGrams: Double
+) {
+    MilliGram("mg", 0.001),
+    DecaGram("dg", 10.0),
+    Gram("g", 1.0),
+    KiloGram("kg", 1000.0),
+    MilliLiter("ml", 1.0),
+    Liter("l", 1000.0),
+}
+
+val <T : Number> T.mg: Amount
     get() = Amount(
-        amount = this,
+        amount = toDouble(),
         unit = AmountUnit.MilliGram
     )
 
-val Double.dg: Amount
+val <T : Number> T.dg: Amount
     get() = Amount(
-        amount = this,
+        amount = toDouble(),
         unit = AmountUnit.DecaGram
     )
 
-val Double.g: Amount
+val <T : Number> T.g: Amount
     get() = Amount(
-        amount = this,
+        amount = toDouble(),
         unit = AmountUnit.Gram
     )
 
-val Double.kg: Amount
+val <T : Number> T.kg: Amount
     get() = Amount(
-        amount = this,
+        amount = toDouble(),
         unit = AmountUnit.KiloGram
     )
 
-val Double.ml: Amount
+val <T : Number> T.ml: Amount
     get() = Amount(
-        amount = this,
+        amount = toDouble(),
         unit = AmountUnit.MilliLiter
     )
 
-val Double.liter: Amount
+val <T : Number> T.liter: Amount
     get() = Amount(
-        amount = this,
+        amount = toDouble(),
         unit = AmountUnit.Liter
     )

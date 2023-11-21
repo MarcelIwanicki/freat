@@ -22,7 +22,8 @@ suspend fun RecipeEntity.toRecipe(
         products = products,
         tags = tags,
         steps = steps,
-        photoBytes = imagePath?.let { imageStorage.getBytes(it) }
+        photoBytes = imagePath?.let { imageStorage.getBytes(it) },
+        ownedProductsPercent = 0
     )
 }
 
