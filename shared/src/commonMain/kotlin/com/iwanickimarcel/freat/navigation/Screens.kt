@@ -14,7 +14,9 @@ import com.iwanickimarcel.freat.feature.settings.presentation.SettingsScreen
 object Home : Screen {
     @Composable
     override fun Content() {
-        HomeScreen()
+        HomeScreen(
+            getViewModel = { appModule.viewModelModule.homeViewModel }
+        )
     }
 }
 

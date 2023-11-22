@@ -8,14 +8,14 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.WhileSubscribed
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.seconds
 
 class AddIngredientViewModel(
     private val validateProduct: ValidateProduct
 ) : ViewModel() {
 
     companion object {
-        private val STOP_TIMEOUT = 5000.milliseconds
+        private val STOP_TIMEOUT = 5.seconds
         val AMOUNT_UNIT_OPTIONS = AmountUnit.values().map { it.abbreviation }
     }
 

@@ -92,9 +92,7 @@ fun ProductsScreen(
     }
 
     if (state.searchBarPressed) {
-        LaunchedEffect(Unit) {
-            navigator.push(ProductsSearch)
-        }
+        navigator.push(ProductsSearch)
     }
 
     state.productToDelete?.let {

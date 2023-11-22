@@ -76,9 +76,7 @@ fun RecipesScreen(
     }
 
     if (state.searchBarPressed) {
-        LaunchedEffect(Unit) {
-            navigator.push(RecipesSearch)
-        }
+        navigator.push(RecipesSearch)
     }
 
     state.recipeToDelete?.let {

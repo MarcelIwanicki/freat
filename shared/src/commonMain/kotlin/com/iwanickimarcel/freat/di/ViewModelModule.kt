@@ -5,6 +5,7 @@ import com.iwanickimarcel.freat.feature.add_ingredient.presentation.AddIngredien
 import com.iwanickimarcel.freat.feature.add_product.presentation.AddProductViewModel
 import com.iwanickimarcel.freat.feature.add_recipe.presentation.AddRecipeViewModel
 import com.iwanickimarcel.freat.feature.add_step.presentation.AddStepViewModel
+import com.iwanickimarcel.freat.feature.home.presentation.HomeViewModel
 import com.iwanickimarcel.freat.feature.products.domain.ProductDataSource
 import com.iwanickimarcel.freat.feature.products.presentation.ProductsViewModel
 import com.iwanickimarcel.freat.feature.products_search.domain.ProductsSearchHistoryDataSource
@@ -23,6 +24,15 @@ class ViewModelModule(
     private val recipesSearchHistoryDataSource: RecipesSearchHistoryDataSource,
 ) {
     private val useCaseModule: UseCaseModule = UseCaseModule()
+
+    val homeViewModel: HomeViewModel
+        @Composable
+        get() = getViewModel(
+            key = "home-screen",
+            factory = viewModelFactory {
+                HomeViewModel()
+            }
+        )
 
     val productsViewModel: ProductsViewModel
         @Composable

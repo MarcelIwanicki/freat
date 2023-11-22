@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.WhileSubscribed
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.seconds
 
 class ProductsViewModel(
     private val productDataSource: ProductDataSource,
@@ -17,7 +17,7 @@ class ProductsViewModel(
 ) : ViewModel() {
 
     companion object {
-        private val STOP_TIMEOUT = 5000.milliseconds
+        private val STOP_TIMEOUT = 5.seconds
     }
 
     private val _state = MutableStateFlow(ProductsState())
