@@ -1,11 +1,13 @@
 package com.iwanickimarcel.freat.feature.home.presentation
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -20,7 +22,9 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Favorite
+import androidx.compose.material.icons.outlined.Receipt
 import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material3.Button
 import androidx.compose.material3.ElevatedFilterChip
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChipDefaults
@@ -126,6 +130,7 @@ fun HomeScreen(
                     .padding(paddingValues),
                 verticalArrangement = Arrangement.Top
             ) {
+
                 state.products.takeIf { it.isNotEmpty() }?.let {
                     Row(
                         modifier = Modifier
@@ -192,6 +197,50 @@ fun HomeScreen(
                     Spacer(modifier = Modifier.height(32.dp))
                 }
 
+                Row(
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                        .clip(RoundedCornerShape(12.dp))
+                        .fillMaxWidth()
+                        .height(150.dp)
+                        .background(MaterialTheme.colorScheme.primaryContainer)
+                        .clickable {
+
+                        },
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .padding(start = 32.dp),
+                        verticalArrangement = Arrangement.SpaceAround
+                    ) {
+                        Text(
+                            modifier = Modifier.width(160.dp),
+                            text = "Scan your bill to upload products",
+                            fontSize = 20.sp
+                        )
+                        Button(
+                            onClick = {
+
+                            },
+                            content = {
+                                Text("Take a picture")
+                            }
+                        )
+                    }
+                    Icon(
+                        modifier = Modifier
+                            .size(132.dp)
+                            .padding(end = 32.dp),
+                        imageVector = Icons.Outlined.Receipt,
+                        contentDescription = "Scan your bill"
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
                 state.recipes.takeIf { it.isNotEmpty() }?.let {
                     Row(
                         modifier = Modifier
@@ -202,7 +251,7 @@ fun HomeScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = "Your recipes",
+                            text = "Recipes",
                             fontWeight = FontWeight.Bold,
                             fontSize = 16.sp
                         )
@@ -301,7 +350,6 @@ fun HomeScreen(
                         }
                     }
                 }
-
             }
         },
         bottomBar = {
