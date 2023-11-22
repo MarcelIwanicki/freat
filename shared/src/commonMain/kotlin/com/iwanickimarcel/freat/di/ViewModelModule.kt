@@ -74,7 +74,7 @@ class ViewModelModule(
     val recipesViewModel: RecipesViewModel
         @Composable
         get() = getViewModel(
-            key = "recipes-search-screen",
+            key = "recipes-screen",
             factory = viewModelFactory {
                 RecipesViewModel(
                     recipeDataSource = recipeDataSource,
