@@ -31,7 +31,8 @@ class ViewModelModule(
             key = "home-screen",
             factory = viewModelFactory {
                 HomeViewModel(
-                    productDataSource = productDataSource
+                    productDataSource = productDataSource,
+                    recipeDataSource = recipeDataSource
                 )
             }
         )

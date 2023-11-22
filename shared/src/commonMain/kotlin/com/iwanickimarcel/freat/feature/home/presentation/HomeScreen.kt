@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -13,7 +12,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -46,6 +44,7 @@ import com.iwanickimarcel.freat.feature.products.domain.ProductPhoto
 import com.iwanickimarcel.freat.navigation.BottomNavigationBar
 import com.iwanickimarcel.freat.navigation.Home
 import com.iwanickimarcel.freat.navigation.Products
+import com.iwanickimarcel.freat.navigation.Recipes
 import com.iwanickimarcel.freat.navigation.RecipesSearch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -68,6 +67,10 @@ fun HomeScreen(
 
     if (state.isShowAllProductsClicked) {
         navigator.push(Products())
+    }
+
+    if (state.isShowAllRecipesClicked) {
+        navigator.push(Recipes())
     }
 
     Scaffold(
@@ -174,6 +177,38 @@ fun HomeScreen(
                             }
                         }
                     }
+                    Spacer(modifier = Modifier.height(32.dp))
+                }
+
+                state.recipes.takeIf { it.isNotEmpty() }?.let {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .wrapContentHeight()
+                            .padding(horizontal = 16.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = "Your recipes",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 16.sp
+                        )
+                        TextButton(
+                            modifier = Modifier.padding(top = 4.dp),
+                            onClick = {
+                                viewModel.onEvent(HomeEvent.OnShowAllRecipesClick)
+                            },
+                            content = {
+                                Text(
+                                    text = "Show all",
+                                    fontWeight = FontWeight.SemiBold,
+                                    fontSize = 14.sp
+                                )
+                            }
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(16.dp))
                 }
 
             }
