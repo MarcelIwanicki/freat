@@ -1,28 +1,49 @@
 package com.iwanickimarcel.freat.feature.home.presentation
 
+import com.iwanickimarcel.freat.feature.products.domain.ProductDataSource
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.WhileSubscribed
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlin.time.Duration.Companion.seconds
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel(
+    productDataSource: ProductDataSource
+) : ViewModel() {
 
     companion object {
         private val STOP_TIMEOUT = 5.seconds
     }
 
     private val _state = MutableStateFlow(HomeState())
-    val state = _state.stateIn(
-        viewModelScope, SharingStarted.WhileSubscribed(STOP_TIMEOUT), HomeState()
-    )
+    val state = combine(
+        _state,
+        productDataSource.getProducts()
+    ) { state, products ->
+        state.copy(
+            products = products
+        )
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(STOP_TIMEOUT), HomeState())
 
     fun onEvent(event: HomeEvent) {
         when (event) {
             is HomeEvent.OnSearchBarClick -> {
                 _state.value = _state.value.copy(
                     isSearchBarClicked = true
+                )
+            }
+
+            is HomeEvent.OnShowAllProductsClick -> {
+                _state.value = _state.value.copy(
+                    isShowAllProductsClicked = true
+                )
+            }
+
+            is HomeEvent.OnProductClick -> {
+                _state.value = _state.value.copy(
+                    clickedProduct = event.product
                 )
             }
         }

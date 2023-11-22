@@ -4,5 +4,7 @@ import com.iwanickimarcel.freat.feature.products.domain.Product
 
 data class HomeState(
     val products: List<Product> = emptyList(),
-    val isSearchBarClicked: Boolean = false
+    val isSearchBarClicked: Boolean = false,
+    val isShowAllProductsClicked: Boolean = false,
+    val clickedProduct: Product? = null,
 )

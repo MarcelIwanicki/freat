@@ -30,7 +30,9 @@ class ViewModelModule(
         get() = getViewModel(
             key = "home-screen",
             factory = viewModelFactory {
-                HomeViewModel()
+                HomeViewModel(
+                    productDataSource = productDataSource
+                )
             }
         )
 

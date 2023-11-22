@@ -22,10 +22,11 @@ import com.iwanickimarcel.freat.core.presentation.rememberBitmapFromBytes
 fun ProductPhoto(
     product: Product?,
     modifier: Modifier = Modifier,
-    iconSize: Dp = 25.dp
+    iconSize: Dp = 25.dp,
+    shape: RoundedCornerShape = RoundedCornerShape(percent = 35)
 ) {
     val bitmap = rememberBitmapFromBytes(product?.photoBytes)
-    val photoModifier = modifier.clip(RoundedCornerShape(percent = 35))
+    val photoModifier = modifier.clip(shape)
 
     bitmap?.let {
         Image(
