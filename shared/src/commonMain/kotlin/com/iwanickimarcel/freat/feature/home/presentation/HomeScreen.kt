@@ -2,9 +2,11 @@ package com.iwanickimarcel.freat.feature.home.presentation
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -17,9 +19,13 @@ import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material3.ElevatedFilterChip
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -33,6 +39,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -41,6 +48,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.iwanickimarcel.freat.feature.products.domain.ProductPhoto
+import com.iwanickimarcel.freat.feature.recipes.domain.RecipePhoto
 import com.iwanickimarcel.freat.navigation.BottomNavigationBar
 import com.iwanickimarcel.freat.navigation.Home
 import com.iwanickimarcel.freat.navigation.Products
@@ -59,6 +67,10 @@ fun HomeScreen(
 
     state.clickedProduct?.let {
         navigator.push(Products(it.name))
+    }
+
+    state.clickedRecipe?.let {
+        navigator.push(Recipes(it.name))
     }
 
     if (state.isSearchBarClicked) {
@@ -209,6 +221,85 @@ fun HomeScreen(
                         )
                     }
                     Spacer(modifier = Modifier.height(16.dp))
+                    LazyHorizontalGrid(
+                        rows = GridCells.Fixed(1),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(110.dp)
+                    ) {
+                        items(it) {
+                            Box(
+                                modifier = Modifier
+                                    .width(200.dp)
+                                    .height(110.dp)
+                                    .clip(RoundedCornerShape(10.dp))
+                                    .clickable {
+                                        viewModel.onEvent(HomeEvent.OnRecipeClick(it))
+                                    }
+                                    .padding(horizontal = 16.dp)
+                            ) {
+                                RecipePhoto(
+                                    recipe = it,
+                                    modifier = Modifier.fillMaxSize()
+                                )
+
+                                Column(
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .padding(12.dp),
+                                    verticalArrangement = Arrangement.SpaceBetween
+                                ) {
+                                    Row(
+                                        modifier = Modifier
+                                            .fillMaxWidth(),
+                                        horizontalArrangement = Arrangement.SpaceBetween
+                                    ) {
+                                        it.tags.firstOrNull()?.let {
+                                            ElevatedFilterChip(
+                                                selected = false,
+                                                onClick = { },
+                                                label = {
+                                                    Text(it.name)
+                                                },
+                                                shape = RoundedCornerShape(16.dp),
+                                                colors = FilterChipDefaults.filterChipColors(
+                                                    containerColor = MaterialTheme.colorScheme.tertiary,
+                                                    labelColor = MaterialTheme.colorScheme.onTertiary
+                                                )
+                                            )
+                                        }
+
+                                        IconButton(
+                                            onClick = {
+
+                                            },
+                                            content = {
+                                                Icon(
+                                                    imageVector = Icons.Outlined.Favorite,
+                                                    contentDescription = "Favorite",
+                                                )
+                                            }
+                                        )
+                                    }
+
+                                    Column {
+                                        Text(
+                                            text = it.name,
+                                            fontWeight = FontWeight.Bold
+                                        )
+                                        Text(
+                                            text = buildString {
+                                                append("You have ")
+                                                append(it.ownedProductsPercent)
+                                                append("% of ingredients")
+                                            },
+                                            fontSize = 10.sp
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
 
             }

@@ -1,13 +1,14 @@
 package com.iwanickimarcel.freat.feature.recipes.presentation
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -48,6 +49,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.LocalNavigator
+import com.iwanickimarcel.freat.feature.recipes.domain.RecipePhoto
 import com.iwanickimarcel.freat.navigation.AddRecipe
 import com.iwanickimarcel.freat.navigation.BottomNavigationBar
 import com.iwanickimarcel.freat.navigation.Recipes
@@ -204,12 +206,11 @@ fun RecipesScreen(
                         120.dp
                     }
 
-                    Column(
+                    Box(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(height)
                             .clip(RoundedCornerShape(10.dp))
-                            .background(MaterialTheme.colorScheme.secondaryContainer)
                             .combinedClickable(
                                 onClick = {
 
@@ -217,56 +218,66 @@ fun RecipesScreen(
                                 onLongClick = {
                                     viewModel.onEvent(RecipesEvent.OnRecipeLongPress(item))
                                 }
-                            )
-                            .padding(12.dp),
-                        verticalArrangement = Arrangement.SpaceBetween
+                            ),
                     ) {
-                        Row(
+                        RecipePhoto(
+                            recipe = item,
+                            modifier = Modifier.fillMaxSize()
+                        )
+
+                        Column(
                             modifier = Modifier
-                                .fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween
+                                .fillMaxSize()
+                                .padding(12.dp),
+                            verticalArrangement = Arrangement.SpaceBetween
                         ) {
-                            item.tags.firstOrNull()?.let {
-                                ElevatedFilterChip(
-                                    selected = false,
-                                    onClick = { },
-                                    label = {
-                                        Text(it.name)
-                                    },
-                                    shape = RoundedCornerShape(16.dp),
-                                    colors = FilterChipDefaults.filterChipColors(
-                                        containerColor = MaterialTheme.colorScheme.tertiary,
-                                        labelColor = MaterialTheme.colorScheme.onTertiary
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                item.tags.firstOrNull()?.let {
+                                    ElevatedFilterChip(
+                                        selected = false,
+                                        onClick = { },
+                                        label = {
+                                            Text(it.name)
+                                        },
+                                        shape = RoundedCornerShape(16.dp),
+                                        colors = FilterChipDefaults.filterChipColors(
+                                            containerColor = MaterialTheme.colorScheme.tertiary,
+                                            labelColor = MaterialTheme.colorScheme.onTertiary
+                                        )
                                     )
+                                }
+
+                                IconButton(
+                                    onClick = {
+
+                                    },
+                                    content = {
+                                        Icon(
+                                            imageVector = Icons.Outlined.Favorite,
+                                            contentDescription = "Favorite",
+                                        )
+                                    }
                                 )
                             }
 
-                            IconButton(
-                                onClick = {
-
-                                },
-                                content = {
-                                    Icon(
-                                        imageVector = Icons.Outlined.Favorite,
-                                        contentDescription = "Favorite",
-                                    )
-                                }
-                            )
-                        }
-
-                        Column {
-                            Text(
-                                text = item.name,
-                                fontWeight = FontWeight.Bold
-                            )
-                            Text(
-                                text = buildString {
-                                    append("You have ")
-                                    append(item.ownedProductsPercent)
-                                    append("% of ingredients")
-                                },
-                                fontSize = 10.sp
-                            )
+                            Column {
+                                Text(
+                                    text = item.name,
+                                    fontWeight = FontWeight.Bold
+                                )
+                                Text(
+                                    text = buildString {
+                                        append("You have ")
+                                        append(item.ownedProductsPercent)
+                                        append("% of ingredients")
+                                    },
+                                    fontSize = 10.sp
+                                )
+                            }
                         }
                     }
                 }
