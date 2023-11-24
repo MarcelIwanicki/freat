@@ -51,6 +51,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.LocalNavigator
+import com.iwanickimarcel.freat.core.presentation.TriangleShape
 import com.iwanickimarcel.freat.feature.products.domain.ProductPhoto
 import com.iwanickimarcel.freat.feature.recipes.domain.RecipePhoto
 import com.iwanickimarcel.freat.navigation.BottomNavigationBar
@@ -197,46 +198,56 @@ fun HomeScreen(
                     Spacer(modifier = Modifier.height(32.dp))
                 }
 
-                Row(
-                    modifier = Modifier
-                        .padding(horizontal = 16.dp)
-                        .clip(RoundedCornerShape(12.dp))
-                        .fillMaxWidth()
-                        .height(150.dp)
-                        .background(MaterialTheme.colorScheme.primaryContainer)
-                        .clickable {
-
-                        },
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Column(
+                    TriangleShape(
+                        width = 32.dp,
+                        height = 16.dp,
+                        color = MaterialTheme.colorScheme.primaryContainer
+                    )
+                    Row(
                         modifier = Modifier
-                            .fillMaxHeight()
-                            .padding(start = 32.dp),
-                        verticalArrangement = Arrangement.SpaceAround
-                    ) {
-                        Text(
-                            modifier = Modifier.width(160.dp),
-                            text = "Scan your bill to upload products",
-                            fontSize = 20.sp
-                        )
-                        Button(
-                            onClick = {
+                            .padding(horizontal = 16.dp)
+                            .clip(RoundedCornerShape(12.dp))
+                            .fillMaxWidth()
+                            .height(150.dp)
+                            .background(MaterialTheme.colorScheme.primaryContainer)
+                            .clickable {
 
                             },
-                            content = {
-                                Text("Take a picture")
-                            }
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxHeight()
+                                .padding(start = 32.dp),
+                            verticalArrangement = Arrangement.SpaceAround
+                        ) {
+                            Text(
+                                modifier = Modifier.width(160.dp),
+                                text = "Scan your bill to upload products",
+                                fontSize = 20.sp
+                            )
+                            Button(
+                                onClick = {
+
+                                },
+                                content = {
+                                    Text("Take a picture")
+                                }
+                            )
+                        }
+                        Icon(
+                            modifier = Modifier
+                                .size(142.dp)
+                                .padding(end = 22.dp),
+                            imageVector = Icons.Outlined.Receipt,
+                            contentDescription = "Scan your bill"
                         )
                     }
-                    Icon(
-                        modifier = Modifier
-                            .size(132.dp)
-                            .padding(end = 32.dp),
-                        imageVector = Icons.Outlined.Receipt,
-                        contentDescription = "Scan your bill"
-                    )
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
