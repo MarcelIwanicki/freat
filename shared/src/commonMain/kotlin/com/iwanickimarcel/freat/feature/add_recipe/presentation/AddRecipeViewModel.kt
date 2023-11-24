@@ -78,6 +78,15 @@ class AddRecipeViewModel(
                 )
             }
 
+            is AddRecipeEvent.OnDeleteIngredientPress -> {
+                _state.value = _state.value.copy(
+                    ingredients = _state.value.ingredients.toMutableList().apply {
+                        remove(event.product)
+                    },
+                    finalErrorMessage = null,
+                )
+            }
+
             is AddRecipeEvent.OnEditIngredientDismiss -> {
                 _state.value = _state.value.copy(
                     editIngredient = null,

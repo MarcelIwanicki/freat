@@ -10,11 +10,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -33,6 +36,7 @@ fun IngredientsScreen(
     addRecipeState: AddRecipeState,
     onEditIngredientPressed: (Product) -> Unit,
     onAddIngredientPressed: () -> Unit,
+    onDeleteIngredientPressed: (Product) -> Unit,
     onNextClick: () -> Unit
 ) {
     Column(
@@ -60,7 +64,8 @@ fun IngredientsScreen(
                             onEditIngredientPressed(it)
                         }
                         .padding(8.dp),
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
                         buildString {
@@ -71,6 +76,32 @@ fun IngredientsScreen(
                             append(it.amount.unit.abbreviation)
                         },
                     )
+                    Row(
+                        modifier = Modifier.width(80.dp)
+                    ) {
+                        IconButton(
+                            onClick = {
+                                onEditIngredientPressed(it)
+                            },
+                            content = {
+                                Icon(
+                                    imageVector = Icons.Filled.Edit,
+                                    contentDescription = "Edit ingredient"
+                                )
+                            }
+                        )
+                        IconButton(
+                            onClick = {
+                                onDeleteIngredientPressed(it)
+                            },
+                            content = {
+                                Icon(
+                                    imageVector = Icons.Filled.Delete,
+                                    contentDescription = "Delete ingredient"
+                                )
+                            }
+                        )
+                    }
                 }
             }
             item {

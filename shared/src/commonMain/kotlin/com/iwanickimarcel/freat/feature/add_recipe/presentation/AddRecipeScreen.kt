@@ -115,6 +115,9 @@ fun AddRecipeScreen(
                         onAddIngredientPressed = {
                             viewModel.onEvent(AddRecipeEvent.OnAddIngredientPress)
                         },
+                        onDeleteIngredientPressed = {
+                            viewModel.onEvent(AddRecipeEvent.OnDeleteIngredientPress(it))
+                        },
                         onNextClick = {
                             scope.launch {
                                 pagerState.scrollToPage(pagerState.currentPage + 1)

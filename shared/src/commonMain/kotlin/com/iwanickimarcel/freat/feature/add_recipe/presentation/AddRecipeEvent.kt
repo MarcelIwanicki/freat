@@ -11,6 +11,7 @@ sealed interface AddRecipeEvent {
     object OnAddIngredientPress : AddRecipeEvent
     object OnAddIngredientDismiss : AddRecipeEvent
     data class OnEditIngredientPress(val product: Product) : AddRecipeEvent
+    data class OnDeleteIngredientPress(val product: Product) : AddRecipeEvent
     object OnEditIngredientDismiss : AddRecipeEvent
     data class OnIngredientAdded(val ingredient: Product) : AddRecipeEvent
     data class OnIngredientEdited(val ingredient: Product) : AddRecipeEvent
