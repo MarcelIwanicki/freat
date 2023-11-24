@@ -10,7 +10,10 @@ sealed interface AddRecipeEvent {
     data class OnPhotoSelected(val photoBytes: ByteArray) : AddRecipeEvent
     object OnAddIngredientPress : AddRecipeEvent
     object OnAddIngredientDismiss : AddRecipeEvent
+    data class OnEditIngredientPress(val product: Product) : AddRecipeEvent
+    object OnEditIngredientDismiss : AddRecipeEvent
     data class OnIngredientAdded(val ingredient: Product) : AddRecipeEvent
+    data class OnIngredientEdited(val ingredient: Product) : AddRecipeEvent
     object OnAddStepPress : AddRecipeEvent
     object OnAddStepDismiss : AddRecipeEvent
     data class OnStepAdded(val step: Recipe.Step) : AddRecipeEvent

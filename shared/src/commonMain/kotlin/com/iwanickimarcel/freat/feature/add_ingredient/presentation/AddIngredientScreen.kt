@@ -31,6 +31,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -46,10 +47,17 @@ import com.iwanickimarcel.freat.feature.products.domain.Product
 fun AddIngredientScreen(
     getViewModel: @Composable () -> AddIngredientViewModel,
     onIngredientAdded: (Product) -> Unit,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
+    editProduct: Product? = null,
 ) {
     val viewModel = getViewModel()
     val state by viewModel.state.collectAsState()
+
+    editProduct?.let {
+        LaunchedEffect(Unit) {
+            viewModel.onEvent(AddIngredientEvent.OnEditProductProvided(it))
+        }
+    }
 
     if (state.success) {
         onDismiss()
@@ -60,7 +68,12 @@ fun AddIngredientScreen(
             TopAppBar(
                 title = {
                     Text(
-                        "Add ingredient"
+                        editProduct?.let {
+                            buildString {
+                                append("Edit ")
+                                append(state.name ?: "ingredient")
+                            }
+                        } ?: "Add ingredient"
                     )
                 },
                 navigationIcon = {
@@ -217,7 +230,11 @@ fun AddIngredientScreen(
                     }
                 ) {
                     Text(
-                        "Add ingredient",
+                        if (editProduct != null) {
+                            "Save changes"
+                        } else {
+                            "Add ingredient"
+                        },
                         color = MaterialTheme.colorScheme.onPrimary
                     )
                 }

@@ -28,6 +28,14 @@ class AddIngredientViewModel(
 
     fun onEvent(event: AddIngredientEvent) {
         when (event) {
+            is AddIngredientEvent.OnEditProductProvided -> {
+                _state.value = _state.value.copy(
+                    name = event.product.name,
+                    amount = event.product.amount.amount,
+                    amountUnit = event.product.amount.unit
+                )
+            }
+
             is AddIngredientEvent.OnNameChanged -> {
                 _state.value = _state.value.copy(
                     name = event.name,

@@ -71,9 +71,33 @@ class AddRecipeViewModel(
                 )
             }
 
+            is AddRecipeEvent.OnEditIngredientPress -> {
+                _state.value = _state.value.copy(
+                    editIngredient = event.product,
+                    finalErrorMessage = null
+                )
+            }
+
+            is AddRecipeEvent.OnEditIngredientDismiss -> {
+                _state.value = _state.value.copy(
+                    editIngredient = null,
+                    finalErrorMessage = null
+                )
+            }
+
             is AddRecipeEvent.OnIngredientAdded -> {
                 _state.value = _state.value.copy(
                     ingredients = _state.value.ingredients.toMutableList().apply {
+                        add(event.ingredient)
+                    },
+                    finalErrorMessage = null,
+                )
+            }
+
+            is AddRecipeEvent.OnIngredientEdited -> {
+                _state.value = _state.value.copy(
+                    ingredients = _state.value.ingredients.toMutableList().apply {
+                        remove(_state.value.ingredients.find { it.name == event.ingredient.name })
                         add(event.ingredient)
                     },
                     finalErrorMessage = null,

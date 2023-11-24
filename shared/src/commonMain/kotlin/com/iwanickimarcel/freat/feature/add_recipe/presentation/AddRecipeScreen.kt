@@ -109,6 +109,9 @@ fun AddRecipeScreen(
                 content = {
                     IngredientsScreen(
                         addRecipeState = state,
+                        onEditIngredientPressed = {
+                            viewModel.onEvent(AddRecipeEvent.OnEditIngredientPress(it))
+                        },
                         onAddIngredientPressed = {
                             viewModel.onEvent(AddRecipeEvent.OnAddIngredientPress)
                         },
@@ -159,6 +162,27 @@ fun AddRecipeScreen(
                 }
             ),
         )
+    }
+
+    state.editIngredient?.let {
+        ModalBottomSheet(
+            onDismissRequest = {
+                viewModel.onEvent(AddRecipeEvent.OnEditIngredientDismiss)
+            },
+            sheetState = bottomSheetState,
+            windowInsets = BottomSheetDefaults.windowInsets
+        ) {
+            AddIngredientScreen(
+                editProduct = it,
+                getViewModel = getAddIngredientViewModel,
+                onIngredientAdded = {
+                    viewModel.onEvent(AddRecipeEvent.OnIngredientEdited(it))
+                },
+                onDismiss = {
+                    viewModel.onEvent(AddRecipeEvent.OnEditIngredientDismiss)
+                },
+            )
+        }
     }
 
     if (state.addIngredientOpen) {
