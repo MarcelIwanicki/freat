@@ -19,7 +19,9 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.Receipt
@@ -91,7 +93,8 @@ fun HomeScreen(
     }
 
     Scaffold(
-        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        modifier = Modifier
+            .nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             TopAppBar(
                 modifier = Modifier.padding(16.dp),
@@ -128,7 +131,8 @@ fun HomeScreen(
         content = { paddingValues ->
             Column(
                 modifier = Modifier
-                    .padding(paddingValues),
+                    .padding(paddingValues)
+                    .verticalScroll(rememberScrollState()),
                 verticalArrangement = Arrangement.Top
             ) {
 
@@ -195,18 +199,20 @@ fun HomeScreen(
                             }
                         }
                     }
-                    Spacer(modifier = Modifier.height(32.dp))
+                    Spacer(modifier = Modifier.height(28.dp))
                 }
 
                 Column(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    TriangleShape(
-                        width = 32.dp,
-                        height = 16.dp,
-                        color = MaterialTheme.colorScheme.primaryContainer
-                    )
+                    state.products.takeIf { it.isNotEmpty() }?.let {
+                        TriangleShape(
+                            width = 32.dp,
+                            height = 16.dp,
+                            color = MaterialTheme.colorScheme.primaryContainer
+                        )
+                    }
                     Row(
                         modifier = Modifier
                             .padding(horizontal = 16.dp)
@@ -306,7 +312,12 @@ fun HomeScreen(
                                 Column(
                                     modifier = Modifier
                                         .fillMaxSize()
-                                        .padding(12.dp),
+                                        .padding(
+                                            start = 12.dp,
+                                            end = 12.dp,
+                                            bottom = 8.dp,
+                                            top = 4.dp,
+                                        ),
                                     verticalArrangement = Arrangement.SpaceBetween
                                 ) {
                                     Row(
@@ -360,6 +371,7 @@ fun HomeScreen(
                             }
                         }
                     }
+                    Spacer(modifier = Modifier.height(28.dp))
                 }
             }
         },
