@@ -26,6 +26,12 @@ class AddStepViewModel(
 
     fun onEvent(event: AddStepEvent) {
         when (event) {
+            is AddStepEvent.OnEditStepProvided -> {
+                _state.value = _state.value.copy(
+                    step = event.step.description,
+                )
+            }
+
             is AddStepEvent.OnStepChanged -> {
                 _state.value = _state.value.copy(
                     step = event.step,

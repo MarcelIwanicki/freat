@@ -194,6 +194,28 @@ fun AddRecipeScreen(
         }
     }
 
+    state.editStep?.let {
+        ModalBottomSheet(
+            onDismissRequest = {
+                viewModel.onEvent(AddRecipeEvent.OnEditStepDismiss)
+            },
+            sheetState = bottomSheetState,
+            windowInsets = BottomSheetDefaults.windowInsets
+        ) {
+            AddStepScreen(
+                editStep = it,
+                getViewModel = getAddStepViewModel,
+                stepsCount = state.steps.size,
+                onStepAdded = {
+                    viewModel.onEvent(AddRecipeEvent.OnStepEdited(it))
+                },
+                onDismiss = {
+                    viewModel.onEvent(AddRecipeEvent.OnEditStepDismiss)
+                }
+            )
+        }
+    }
+
     if (state.addIngredientOpen) {
         ModalBottomSheet(
             onDismissRequest = {

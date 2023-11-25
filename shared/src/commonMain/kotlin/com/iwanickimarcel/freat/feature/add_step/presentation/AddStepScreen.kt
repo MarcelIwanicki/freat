@@ -25,6 +25,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -41,10 +42,17 @@ fun AddStepScreen(
     getViewModel: @Composable () -> AddStepViewModel,
     stepsCount: Int,
     onStepAdded: (Recipe.Step) -> Unit,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
+    editStep: Recipe.Step? = null,
 ) {
     val viewModel = getViewModel()
     val state by viewModel.state.collectAsState()
+
+    editStep?.let {
+        LaunchedEffect(Unit) {
+            viewModel.onEvent(AddStepEvent.OnEditStepProvided(it))
+        }
+    }
 
     if (state.success) {
         onDismiss()
@@ -55,7 +63,9 @@ fun AddStepScreen(
             TopAppBar(
                 title = {
                     Text(
-                        "Add step"
+                        text = editStep?.let {
+                            "Edit step"
+                        } ?: "Add step"
                     )
                 },
                 navigationIcon = {
@@ -130,14 +140,20 @@ fun AddStepScreen(
                     onClick = {
                         viewModel.onEvent(
                             AddStepEvent.OnAddStepClick(
-                                stepsCount = stepsCount,
+                                stepsCount = editStep?.let {
+                                    it.step - 1
+                                } ?: stepsCount,
                                 onStepAdded = onStepAdded
                             )
                         )
                     }
                 ) {
                     Text(
-                        "Add step",
+                        if (editStep != null) {
+                            "Save changes"
+                        } else {
+                            "Add step"
+                        },
                         color = MaterialTheme.colorScheme.onPrimary
                     )
                 }

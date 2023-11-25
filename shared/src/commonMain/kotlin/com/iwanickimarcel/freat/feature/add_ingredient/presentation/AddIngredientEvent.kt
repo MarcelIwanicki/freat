@@ -8,6 +8,7 @@ sealed interface AddIngredientEvent {
     data class OnAmountChanged(val amount: String) : AddIngredientEvent
     data class OnAmountUnitChanged(val unit: String) : AddIngredientEvent
     object OnAmountUnitMenuStateChanged : AddIngredientEvent
-    data class OnAddIngredientClick(val onIngredientAdded: suspend (Product) -> Unit) :
-        AddIngredientEvent
+    data class OnAddIngredientClick(
+        val onIngredientAdded: suspend (Product) -> Unit
+    ) : AddIngredientEvent
 }
