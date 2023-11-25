@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -68,7 +67,8 @@ fun IngredientsScreen(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        buildString {
+                        modifier = Modifier.fillMaxWidth(0.6f),
+                        text = buildString {
                             append(it.name)
                             append(", ")
                             append(it.amount.amount)
@@ -77,7 +77,7 @@ fun IngredientsScreen(
                         },
                     )
                     Row(
-                        modifier = Modifier.width(80.dp)
+                        modifier = Modifier.fillMaxWidth(0.5f)
                     ) {
                         IconButton(
                             onClick = {

@@ -2,6 +2,7 @@ package com.iwanickimarcel.freat.feature.add_recipe.presentation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,11 +10,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -27,11 +31,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.iwanickimarcel.freat.feature.recipes.domain.Recipe
 
 @Composable
 fun StepsScreen(
     addRecipeState: AddRecipeState,
+    onEditStepPress: (Recipe.Step) -> Unit,
     onAddStepPressed: () -> Unit,
+    onDeleteStepPressed: (Recipe.Step) -> Unit,
     onNextClick: () -> Unit
 ) {
     Column(
@@ -54,16 +61,50 @@ fun StepsScreen(
                             color = MaterialTheme.colorScheme.onBackground,
                             shape = RoundedCornerShape(16.dp)
                         )
+                        .clickable {
+                            onEditStepPress(it)
+                        }
                         .padding(8.dp),
                     verticalAlignment = Alignment.Top,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Text(
-                        text = it.step.toString(),
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 32.sp,
-                    )
-                    Text(it.description)
+                    Row(
+                        modifier = Modifier.fillMaxWidth(0.6f),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Text(
+                            text = it.step.toString(),
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 32.sp,
+                        )
+                        Text(it.description)
+                    }
+                    Row(
+                        modifier = Modifier.fillMaxWidth(0.5f)
+                    ) {
+                        IconButton(
+                            onClick = {
+                                onEditStepPress(it)
+                            },
+                            content = {
+                                Icon(
+                                    imageVector = Icons.Filled.Edit,
+                                    contentDescription = "Edit step"
+                                )
+                            }
+                        )
+                        IconButton(
+                            onClick = {
+                                onDeleteStepPressed(it)
+                            },
+                            content = {
+                                Icon(
+                                    imageVector = Icons.Filled.Delete,
+                                    contentDescription = "Delete step"
+                                )
+                            }
+                        )
+                    }
                 }
             }
             item {

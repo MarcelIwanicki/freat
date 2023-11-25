@@ -15,6 +15,7 @@ data class AddRecipeState(
     var tagsTextFieldValue: TextFieldValue = TextFieldValue(""),
     val addIngredientOpen: Boolean = false,
     val editIngredient: Product? = null,
+    val editStep: Recipe.Step? = null,
     val addStepOpen: Boolean = false,
     val success: Boolean = false,
     val finalErrorMessage: String? = null,

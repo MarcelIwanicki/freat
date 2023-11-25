@@ -1,5 +1,6 @@
 package com.iwanickimarcel.freat.feature.add_recipe.presentation
 
+import com.iwanickimarcel.freat.feature.add_recipe.domain.DeleteStep
 import com.iwanickimarcel.freat.feature.add_recipe.domain.ValidateRecipe
 import com.iwanickimarcel.freat.feature.recipes.domain.Recipe
 import com.iwanickimarcel.freat.feature.recipes.domain.RecipeDataSource
@@ -13,7 +14,8 @@ import kotlin.time.Duration.Companion.seconds
 
 class AddRecipeViewModel(
     private val recipeDataSource: RecipeDataSource,
-    private val validateRecipe: ValidateRecipe
+    private val validateRecipe: ValidateRecipe,
+    private val deleteStep: DeleteStep
 ) : ViewModel() {
 
     companion object {
@@ -116,6 +118,23 @@ class AddRecipeViewModel(
             is AddRecipeEvent.OnAddStepPress -> {
                 _state.value = _state.value.copy(
                     addStepOpen = true,
+                    finalErrorMessage = null,
+                )
+            }
+
+            is AddRecipeEvent.OnEditStepPress -> {
+                _state.value = _state.value.copy(
+                    editStep = event.step,
+                    finalErrorMessage = null
+                )
+            }
+
+            is AddRecipeEvent.OnDeleteStepPress -> {
+                _state.value = _state.value.copy(
+                    steps = deleteStep(
+                        steps = _state.value.steps,
+                        stepToDelete = event.step
+                    ),
                     finalErrorMessage = null,
                 )
             }

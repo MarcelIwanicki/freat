@@ -95,7 +95,8 @@ class ViewModelModule(
             factory = viewModelFactory {
                 AddRecipeViewModel(
                     recipeDataSource = recipeDataSource,
-                    validateRecipe = useCaseModule.validateRecipe
+                    validateRecipe = useCaseModule.validateRecipe,
+                    deleteStep = useCaseModule.deleteStep
                 )
             }
         )

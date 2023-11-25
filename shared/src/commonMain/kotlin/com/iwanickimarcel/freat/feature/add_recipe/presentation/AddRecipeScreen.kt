@@ -132,8 +132,14 @@ fun AddRecipeScreen(
                 content = {
                     StepsScreen(
                         addRecipeState = state,
+                        onEditStepPress = {
+                            viewModel.onEvent(AddRecipeEvent.OnEditStepPress(it))
+                        },
                         onAddStepPressed = {
                             viewModel.onEvent(AddRecipeEvent.OnAddStepPress)
+                        },
+                        onDeleteStepPressed = {
+                            viewModel.onEvent(AddRecipeEvent.OnDeleteStepPress(it))
                         },
                         onNextClick = {
                             scope.launch {

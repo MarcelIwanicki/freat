@@ -1,6 +1,7 @@
 package com.iwanickimarcel.freat.di
 
 import com.iwanickimarcel.freat.feature.add_product.domain.ValidateProduct
+import com.iwanickimarcel.freat.feature.add_recipe.domain.DeleteStep
 import com.iwanickimarcel.freat.feature.add_recipe.domain.ValidateRecipe
 import com.iwanickimarcel.freat.feature.add_step.domain.ValidateStep
 import com.iwanickimarcel.freat.feature.products.domain.FilterProductsByQuery
@@ -40,5 +41,9 @@ class UseCaseModule {
 
     val validateStep: ValidateStep by lazy {
         ValidateStep()
+    }
+
+    val deleteStep: DeleteStep by lazy {
+        DeleteStep()
     }
 }
