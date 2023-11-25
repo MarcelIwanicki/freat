@@ -108,6 +108,12 @@ class ProductsViewModel(
                     productToEdit = null
                 )
             }
+
+            is ProductsEvent.OnScanBillClick -> {
+                _state.value = _state.value.copy(
+                    isScanBillClicked = true
+                )
+            }
         }
     }
 }

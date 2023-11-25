@@ -11,4 +11,5 @@ data class ProductsState(
     val addProductOpen: Boolean = false,
     val searchBarPressed: Boolean = false,
     val errorMessage: String? = null,
+    val isScanBillClicked: Boolean = false,
 )

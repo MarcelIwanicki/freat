@@ -9,6 +9,7 @@ import com.iwanickimarcel.freat.feature.products.presentation.ProductsScreen
 import com.iwanickimarcel.freat.feature.products_search.presentation.ProductsSearchScreen
 import com.iwanickimarcel.freat.feature.recipes.presentation.RecipesScreen
 import com.iwanickimarcel.freat.feature.recipes_search.presentation.RecipesSearchScreen
+import com.iwanickimarcel.freat.feature.scan_bill.presentation.ScanBillScreen
 import com.iwanickimarcel.freat.feature.settings.presentation.SettingsScreen
 
 object Home : Screen {
@@ -66,6 +67,15 @@ object ProductsSearch : Screen {
     override fun Content() {
         ProductsSearchScreen(
             getViewModel = { appModule.viewModelModule.productsSearchViewModel }
+        )
+    }
+}
+
+object ScanBill : Screen {
+    @Composable
+    override fun Content() {
+        ScanBillScreen(
+            imagePicker = appModule.imageModule.imagePicker
         )
     }
 }

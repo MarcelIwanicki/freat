@@ -47,6 +47,7 @@ import com.iwanickimarcel.freat.feature.add_product.presentation.AddProductViewM
 import com.iwanickimarcel.freat.navigation.BottomNavigationBar
 import com.iwanickimarcel.freat.navigation.Products
 import com.iwanickimarcel.freat.navigation.ProductsSearch
+import com.iwanickimarcel.freat.navigation.ScanBill
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
@@ -93,6 +94,10 @@ fun ProductsScreen(
 
     if (state.searchBarPressed) {
         navigator.push(ProductsSearch)
+    }
+
+    if (state.isScanBillClicked) {
+        navigator.push(ScanBill)
     }
 
     state.productToDelete?.let {
@@ -250,7 +255,7 @@ fun ProductsScreen(
                             modifier = Modifier.fillMaxWidth()
                                 .padding(8.dp)
                         ) {
-
+                            viewModel.onEvent(ProductsEvent.OnScanBillClick)
                         }
                     }
 

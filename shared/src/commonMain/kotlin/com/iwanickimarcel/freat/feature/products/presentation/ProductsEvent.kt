@@ -14,5 +14,5 @@ sealed interface ProductsEvent {
     object OnDeleteProductMenuDismiss : ProductsEvent
     object OnDeleteProductConfirm : ProductsEvent
     data class OnEditProductPress(val product: Product) : ProductsEvent
-
+    object OnScanBillClick : ProductsEvent
 }

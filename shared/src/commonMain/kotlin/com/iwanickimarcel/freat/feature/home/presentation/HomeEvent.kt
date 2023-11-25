@@ -9,4 +9,5 @@ sealed interface HomeEvent {
     data class OnProductClick(val product: Product) : HomeEvent
     object OnShowAllRecipesClick : HomeEvent
     data class OnRecipeClick(val recipe: Recipe) : HomeEvent
+    object OnScanBillClick : HomeEvent
 }

@@ -32,7 +32,7 @@ import com.iwanickimarcel.freat.feature.products.domain.Product
 
 @Composable
 fun IngredientsScreen(
-    addRecipeState: AddRecipeState,
+    ingredients: List<Product>,
     onEditIngredientPressed: (Product) -> Unit,
     onAddIngredientPressed: () -> Unit,
     onDeleteIngredientPressed: (Product) -> Unit,
@@ -49,7 +49,7 @@ fun IngredientsScreen(
                 .fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            items(addRecipeState.ingredients) {
+            items(ingredients) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()

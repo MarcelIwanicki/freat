@@ -62,6 +62,12 @@ class HomeViewModel(
                     clickedRecipe = event.recipe
                 )
             }
+
+            is HomeEvent.OnScanBillClick -> {
+                _state.value = _state.value.copy(
+                    isScanBillClicked = true
+                )
+            }
         }
     }
 }

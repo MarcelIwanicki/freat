@@ -11,4 +11,5 @@ data class HomeState(
     val isShowAllRecipesClicked: Boolean = false,
     val clickedProduct: Product? = null,
     val clickedRecipe: Recipe? = null,
+    val isScanBillClicked: Boolean = false,
 )

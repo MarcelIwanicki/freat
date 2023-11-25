@@ -61,6 +61,7 @@ import com.iwanickimarcel.freat.navigation.Home
 import com.iwanickimarcel.freat.navigation.Products
 import com.iwanickimarcel.freat.navigation.Recipes
 import com.iwanickimarcel.freat.navigation.RecipesSearch
+import com.iwanickimarcel.freat.navigation.ScanBill
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -90,6 +91,10 @@ fun HomeScreen(
 
     if (state.isShowAllRecipesClicked) {
         navigator.push(Recipes())
+    }
+
+    if (state.isScanBillClicked) {
+        navigator.push(ScanBill)
     }
 
     Scaffold(
@@ -221,7 +226,7 @@ fun HomeScreen(
                             .height(150.dp)
                             .background(MaterialTheme.colorScheme.primaryContainer)
                             .clickable {
-
+                                viewModel.onEvent(HomeEvent.OnScanBillClick)
                             },
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
@@ -239,7 +244,7 @@ fun HomeScreen(
                             )
                             Button(
                                 onClick = {
-
+                                    viewModel.onEvent(HomeEvent.OnScanBillClick)
                                 },
                                 content = {
                                     Text("Take a picture")

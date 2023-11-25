@@ -108,7 +108,7 @@ fun AddRecipeScreen(
                 title = "Ingredients",
                 content = {
                     IngredientsScreen(
-                        addRecipeState = state,
+                        ingredients = state.ingredients,
                         onEditIngredientPressed = {
                             viewModel.onEvent(AddRecipeEvent.OnEditIngredientPress(it))
                         },
