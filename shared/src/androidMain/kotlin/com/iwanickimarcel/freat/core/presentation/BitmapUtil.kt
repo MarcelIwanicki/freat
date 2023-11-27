@@ -29,22 +29,18 @@ suspend fun ByteArray.scaleFitXY(width: Int, height: Int): ByteArray {
         val originalWidth = options.outWidth
         val originalHeight = options.outHeight
 
-        // Calculate the scaling factor for width and height
         val widthScaleFactor = width.toFloat() / originalWidth
         val heightScaleFactor = height.toFloat() / originalHeight
-
-        // Use the smaller scaling factor to maintain aspect ratio
         val scaleFactor = minOf(widthScaleFactor, heightScaleFactor)
 
-        // Calculate the new width and height
         val newWidth = (originalWidth * scaleFactor).toInt()
         val newHeight = (originalHeight * scaleFactor).toInt()
 
-        // Create a new Bitmap with the calculated width and height
         options.inSampleSize = 1
         options.inJustDecodeBounds = false
-        val originalBitmap =
-            BitmapFactory.decodeByteArray(this@scaleFitXY, 0, this@scaleFitXY.size, options)
+        val originalBitmap = BitmapFactory.decodeByteArray(
+            this@scaleFitXY, 0, this@scaleFitXY.size, options
+        )
         val scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, newWidth, newHeight, true)
 
         val outputStream = ByteArrayOutputStream()
