@@ -1,26 +1,41 @@
 package com.iwanickimarcel.freat.feature.scan_bill.presentation
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.AddAPhoto
 import androidx.compose.material.icons.outlined.ArrowBackIos
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.iwanickimarcel.freat.core.presentation.ImagePicker
+import com.iwanickimarcel.freat.feature.add_recipe.presentation.IngredientsScreen
+import com.iwanickimarcel.freat.feature.products.presentation.AddProductPlaceholder
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ScanBillScreen(
+    getViewModel: @Composable () -> ScanBillViewModel,
     imagePicker: ImagePicker
 ) {
+    val viewModel = getViewModel()
+    val state by viewModel.state.collectAsState()
     val navigator = LocalNavigator.current ?: return
+
+    imagePicker.registerPicker {
+        viewModel.onEvent(ScanBillEvent.OnPhotoSelected(it))
+    }
 
     Scaffold(
         topBar = {
@@ -44,7 +59,36 @@ fun ScanBillScreen(
             Column(
                 modifier = Modifier.padding(paddingValues)
             ) {
+                AddProductPlaceholder(
+                    text = if (state.photoBytes == null) {
+                        "Add a photo"
+                    } else {
+                        "Edit photo"
+                    },
+                    icon = Icons.Outlined.AddAPhoto,
+                    photoBytes = state.photoBytes,
+                    modifier = Modifier.fillMaxWidth()
+                        .padding(8.dp)
+                ) {
+                    imagePicker.pickImage()
+                }
 
+                IngredientsScreen(
+                    ingredients = state.products,
+                    onEditIngredientPressed = {
+                        viewModel.onEvent(ScanBillEvent.OnEditProductPress(it))
+                    },
+                    onAddIngredientPressed = {
+                        viewModel.onEvent(ScanBillEvent.OnAddProductPress)
+                    },
+                    onDeleteIngredientPressed = {
+                        viewModel.onEvent(ScanBillEvent.OnDeleteProductPress(it))
+                    },
+                    onConfirmClick = {},
+                    confirmButtonText = "Add products",
+                    confirmContainerColor = MaterialTheme.colorScheme.primary,
+                    confirmTextColor = MaterialTheme.colorScheme.onPrimary
+                )
             }
         }
     )

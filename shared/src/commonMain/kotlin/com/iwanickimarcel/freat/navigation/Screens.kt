@@ -75,6 +75,7 @@ object ScanBill : Screen {
     @Composable
     override fun Content() {
         ScanBillScreen(
+            getViewModel = { appModule.viewModelModule.scanBillViewModel },
             imagePicker = appModule.imageModule.imagePicker
         )
     }

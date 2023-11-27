@@ -14,6 +14,7 @@ import com.iwanickimarcel.freat.feature.recipes.domain.RecipeDataSource
 import com.iwanickimarcel.freat.feature.recipes.presentation.RecipesViewModel
 import com.iwanickimarcel.freat.feature.recipes_search.domain.RecipesSearchHistoryDataSource
 import com.iwanickimarcel.freat.feature.recipes_search.presentation.RecipesSearchViewModel
+import com.iwanickimarcel.freat.feature.scan_bill.presentation.ScanBillViewModel
 import dev.icerock.moko.mvvm.compose.getViewModel
 import dev.icerock.moko.mvvm.compose.viewModelFactory
 
@@ -134,6 +135,15 @@ class ViewModelModule(
                 AddStepViewModel(
                     validateStep = useCaseModule.validateStep
                 )
+            }
+        )
+
+    val scanBillViewModel: ScanBillViewModel
+        @Composable
+        get() = getViewModel(
+            key = "scan-bill-screen",
+            factory = viewModelFactory {
+                ScanBillViewModel()
             }
         )
 

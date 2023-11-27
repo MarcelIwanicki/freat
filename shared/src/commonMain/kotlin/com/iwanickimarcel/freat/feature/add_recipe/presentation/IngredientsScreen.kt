@@ -27,6 +27,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.iwanickimarcel.freat.feature.products.domain.Product
 
@@ -36,7 +37,10 @@ fun IngredientsScreen(
     onEditIngredientPressed: (Product) -> Unit,
     onAddIngredientPressed: () -> Unit,
     onDeleteIngredientPressed: (Product) -> Unit,
-    onNextClick: () -> Unit
+    onConfirmClick: () -> Unit,
+    confirmButtonText: String,
+    confirmContainerColor: Color = MaterialTheme.colorScheme.secondary,
+    confirmTextColor: Color = MaterialTheme.colorScheme.onSecondary
 ) {
     Column(
         modifier = Modifier
@@ -134,16 +138,16 @@ fun IngredientsScreen(
                 .fillMaxWidth()
                 .height(48.dp),
             onClick = {
-                onNextClick()
+                onConfirmClick()
             },
             colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.secondary
+                containerColor = confirmContainerColor
             ),
             shape = RoundedCornerShape(16.dp)
         ) {
             Text(
-                "Next",
-                color = MaterialTheme.colorScheme.onSecondary
+                confirmButtonText,
+                color = confirmTextColor
             )
         }
     }
