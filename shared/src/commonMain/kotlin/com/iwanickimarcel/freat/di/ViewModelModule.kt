@@ -1,6 +1,7 @@
 package com.iwanickimarcel.freat.di
 
 import androidx.compose.runtime.Composable
+import com.iwanickimarcel.freat.core.domain.ImageAnalyzer
 import com.iwanickimarcel.freat.feature.add_ingredient.presentation.AddIngredientViewModel
 import com.iwanickimarcel.freat.feature.add_product.presentation.AddProductViewModel
 import com.iwanickimarcel.freat.feature.add_recipe.presentation.AddRecipeViewModel
@@ -23,6 +24,7 @@ class ViewModelModule(
     private val productsSearchHistoryDataSource: ProductsSearchHistoryDataSource,
     private val recipeDataSource: RecipeDataSource,
     private val recipesSearchHistoryDataSource: RecipesSearchHistoryDataSource,
+    private val imageAnalyzer: ImageAnalyzer
 ) {
     private val useCaseModule: UseCaseModule = UseCaseModule()
 
@@ -143,7 +145,9 @@ class ViewModelModule(
         get() = getViewModel(
             key = "scan-bill-screen",
             factory = viewModelFactory {
-                ScanBillViewModel()
+                ScanBillViewModel(
+                    imageAnalyzer = imageAnalyzer
+                )
             }
         )
 

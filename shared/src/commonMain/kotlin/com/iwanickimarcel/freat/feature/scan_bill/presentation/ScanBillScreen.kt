@@ -20,7 +20,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
-import com.iwanickimarcel.freat.core.domain.ImageAnalyzer
 import com.iwanickimarcel.freat.core.presentation.ImagePicker
 import com.iwanickimarcel.freat.core.presentation.rememberBitmapFromBytes
 import com.iwanickimarcel.freat.feature.add_recipe.presentation.IngredientsScreen
@@ -43,12 +42,11 @@ fun ScanBillScreen(
     state.photoBytes?.let {
         val bitmap = rememberBitmapFromBytes(it)
         LaunchedEffect(Unit) {
-            val analyzer = ImageAnalyzer()
-            analyzer.getProductsFromImage(
-                bitmap ?: return@LaunchedEffect
-            ).collect {
-
-            }
+            viewModel.onEvent(
+                ScanBillEvent.OnImageAnalysisRequested(
+                    bitmap ?: return@LaunchedEffect
+                )
+            )
         }
     }
 

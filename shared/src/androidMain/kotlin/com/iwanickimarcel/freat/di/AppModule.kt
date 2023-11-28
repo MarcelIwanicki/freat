@@ -9,6 +9,10 @@ actual class AppModule(
         ImageModule(context)
     }
 
+    actual val imageAnalyzerModule: ImageAnalyzerModule by lazy {
+        ImageAnalyzerModule()
+    }
+
     actual val databaseModule: DatabaseModule by lazy {
         DatabaseModule(context)
     }
@@ -28,7 +32,8 @@ actual class AppModule(
             productDataSource = dataSourceModule.productDataSource,
             productsSearchHistoryDataSource = dataSourceModule.productsSearchHistoryDataSource,
             recipeDataSource = dataSourceModule.recipeDataSource,
-            recipesSearchHistoryDataSource = dataSourceModule.recipesSearchHistoryDataSource
+            recipesSearchHistoryDataSource = dataSourceModule.recipesSearchHistoryDataSource,
+            imageAnalyzer = imageAnalyzerModule.imageAnalyzer
         )
     }
 }
