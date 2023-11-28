@@ -6,13 +6,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AddAPhoto
 import androidx.compose.material.icons.outlined.ArrowBackIos
+import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -22,6 +25,8 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.iwanickimarcel.freat.core.presentation.ImagePicker
 import com.iwanickimarcel.freat.core.presentation.rememberBitmapFromBytes
+import com.iwanickimarcel.freat.feature.add_ingredient.presentation.AddIngredientScreen
+import com.iwanickimarcel.freat.feature.add_ingredient.presentation.AddIngredientViewModel
 import com.iwanickimarcel.freat.feature.add_recipe.presentation.IngredientsScreen
 import com.iwanickimarcel.freat.feature.products.presentation.AddProductPlaceholder
 
@@ -29,11 +34,16 @@ import com.iwanickimarcel.freat.feature.products.presentation.AddProductPlacehol
 @Composable
 fun ScanBillScreen(
     getViewModel: @Composable () -> ScanBillViewModel,
+    getAddIngredientViewModel: @Composable () -> AddIngredientViewModel,
     imagePicker: ImagePicker
 ) {
     val viewModel = getViewModel()
     val state by viewModel.state.collectAsState()
     val navigator = LocalNavigator.current ?: return
+
+    val bottomSheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true
+    )
 
     imagePicker.registerPicker {
         viewModel.onEvent(ScanBillEvent.OnPhotoSelected(it))
@@ -46,6 +56,27 @@ fun ScanBillScreen(
                 ScanBillEvent.OnImageAnalysisRequested(
                     bitmap ?: return@LaunchedEffect
                 )
+            )
+        }
+    }
+
+    state.editProduct?.let {
+        ModalBottomSheet(
+            onDismissRequest = {
+                viewModel.onEvent(ScanBillEvent.OnEditProductDismiss)
+            },
+            sheetState = bottomSheetState,
+            windowInsets = BottomSheetDefaults.windowInsets
+        ) {
+            AddIngredientScreen(
+                editProduct = it,
+                getViewModel = getAddIngredientViewModel,
+                onIngredientAdded = {
+                    viewModel.onEvent(ScanBillEvent.OnProductEdited(it))
+                },
+                onDismiss = {
+                    viewModel.onEvent(ScanBillEvent.OnEditProductDismiss)
+                },
             )
         }
     }

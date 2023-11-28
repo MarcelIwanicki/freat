@@ -53,7 +53,24 @@ class ScanBillViewModel(
             }
 
             is ScanBillEvent.OnEditProductPress -> {
+                _state.value = _state.value.copy(
+                    editProduct = event.product
+                )
+            }
 
+            is ScanBillEvent.OnProductEdited -> {
+                _state.value = _state.value.copy(
+                    products = _state.value.products.toMutableList().apply {
+                        remove(_state.value.products.find { it.name == event.product.name })
+                        add(event.product)
+                    }
+                )
+            }
+
+            is ScanBillEvent.OnEditProductDismiss -> {
+                _state.value = _state.value.copy(
+                    editProduct = null
+                )
             }
         }
     }

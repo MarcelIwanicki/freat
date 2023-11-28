@@ -76,6 +76,7 @@ object ScanBill : Screen {
     override fun Content() {
         ScanBillScreen(
             getViewModel = { appModule.viewModelModule.scanBillViewModel },
+            getAddIngredientViewModel = { appModule.viewModelModule.addIngredientViewModel },
             imagePicker = appModule.imageModule.imagePicker
         )
     }
