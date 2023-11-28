@@ -45,7 +45,11 @@ class ScanBillViewModel(
             }
 
             is ScanBillEvent.OnDeleteProductPress -> {
-
+                _state.value = _state.value.copy(
+                    products = _state.value.products.toMutableList().apply {
+                        remove(event.product)
+                    }
+                )
             }
 
             is ScanBillEvent.OnEditProductPress -> {

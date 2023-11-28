@@ -98,7 +98,7 @@ fun ScanBillScreen(
                         viewModel.onEvent(ScanBillEvent.OnDeleteProductPress(it))
                     },
                     onConfirmClick = {},
-                    confirmButtonText = "Add products",
+                    confirmButtonText = "Confirm adding products",
                     confirmContainerColor = MaterialTheme.colorScheme.primary,
                     confirmTextColor = MaterialTheme.colorScheme.onPrimary
                 )
