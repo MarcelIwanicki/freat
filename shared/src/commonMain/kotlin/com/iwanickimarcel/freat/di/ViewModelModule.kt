@@ -146,7 +146,8 @@ class ViewModelModule(
             key = "scan-bill-screen",
             factory = viewModelFactory {
                 ScanBillViewModel(
-                    imageAnalyzer = imageAnalyzer
+                    imageAnalyzer = imageAnalyzer,
+                    productDataSource = productDataSource
                 )
             }
         )

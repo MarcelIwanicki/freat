@@ -81,6 +81,12 @@ fun ScanBillScreen(
         }
     }
 
+    if (state.success) {
+        LaunchedEffect(Unit) {
+            navigator.pop()
+        }
+    }
+
     if (state.isAddProductOpen) {
         ModalBottomSheet(
             onDismissRequest = {
@@ -148,7 +154,9 @@ fun ScanBillScreen(
                     onDeleteIngredientPressed = {
                         viewModel.onEvent(ScanBillEvent.OnDeleteProductPress(it))
                     },
-                    onConfirmClick = {},
+                    onConfirmClick = {
+                        viewModel.onEvent(ScanBillEvent.OnAddProductsConfirm)
+                    },
                     confirmButtonText = "Confirm adding products",
                     confirmContainerColor = MaterialTheme.colorScheme.primary,
                     confirmTextColor = MaterialTheme.colorScheme.onPrimary

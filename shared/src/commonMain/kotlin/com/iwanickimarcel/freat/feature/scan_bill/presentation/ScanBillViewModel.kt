@@ -1,6 +1,7 @@
 package com.iwanickimarcel.freat.feature.scan_bill.presentation
 
 import com.iwanickimarcel.freat.core.domain.ImageAnalyzer
+import com.iwanickimarcel.freat.feature.products.domain.ProductDataSource
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -10,7 +11,8 @@ import kotlinx.coroutines.launch
 import kotlin.time.Duration.Companion.seconds
 
 class ScanBillViewModel(
-    val imageAnalyzer: ImageAnalyzer
+    val imageAnalyzer: ImageAnalyzer,
+    val productDataSource: ProductDataSource
 ) : ViewModel() {
 
     companion object {
@@ -87,6 +89,18 @@ class ScanBillViewModel(
                 _state.value = _state.value.copy(
                     editProduct = null
                 )
+            }
+
+            is ScanBillEvent.OnAddProductsConfirm -> {
+                viewModelScope.launch {
+                    _state.value.products.forEach {
+                        productDataSource.insertProduct(it)
+                    }
+
+                    _state.value = _state.value.copy(
+                        success = true
+                    )
+                }
             }
         }
     }
