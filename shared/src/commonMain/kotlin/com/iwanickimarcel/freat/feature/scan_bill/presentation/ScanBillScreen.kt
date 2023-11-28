@@ -81,6 +81,26 @@ fun ScanBillScreen(
         }
     }
 
+    if (state.isAddProductOpen) {
+        ModalBottomSheet(
+            onDismissRequest = {
+                viewModel.onEvent(ScanBillEvent.OnAddProductDismiss)
+            },
+            sheetState = bottomSheetState,
+            windowInsets = BottomSheetDefaults.windowInsets
+        ) {
+            AddIngredientScreen(
+                getViewModel = getAddIngredientViewModel,
+                onIngredientAdded = {
+                    viewModel.onEvent(ScanBillEvent.OnProductAdded(it))
+                },
+                onDismiss = {
+                    viewModel.onEvent(ScanBillEvent.OnAddProductDismiss)
+                }
+            )
+        }
+    }
+
     Scaffold(
         topBar = {
             TopAppBar(

@@ -41,7 +41,23 @@ class ScanBillViewModel(
             }
 
             is ScanBillEvent.OnAddProductPress -> {
+                _state.value = _state.value.copy(
+                    isAddProductOpen = true
+                )
+            }
 
+            is ScanBillEvent.OnAddProductDismiss -> {
+                _state.value = _state.value.copy(
+                    isAddProductOpen = false
+                )
+            }
+
+            is ScanBillEvent.OnProductAdded -> {
+                _state.value = _state.value.copy(
+                    products = _state.value.products.toMutableList().apply {
+                        add(event.product)
+                    }
+                )
             }
 
             is ScanBillEvent.OnDeleteProductPress -> {

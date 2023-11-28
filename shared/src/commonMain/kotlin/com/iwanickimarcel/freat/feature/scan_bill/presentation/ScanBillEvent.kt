@@ -10,5 +10,7 @@ sealed interface ScanBillEvent {
     data class OnProductEdited(val product: Product) : ScanBillEvent
     object OnEditProductDismiss : ScanBillEvent
     object OnAddProductPress : ScanBillEvent
+    object OnAddProductDismiss : ScanBillEvent
+    data class OnProductAdded(val product: Product): ScanBillEvent
     data class OnDeleteProductPress(val product: Product) : ScanBillEvent
 }

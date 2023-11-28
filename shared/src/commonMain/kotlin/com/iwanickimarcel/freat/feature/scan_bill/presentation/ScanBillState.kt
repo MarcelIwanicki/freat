@@ -6,4 +6,5 @@ data class ScanBillState(
     val photoBytes: ByteArray? = null,
     val products: List<Product> = emptyList(),
     val editProduct: Product? = null,
+    val isAddProductOpen: Boolean = false,
 )
