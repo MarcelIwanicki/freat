@@ -1,6 +1,6 @@
 package com.iwanickimarcel.freat.feature.recipes.domain
 
-import com.iwanickimarcel.freat.feature.products.domain.Product
+import com.iwanickimarcel.products.Product
 
 typealias Percent = Int
 

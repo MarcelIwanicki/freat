@@ -1,6 +1,6 @@
 package com.iwanickimarcel.freat.feature.add_product.presentation
 
-import com.iwanickimarcel.freat.feature.products.domain.AmountUnit
+import com.iwanickimarcel.products.AmountUnit
 
 data class AddProductState(
     val name: String? = null,

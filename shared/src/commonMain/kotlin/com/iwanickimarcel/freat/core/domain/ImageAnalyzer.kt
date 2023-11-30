@@ -1,7 +1,7 @@
 package com.iwanickimarcel.freat.core.domain
 
 import androidx.compose.ui.graphics.ImageBitmap
-import com.iwanickimarcel.freat.feature.products.domain.Product
+import com.iwanickimarcel.products.Product
 import kotlinx.coroutines.flow.Flow
 
 expect class ImageAnalyzer {

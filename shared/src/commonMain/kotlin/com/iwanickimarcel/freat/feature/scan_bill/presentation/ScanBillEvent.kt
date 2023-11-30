@@ -1,7 +1,7 @@
 package com.iwanickimarcel.freat.feature.scan_bill.presentation
 
 import androidx.compose.ui.graphics.ImageBitmap
-import com.iwanickimarcel.freat.feature.products.domain.Product
+import com.iwanickimarcel.products.Product
 
 sealed interface ScanBillEvent {
     data class OnImageAnalysisRequested(val imageBitmap: ImageBitmap) : ScanBillEvent

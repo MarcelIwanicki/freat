@@ -1,6 +1,6 @@
 package com.iwanickimarcel.freat.feature.add_ingredient.presentation
 
-import com.iwanickimarcel.freat.feature.products.domain.Product
+import com.iwanickimarcel.products.Product
 
 sealed interface AddIngredientEvent {
     data class OnEditProductProvided(val product: Product) : AddIngredientEvent

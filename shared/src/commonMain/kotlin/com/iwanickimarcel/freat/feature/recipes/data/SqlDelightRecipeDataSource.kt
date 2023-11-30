@@ -2,7 +2,7 @@ package com.iwanickimarcel.freat.feature.recipes.data
 
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
-import com.iwanickimarcel.freat.core.data.ImageStorage
+import com.iwanickimarcel.core.ImageStorage
 import com.iwanickimarcel.freat.core.extensions.combineIndexes
 import com.iwanickimarcel.freat.feature.recipes.domain.Recipe
 import com.iwanickimarcel.freat.feature.recipes.domain.RecipeDataSource

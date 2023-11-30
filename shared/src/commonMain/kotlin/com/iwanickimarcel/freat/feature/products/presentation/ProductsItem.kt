@@ -19,8 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.iwanickimarcel.freat.feature.products.domain.Product
-import com.iwanickimarcel.freat.feature.products.domain.ProductPhoto
+import com.iwanickimarcel.products.Product
 
 @Composable
 fun ProductsItem(

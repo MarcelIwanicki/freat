@@ -1,7 +1,7 @@
 package com.iwanickimarcel.freat.feature.products_search.domain
 
-import com.iwanickimarcel.freat.feature.products.domain.Product
 import com.iwanickimarcel.freat.feature.products_search.data.toProductsSearchHistoryItem
+import com.iwanickimarcel.products.Product
 
 class FilterProductsSearchHistoryItems {
     operator fun invoke(

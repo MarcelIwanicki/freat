@@ -95,6 +95,11 @@ sqldelight {
 }
 
 dependencies {
+    implementation(project(mapOf("path" to ":shared:data:core")))
+    implementation(project(mapOf("path" to ":shared:presentation:core")))
+    implementation(project(mapOf("path" to ":shared:domain:products")))
+    implementation(project(mapOf("path" to ":shared:data:products")))
+
     implementation("androidx.core:core:1.12.0")
     implementation("com.google.mlkit:text-recognition:16.0.0")
     commonMainImplementation("cafe.adriel.voyager:voyager-navigator:1.0.0-rc05")

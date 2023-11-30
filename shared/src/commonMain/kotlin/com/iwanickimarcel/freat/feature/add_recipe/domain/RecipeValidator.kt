@@ -1,7 +1,7 @@
 package com.iwanickimarcel.freat.feature.add_recipe.domain
 
-import com.iwanickimarcel.freat.feature.products.domain.Product
 import com.iwanickimarcel.freat.feature.recipes.domain.Recipe
+import com.iwanickimarcel.products.Product
 
 typealias ValidationResult = String?
 

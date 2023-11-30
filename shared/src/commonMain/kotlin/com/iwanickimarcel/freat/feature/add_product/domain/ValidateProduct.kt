@@ -1,8 +1,8 @@
 package com.iwanickimarcel.freat.feature.add_product.domain
 
-import com.iwanickimarcel.freat.feature.products.domain.Amount
-import com.iwanickimarcel.freat.feature.products.domain.AmountUnit
-import com.iwanickimarcel.freat.feature.products.domain.Product
+import com.iwanickimarcel.products.Amount
+import com.iwanickimarcel.products.AmountUnit
+import com.iwanickimarcel.products.Product
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

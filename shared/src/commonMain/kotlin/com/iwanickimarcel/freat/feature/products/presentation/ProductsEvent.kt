@@ -1,6 +1,6 @@
 package com.iwanickimarcel.freat.feature.products.presentation
 
-import com.iwanickimarcel.freat.feature.products.domain.Product
+import com.iwanickimarcel.products.Product
 
 sealed interface ProductsEvent {
     data class OnSearchQuery(val query: String) : ProductsEvent

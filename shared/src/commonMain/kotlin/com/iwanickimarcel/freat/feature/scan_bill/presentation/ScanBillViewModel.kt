@@ -1,7 +1,7 @@
 package com.iwanickimarcel.freat.feature.scan_bill.presentation
 
 import com.iwanickimarcel.freat.core.domain.ImageAnalyzer
-import com.iwanickimarcel.freat.feature.products.domain.ProductDataSource
+import com.iwanickimarcel.products.ProductDataSource
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted

@@ -1,7 +1,7 @@
 package com.iwanickimarcel.freat.feature.home.presentation
 
-import com.iwanickimarcel.freat.feature.products.domain.ProductDataSource
 import com.iwanickimarcel.freat.feature.recipes.domain.RecipeDataSource
+import com.iwanickimarcel.products.ProductDataSource
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted

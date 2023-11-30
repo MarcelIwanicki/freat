@@ -1,6 +1,6 @@
 package com.iwanickimarcel.freat.feature.scan_bill.presentation
 
-import com.iwanickimarcel.freat.feature.products.domain.Product
+import com.iwanickimarcel.products.Product
 
 data class ScanBillState(
     val photoBytes: ByteArray? = null,

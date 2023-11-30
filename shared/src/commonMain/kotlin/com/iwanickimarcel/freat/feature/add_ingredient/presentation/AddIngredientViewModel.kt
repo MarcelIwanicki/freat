@@ -1,7 +1,7 @@
 package com.iwanickimarcel.freat.feature.add_ingredient.presentation
 
 import com.iwanickimarcel.freat.feature.add_product.domain.ValidateProduct
-import com.iwanickimarcel.freat.feature.products.domain.AmountUnit
+import com.iwanickimarcel.products.AmountUnit
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted

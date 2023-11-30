@@ -6,8 +6,8 @@ import androidx.compose.ui.graphics.asAndroidBitmap
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
-import com.iwanickimarcel.freat.feature.products.domain.Product
-import com.iwanickimarcel.freat.feature.products.domain.g
+import com.iwanickimarcel.products.Product
+import com.iwanickimarcel.products.g
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow

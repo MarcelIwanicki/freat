@@ -23,8 +23,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
+import com.iwanickimarcel.core.rememberBitmapFromBytes
 import com.iwanickimarcel.freat.core.presentation.ImagePicker
-import com.iwanickimarcel.freat.core.presentation.rememberBitmapFromBytes
 import com.iwanickimarcel.freat.feature.add_ingredient.presentation.AddIngredientScreen
 import com.iwanickimarcel.freat.feature.add_ingredient.presentation.AddIngredientViewModel
 import com.iwanickimarcel.freat.feature.add_recipe.presentation.IngredientsScreen

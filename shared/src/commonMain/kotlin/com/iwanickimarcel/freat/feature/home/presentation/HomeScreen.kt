@@ -54,7 +54,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.iwanickimarcel.freat.core.presentation.TriangleShape
-import com.iwanickimarcel.freat.feature.products.domain.ProductPhoto
 import com.iwanickimarcel.freat.feature.recipes.domain.RecipePhoto
 import com.iwanickimarcel.freat.navigation.BottomNavigationBar
 import com.iwanickimarcel.freat.navigation.Home
@@ -62,6 +61,7 @@ import com.iwanickimarcel.freat.navigation.Products
 import com.iwanickimarcel.freat.navigation.Recipes
 import com.iwanickimarcel.freat.navigation.RecipesSearch
 import com.iwanickimarcel.freat.navigation.ScanBill
+import com.iwanickimarcel.freat.feature.products.presentation.ProductPhoto
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

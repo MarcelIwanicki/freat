@@ -2,7 +2,7 @@ package com.iwanickimarcel.freat.di
 
 import android.content.Context
 import androidx.compose.runtime.Composable
-import com.iwanickimarcel.freat.core.data.ImageStorage
+import com.iwanickimarcel.core.ImageStorage
 import com.iwanickimarcel.freat.core.presentation.ImagePicker
 import com.iwanickimarcel.freat.core.presentation.ImagePickerFactory
 

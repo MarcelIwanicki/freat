@@ -1,8 +1,8 @@
 package com.iwanickimarcel.freat.feature.add_recipe.presentation
 
 import androidx.compose.ui.text.input.TextFieldValue
-import com.iwanickimarcel.freat.feature.products.domain.Product
 import com.iwanickimarcel.freat.feature.recipes.domain.Recipe
+import com.iwanickimarcel.products.Product
 
 data class AddRecipeState(
     val editId: Long? = null,

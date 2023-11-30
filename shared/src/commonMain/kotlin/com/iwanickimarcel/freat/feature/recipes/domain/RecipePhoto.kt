@@ -18,7 +18,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
-import com.iwanickimarcel.freat.core.presentation.rememberBitmapFromBytes
+import com.iwanickimarcel.core.rememberBitmapFromBytes
 
 @Composable
 fun RecipePhoto(

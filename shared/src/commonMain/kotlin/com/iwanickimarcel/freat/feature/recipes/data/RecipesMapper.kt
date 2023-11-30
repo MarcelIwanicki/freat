@@ -1,14 +1,14 @@
 package com.iwanickimarcel.freat.feature.recipes.data
 
-import com.iwanickimarcel.freat.core.data.ImageStorage
-import com.iwanickimarcel.freat.feature.products.domain.Amount
-import com.iwanickimarcel.freat.feature.products.domain.AmountUnit
-import com.iwanickimarcel.freat.feature.products.domain.Product
+import com.iwanickimarcel.core.ImageStorage
 import com.iwanickimarcel.freat.feature.recipes.domain.Recipe
 import com.iwanickimarcel.freat.recipesdatabase.RecipeEntity
 import com.iwanickimarcel.freat.recipesdatabase.RecipeProductsEntity
 import com.iwanickimarcel.freat.recipesdatabase.RecipeStepEntity
 import com.iwanickimarcel.freat.recipesdatabase.RecipeTagsEntity
+import com.iwanickimarcel.products.Amount
+import com.iwanickimarcel.products.AmountUnit
+import com.iwanickimarcel.products.Product
 
 suspend fun RecipeEntity.toRecipe(
     imageStorage: ImageStorage,
