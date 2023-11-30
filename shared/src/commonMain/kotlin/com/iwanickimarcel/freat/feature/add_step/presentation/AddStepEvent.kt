@@ -1,6 +1,6 @@
 package com.iwanickimarcel.freat.feature.add_step.presentation
 
-import com.iwanickimarcel.freat.feature.recipes.domain.Recipe
+import com.iwanickimarcel.recipes.Recipe
 
 sealed interface AddStepEvent {
     data class OnEditStepProvided(val step: Recipe.Step) : AddStepEvent

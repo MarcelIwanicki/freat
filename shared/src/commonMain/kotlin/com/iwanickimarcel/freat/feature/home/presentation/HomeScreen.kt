@@ -54,7 +54,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.iwanickimarcel.freat.core.presentation.TriangleShape
-import com.iwanickimarcel.freat.feature.recipes.domain.RecipePhoto
+import com.iwanickimarcel.freat.feature.recipes.presentation.RecipePhoto
 import com.iwanickimarcel.freat.navigation.BottomNavigationBar
 import com.iwanickimarcel.freat.navigation.Home
 import com.iwanickimarcel.freat.navigation.Products

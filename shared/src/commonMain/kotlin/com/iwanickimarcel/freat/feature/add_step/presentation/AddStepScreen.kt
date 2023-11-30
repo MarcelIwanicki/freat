@@ -34,7 +34,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import com.iwanickimarcel.freat.feature.recipes.domain.Recipe
+import com.iwanickimarcel.recipes.Recipe
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

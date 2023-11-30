@@ -2,13 +2,13 @@ package com.iwanickimarcel.freat.di
 
 import android.content.Context
 import com.iwanickimarcel.freat.core.data.ProductsSearchHistoryDatabaseDriverFactory
-import com.iwanickimarcel.freat.core.data.RecipesDatabaseDriverFactory
 import com.iwanickimarcel.freat.core.data.RecipesSearchHistoryDatabaseDriverFactory
 import com.iwanickimarcel.freat.products_search_history_database.ProductsSearchHistoryDatabase
-import com.iwanickimarcel.freat.recipes_database.RecipesDatabase
 import com.iwanickimarcel.freat.recipes_search_history_database.RecipesSearchHistoryDatabase
 import com.iwanickimarcel.products.ProductsDatabaseDriverFactory
 import com.iwanickimarcel.products.database.ProductsDatabase
+import com.iwanickimarcel.recipes.RecipesDatabaseDriverFactory
+import com.iwanickimarcel.recipes.database.RecipesDatabase
 
 actual class DatabaseModule(
     private val context: Context

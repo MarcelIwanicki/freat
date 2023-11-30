@@ -99,6 +99,8 @@ dependencies {
     implementation(project(mapOf("path" to ":shared:presentation:core")))
     implementation(project(mapOf("path" to ":shared:domain:products")))
     implementation(project(mapOf("path" to ":shared:data:products")))
+    implementation(project(mapOf("path" to ":shared:data:recipes")))
+    implementation(project(mapOf("path" to ":shared:domain:recipes")))
 
     implementation("androidx.core:core:1.12.0")
     implementation("com.google.mlkit:text-recognition:16.0.0")

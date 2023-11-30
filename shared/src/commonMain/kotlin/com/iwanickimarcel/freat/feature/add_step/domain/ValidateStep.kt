@@ -1,6 +1,6 @@
 package com.iwanickimarcel.freat.feature.add_step.domain
 
-import com.iwanickimarcel.freat.feature.recipes.domain.Recipe
+import com.iwanickimarcel.recipes.Recipe
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

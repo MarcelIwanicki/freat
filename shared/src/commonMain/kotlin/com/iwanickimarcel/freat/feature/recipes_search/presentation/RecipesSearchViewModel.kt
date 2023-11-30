@@ -1,9 +1,9 @@
 package com.iwanickimarcel.freat.feature.recipes_search.presentation
 
-import com.iwanickimarcel.freat.feature.recipes.domain.RecipeDataSource
 import com.iwanickimarcel.freat.feature.recipes_search.domain.FilterRecipesSearchHistoryItems
 import com.iwanickimarcel.freat.feature.recipes_search.domain.RecipesSearchHistoryDataSource
 import com.iwanickimarcel.freat.feature.recipes_search.domain.RecipesSearchHistoryItem
+import com.iwanickimarcel.recipes.RecipeDataSource
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted

@@ -1,7 +1,7 @@
 package com.iwanickimarcel.freat.feature.recipes_search.domain
 
-import com.iwanickimarcel.freat.feature.recipes.domain.Recipe
 import com.iwanickimarcel.freat.feature.recipes_search.data.toRecipesSearchHistoryItem
+import com.iwanickimarcel.recipes.Recipe
 
 class FilterRecipesSearchHistoryItems {
     operator fun invoke(

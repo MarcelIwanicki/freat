@@ -1,6 +1,6 @@
 package com.iwanickimarcel.freat.feature.recipes.presentation
 
-import com.iwanickimarcel.freat.feature.recipes.domain.Recipe
+import com.iwanickimarcel.recipes.Recipe
 
 data class RecipesState(
     val recipes: List<Recipe> = emptyList(),

@@ -1,6 +1,6 @@
 package com.iwanickimarcel.freat.feature.add_recipe.domain
 
-import com.iwanickimarcel.freat.feature.recipes.domain.Recipe
+import com.iwanickimarcel.recipes.Recipe
 
 class EditStep {
     operator fun invoke(

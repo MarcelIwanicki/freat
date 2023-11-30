@@ -1,7 +1,7 @@
 package com.iwanickimarcel.freat.feature.home.presentation
 
-import com.iwanickimarcel.freat.feature.recipes.domain.Recipe
 import com.iwanickimarcel.products.Product
+import com.iwanickimarcel.recipes.Recipe
 
 sealed interface HomeEvent {
     object OnSearchBarClick : HomeEvent

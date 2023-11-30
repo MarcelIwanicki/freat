@@ -6,10 +6,10 @@ import com.iwanickimarcel.freat.feature.add_recipe.domain.EditStep
 import com.iwanickimarcel.freat.feature.add_recipe.domain.ValidateRecipe
 import com.iwanickimarcel.freat.feature.add_step.domain.ValidateStep
 import com.iwanickimarcel.freat.feature.products_search.domain.FilterProductsSearchHistoryItems
-import com.iwanickimarcel.freat.feature.recipes.domain.FilterRecipesByQuery
-import com.iwanickimarcel.freat.feature.recipes.domain.GetRecipesWithOwnedProductsPercent
 import com.iwanickimarcel.freat.feature.recipes_search.domain.FilterRecipesSearchHistoryItems
 import com.iwanickimarcel.products.FilterProductsByQuery
+import com.iwanickimarcel.recipes.FilterRecipesByQuery
+import com.iwanickimarcel.recipes.GetRecipesWithOwnedProductsPercent
 
 class UseCaseModule {
     val filterProductsByQuery: FilterProductsByQuery by lazy {
