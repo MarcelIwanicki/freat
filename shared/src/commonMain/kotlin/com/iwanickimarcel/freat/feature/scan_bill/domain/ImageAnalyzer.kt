@@ -1,4 +1,4 @@
-package com.iwanickimarcel.freat.core.domain
+package com.iwanickimarcel.freat.feature.scan_bill.domain
 
 import androidx.compose.ui.graphics.ImageBitmap
 import com.iwanickimarcel.products.Product

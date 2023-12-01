@@ -1,6 +1,6 @@
 package com.iwanickimarcel.freat.di
 
-import com.iwanickimarcel.freat.feature.add_product.domain.ValidateProduct
+import com.iwanickimarcel.add_product.ValidateProduct
 import com.iwanickimarcel.freat.feature.add_recipe.domain.DeleteStep
 import com.iwanickimarcel.freat.feature.add_recipe.domain.EditStep
 import com.iwanickimarcel.freat.feature.add_recipe.domain.ValidateRecipe

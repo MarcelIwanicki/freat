@@ -1,6 +1,6 @@
 package com.iwanickimarcel.freat.feature.add_product.presentation
 
-import com.iwanickimarcel.freat.feature.add_product.domain.ValidateProduct
+import com.iwanickimarcel.add_product.ValidateProduct
 import com.iwanickimarcel.products.AmountUnit
 import com.iwanickimarcel.products.ProductDataSource
 import dev.icerock.moko.mvvm.viewmodel.ViewModel

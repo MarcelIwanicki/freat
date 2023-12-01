@@ -71,6 +71,7 @@ dependencies {
     implementation(project(mapOf("path" to ":shared:data:recipes_search")))
     implementation(project(mapOf("path" to ":shared:domain:products")))
     implementation(project(mapOf("path" to ":shared:domain:products_search")))
+    implementation(project(mapOf("path" to ":shared:domain:add_product")))
     implementation(project(mapOf("path" to ":shared:domain:recipes")))
     implementation(project(mapOf("path" to ":shared:domain:recipes_search")))
     implementation(project(mapOf("path" to ":shared:presentation:core")))

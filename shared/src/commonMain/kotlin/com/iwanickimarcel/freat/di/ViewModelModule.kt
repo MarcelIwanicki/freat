@@ -1,7 +1,6 @@
 package com.iwanickimarcel.freat.di
 
 import androidx.compose.runtime.Composable
-import com.iwanickimarcel.freat.core.domain.ImageAnalyzer
 import com.iwanickimarcel.freat.feature.add_ingredient.presentation.AddIngredientViewModel
 import com.iwanickimarcel.freat.feature.add_product.presentation.AddProductViewModel
 import com.iwanickimarcel.freat.feature.add_recipe.presentation.AddRecipeViewModel
@@ -11,6 +10,7 @@ import com.iwanickimarcel.freat.feature.products.presentation.ProductsViewModel
 import com.iwanickimarcel.freat.feature.products_search.presentation.ProductsSearchViewModel
 import com.iwanickimarcel.freat.feature.recipes.presentation.RecipesViewModel
 import com.iwanickimarcel.freat.feature.recipes_search.presentation.RecipesSearchViewModel
+import com.iwanickimarcel.freat.feature.scan_bill.domain.ImageAnalyzer
 import com.iwanickimarcel.freat.feature.scan_bill.presentation.ScanBillViewModel
 import com.iwanickimarcel.products.ProductDataSource
 import com.iwanickimarcel.products_search.ProductsSearchHistoryDataSource
