@@ -1,10 +1,8 @@
-package com.iwanickimarcel.freat.feature.recipes_search.data
+package com.iwanickimarcel.recipes_search
 
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
-import com.iwanickimarcel.freat.feature.recipes_search.domain.RecipesSearchHistoryDataSource
-import com.iwanickimarcel.freat.feature.recipes_search.domain.RecipesSearchHistoryItem
-import com.iwanickimarcel.freat.recipes_search_history_database.RecipesSearchHistoryDatabase
+import com.iwanickimarcel.recipes_search.database.RecipesSearchHistoryDatabase
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll

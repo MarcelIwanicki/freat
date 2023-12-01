@@ -1,4 +1,4 @@
-package com.iwanickimarcel.freat.feature.recipes_search.domain
+package com.iwanickimarcel.recipes_search
 
 import kotlinx.coroutines.flow.Flow
 

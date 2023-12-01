@@ -2,7 +2,6 @@ plugins {
     kotlin("multiplatform")
     id("com.android.library")
     id("org.jetbrains.compose")
-    id("app.cash.sqldelight")
 }
 
 @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
@@ -17,12 +16,6 @@ kotlin {
         }
     }
 
-    targets.withType(org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget::class.java).all {
-        binaries.withType(org.jetbrains.kotlin.gradle.plugin.mpp.Framework::class.java).all {
-            export("dev.icerock.moko:mvvm-core:0.16.1")
-        }
-    }
-
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -33,8 +26,6 @@ kotlin {
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
 
-                implementation("app.cash.sqldelight:runtime:2.0.0")
-                implementation("app.cash.sqldelight:coroutines-extensions:2.0.0")
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
             }
         }
@@ -45,18 +36,12 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                implementation("app.cash.sqldelight:android-driver:2.0.0")
                 implementation("androidx.appcompat:appcompat:1.6.1")
                 implementation("androidx.activity:activity-compose:1.8.0")
             }
         }
         val androidUnitTest by getting
-        val iosMain by creating {
-            dependencies {
-                implementation("app.cash.sqldelight:native-driver:2.0.0")
-            }
-            dependsOn(commonMain)
-        }
+
     }
 }
 
@@ -72,21 +57,9 @@ android {
     }
 }
 
-sqldelight {
-    databases {
-        create("RecipesSearchHistoryDatabase") {
-            packageName.set("com.iwanickimarcel.recipes_search.database")
-            srcDirs.setFrom("src/commonMain/sqldelight")
-        }
-    }
-}
-
 dependencies {
-    implementation(project(mapOf("path" to ":shared:data:core")))
-    implementation(project(mapOf("path" to ":shared:domain:recipes_search")))
-
     implementation("androidx.core:core:1.12.0")
-    implementation("com.google.android.gms:play-services-analytics-impl:18.0.4")
+    implementation(project(mapOf("path" to ":shared:domain:recipes")))
     commonMainApi("dev.icerock.moko:mvvm-core:0.16.1")
     commonMainApi("dev.icerock.moko:mvvm-compose:0.16.1")
     commonMainApi("dev.icerock.moko:mvvm-flow:0.16.1")

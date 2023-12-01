@@ -1,6 +1,6 @@
 package com.iwanickimarcel.freat.feature.recipes_search.presentation
 
-import com.iwanickimarcel.freat.feature.recipes_search.domain.RecipesSearchHistoryItem
+import com.iwanickimarcel.recipes_search.RecipesSearchHistoryItem
 
 data class RecipesSearchState(
     val query: String = "",

@@ -1,6 +1,5 @@
-package com.iwanickimarcel.freat.feature.recipes_search.domain
+package com.iwanickimarcel.recipes_search
 
-import com.iwanickimarcel.freat.feature.recipes_search.data.toRecipesSearchHistoryItem
 import com.iwanickimarcel.recipes.Recipe
 
 class FilterRecipesSearchHistoryItems {

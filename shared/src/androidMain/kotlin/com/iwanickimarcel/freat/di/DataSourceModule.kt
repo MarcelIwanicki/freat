@@ -1,9 +1,6 @@
 package com.iwanickimarcel.freat.di
 
 import com.iwanickimarcel.core.ImageStorage
-import com.iwanickimarcel.freat.feature.recipes_search.data.SqlDelightRecipesSearchHistoryDataSource
-import com.iwanickimarcel.freat.feature.recipes_search.domain.RecipesSearchHistoryDataSource
-import com.iwanickimarcel.freat.recipes_search_history_database.RecipesSearchHistoryDatabase
 import com.iwanickimarcel.products.ProductDataSource
 import com.iwanickimarcel.products.SqlDelightProductDataSource
 import com.iwanickimarcel.products.database.ProductsDatabase
@@ -13,6 +10,9 @@ import com.iwanickimarcel.products_search.database.ProductsSearchHistoryDatabase
 import com.iwanickimarcel.recipes.RecipeDataSource
 import com.iwanickimarcel.recipes.SqlDelightRecipeDataSource
 import com.iwanickimarcel.recipes.database.RecipesDatabase
+import com.iwanickimarcel.recipes_search.RecipesSearchHistoryDataSource
+import com.iwanickimarcel.recipes_search.SqlDelightRecipesSearchHistoryDataSource
+import com.iwanickimarcel.recipes_search.database.RecipesSearchHistoryDatabase
 
 actual class DataSourceModule(
     private val productsDatabase: ProductsDatabase,

@@ -1,9 +1,9 @@
-package com.iwanickimarcel.freat.core.data
+package com.iwanickimarcel.recipes_search
 
 import android.content.Context
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
-import com.iwanickimarcel.freat.recipes_search_history_database.RecipesSearchHistoryDatabase
+import com.iwanickimarcel.recipes_search.database.RecipesSearchHistoryDatabase
 
 actual class RecipesSearchHistoryDatabaseDriverFactory(
     private val context: Context
