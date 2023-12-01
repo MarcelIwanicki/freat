@@ -1,8 +1,8 @@
 package com.iwanickimarcel.freat.feature.add_recipe.presentation
 
-import com.iwanickimarcel.freat.feature.add_recipe.domain.DeleteStep
-import com.iwanickimarcel.freat.feature.add_recipe.domain.EditStep
-import com.iwanickimarcel.freat.feature.add_recipe.domain.ValidateRecipe
+import com.iwanickimarcel.add_recipe.DeleteStep
+import com.iwanickimarcel.add_recipe.EditStep
+import com.iwanickimarcel.add_recipe.ValidateRecipe
 import com.iwanickimarcel.recipes.Recipe
 import com.iwanickimarcel.recipes.RecipeDataSource
 import dev.icerock.moko.mvvm.viewmodel.ViewModel

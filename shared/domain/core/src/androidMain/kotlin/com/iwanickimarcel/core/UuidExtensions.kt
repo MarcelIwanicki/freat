@@ -1,8 +1,8 @@
-package com.iwanickimarcel.freat.core.extensions
+package com.iwanickimarcel.core
 
 import java.util.UUID
 
-fun generateUniqueId(): Long {
+actual fun generateUniqueId(): Long {
     val uuid = UUID.randomUUID()
     return uuid.leastSignificantBits xor uuid.mostSignificantBits
 }

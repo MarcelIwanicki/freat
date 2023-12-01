@@ -16,12 +16,6 @@ kotlin {
         }
     }
 
-    targets.withType(org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget::class.java).all {
-        binaries.withType(org.jetbrains.kotlin.gradle.plugin.mpp.Framework::class.java).all {
-            export("dev.icerock.moko:mvvm-core:0.16.1")
-        }
-    }
-
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -52,7 +46,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.iwanickimarcel.add_product"
+    namespace = "com.iwanickimarcel.core"
     compileSdk = 33
     defaultConfig {
         minSdk = 24
@@ -61,13 +55,4 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-}
-
-dependencies {
-    implementation(project(mapOf("path" to ":shared:domain:products")))
-    implementation("androidx.core:core:1.12.0")
-    commonMainApi("dev.icerock.moko:mvvm-core:0.16.1")
-    commonMainApi("dev.icerock.moko:mvvm-compose:0.16.1")
-    commonMainApi("dev.icerock.moko:mvvm-flow:0.16.1")
-    commonMainApi("dev.icerock.moko:mvvm-flow-compose:0.16.1")
 }

@@ -1,9 +1,9 @@
 package com.iwanickimarcel.freat.di
 
 import com.iwanickimarcel.add_product.ValidateProduct
-import com.iwanickimarcel.freat.feature.add_recipe.domain.DeleteStep
-import com.iwanickimarcel.freat.feature.add_recipe.domain.EditStep
-import com.iwanickimarcel.freat.feature.add_recipe.domain.ValidateRecipe
+import com.iwanickimarcel.add_recipe.DeleteStep
+import com.iwanickimarcel.add_recipe.EditStep
+import com.iwanickimarcel.add_recipe.ValidateRecipe
 import com.iwanickimarcel.freat.feature.add_step.domain.ValidateStep
 import com.iwanickimarcel.products.FilterProductsByQuery
 import com.iwanickimarcel.products_search.FilterProductsSearchHistoryItems

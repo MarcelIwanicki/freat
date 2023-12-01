@@ -74,6 +74,7 @@ dependencies {
     implementation(project(mapOf("path" to ":shared:domain:add_product")))
     implementation(project(mapOf("path" to ":shared:domain:recipes")))
     implementation(project(mapOf("path" to ":shared:domain:recipes_search")))
+    implementation(project(mapOf("path" to ":shared:domain:add_recipe")))
     implementation(project(mapOf("path" to ":shared:presentation:core")))
 
     implementation("androidx.core:core:1.12.0")

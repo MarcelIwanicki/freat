@@ -1,4 +1,4 @@
-package com.iwanickimarcel.freat.feature.add_recipe.domain
+package com.iwanickimarcel.add_recipe
 
 import com.iwanickimarcel.recipes.Recipe
 

@@ -1,6 +1,6 @@
-package com.iwanickimarcel.freat.feature.add_recipe.domain
+package com.iwanickimarcel.add_recipe
 
-import com.iwanickimarcel.freat.core.extensions.generateUniqueId
+import com.iwanickimarcel.core.generateUniqueId
 import com.iwanickimarcel.products.Product
 import com.iwanickimarcel.recipes.Recipe
 import kotlinx.coroutines.Dispatchers
