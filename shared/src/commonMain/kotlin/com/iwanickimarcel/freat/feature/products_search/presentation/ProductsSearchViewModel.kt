@@ -1,9 +1,9 @@
 package com.iwanickimarcel.freat.feature.products_search.presentation
 
-import com.iwanickimarcel.freat.feature.products_search.domain.FilterProductsSearchHistoryItems
-import com.iwanickimarcel.freat.feature.products_search.domain.ProductsSearchHistoryDataSource
-import com.iwanickimarcel.freat.feature.products_search.domain.ProductsSearchHistoryItem
 import com.iwanickimarcel.products.ProductDataSource
+import com.iwanickimarcel.products_search.FilterProductsSearchHistoryItems
+import com.iwanickimarcel.products_search.ProductsSearchHistoryDataSource
+import com.iwanickimarcel.products_search.ProductsSearchHistoryItem
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted

@@ -8,13 +8,13 @@ import com.iwanickimarcel.freat.feature.add_recipe.presentation.AddRecipeViewMod
 import com.iwanickimarcel.freat.feature.add_step.presentation.AddStepViewModel
 import com.iwanickimarcel.freat.feature.home.presentation.HomeViewModel
 import com.iwanickimarcel.freat.feature.products.presentation.ProductsViewModel
-import com.iwanickimarcel.freat.feature.products_search.domain.ProductsSearchHistoryDataSource
 import com.iwanickimarcel.freat.feature.products_search.presentation.ProductsSearchViewModel
 import com.iwanickimarcel.freat.feature.recipes.presentation.RecipesViewModel
 import com.iwanickimarcel.freat.feature.recipes_search.domain.RecipesSearchHistoryDataSource
 import com.iwanickimarcel.freat.feature.recipes_search.presentation.RecipesSearchViewModel
 import com.iwanickimarcel.freat.feature.scan_bill.presentation.ScanBillViewModel
 import com.iwanickimarcel.products.ProductDataSource
+import com.iwanickimarcel.products_search.ProductsSearchHistoryDataSource
 import com.iwanickimarcel.recipes.RecipeDataSource
 import dev.icerock.moko.mvvm.compose.getViewModel
 import dev.icerock.moko.mvvm.compose.viewModelFactory

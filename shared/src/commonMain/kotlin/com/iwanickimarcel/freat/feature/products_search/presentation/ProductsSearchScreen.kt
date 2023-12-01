@@ -38,8 +38,8 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
-import com.iwanickimarcel.freat.feature.products_search.domain.ProductsSearchHistoryItem
 import com.iwanickimarcel.freat.navigation.Products
+import com.iwanickimarcel.products_search.ProductsSearchHistoryItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

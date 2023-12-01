@@ -1,10 +1,8 @@
-package com.iwanickimarcel.freat.feature.products_search.data
+package com.iwanickimarcel.products_search
 
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
-import com.iwanickimarcel.freat.feature.products_search.domain.ProductsSearchHistoryDataSource
-import com.iwanickimarcel.freat.feature.products_search.domain.ProductsSearchHistoryItem
-import com.iwanickimarcel.freat.products_search_history_database.ProductsSearchHistoryDatabase
+import com.iwanickimarcel.products_search.database.ProductsSearchHistoryDatabase
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll

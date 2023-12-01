@@ -1,4 +1,4 @@
-package com.iwanickimarcel.freat.feature.products_search.domain
+package com.iwanickimarcel.products_search
 
 data class ProductsSearchHistoryItem(
     val name: String,

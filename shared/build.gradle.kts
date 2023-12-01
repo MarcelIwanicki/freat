@@ -75,18 +75,6 @@ android {
 
 sqldelight {
     databases {
-        create("ProductsDatabase") {
-            packageName.set("com.iwanickimarcel.freat.products_database")
-            srcDirs.setFrom("src/commonMain/sqldelight_products")
-        }
-        create("ProductsSearchHistoryDatabase") {
-            packageName.set("com.iwanickimarcel.freat.products_search_history_database")
-            srcDirs.setFrom("src/commonMain/sqldelight_products_search_history")
-        }
-        create("RecipesDatabase") {
-            packageName.set("com.iwanickimarcel.freat.recipes_database")
-            srcDirs.setFrom("src/commonMain/sqldelight_recipes")
-        }
         create("RecipesSearchHistoryDatabase") {
             packageName.set("com.iwanickimarcel.freat.recipes_search_history_database")
             srcDirs.setFrom("src/commonMain/sqldelight_recipes_search_history")
@@ -96,11 +84,13 @@ sqldelight {
 
 dependencies {
     implementation(project(mapOf("path" to ":shared:data:core")))
-    implementation(project(mapOf("path" to ":shared:presentation:core")))
-    implementation(project(mapOf("path" to ":shared:domain:products")))
     implementation(project(mapOf("path" to ":shared:data:products")))
+    implementation(project(mapOf("path" to ":shared:data:products_search")))
     implementation(project(mapOf("path" to ":shared:data:recipes")))
+    implementation(project(mapOf("path" to ":shared:domain:products")))
+    implementation(project(mapOf("path" to ":shared:domain:products_search")))
     implementation(project(mapOf("path" to ":shared:domain:recipes")))
+    implementation(project(mapOf("path" to ":shared:presentation:core")))
 
     implementation("androidx.core:core:1.12.0")
     implementation("com.google.mlkit:text-recognition:16.0.0")

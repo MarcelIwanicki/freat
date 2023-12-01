@@ -5,9 +5,9 @@ import com.iwanickimarcel.freat.feature.add_recipe.domain.DeleteStep
 import com.iwanickimarcel.freat.feature.add_recipe.domain.EditStep
 import com.iwanickimarcel.freat.feature.add_recipe.domain.ValidateRecipe
 import com.iwanickimarcel.freat.feature.add_step.domain.ValidateStep
-import com.iwanickimarcel.freat.feature.products_search.domain.FilterProductsSearchHistoryItems
 import com.iwanickimarcel.freat.feature.recipes_search.domain.FilterRecipesSearchHistoryItems
 import com.iwanickimarcel.products.FilterProductsByQuery
+import com.iwanickimarcel.products_search.FilterProductsSearchHistoryItems
 import com.iwanickimarcel.recipes.FilterRecipesByQuery
 import com.iwanickimarcel.recipes.GetRecipesWithOwnedProductsPercent
 

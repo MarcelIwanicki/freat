@@ -1,6 +1,5 @@
-package com.iwanickimarcel.freat.feature.products_search.domain
+package com.iwanickimarcel.products_search
 
-import com.iwanickimarcel.freat.feature.products_search.data.toProductsSearchHistoryItem
 import com.iwanickimarcel.products.Product
 
 class FilterProductsSearchHistoryItems {
