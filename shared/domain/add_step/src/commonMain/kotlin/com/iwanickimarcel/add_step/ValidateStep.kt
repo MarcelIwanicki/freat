@@ -1,4 +1,4 @@
-package com.iwanickimarcel.freat.feature.add_step.domain
+package com.iwanickimarcel.add_step
 
 import com.iwanickimarcel.recipes.Recipe
 import kotlinx.coroutines.Dispatchers

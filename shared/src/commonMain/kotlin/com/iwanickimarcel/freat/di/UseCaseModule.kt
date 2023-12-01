@@ -4,7 +4,7 @@ import com.iwanickimarcel.add_product.ValidateProduct
 import com.iwanickimarcel.add_recipe.DeleteStep
 import com.iwanickimarcel.add_recipe.EditStep
 import com.iwanickimarcel.add_recipe.ValidateRecipe
-import com.iwanickimarcel.freat.feature.add_step.domain.ValidateStep
+import com.iwanickimarcel.add_step.ValidateStep
 import com.iwanickimarcel.products.FilterProductsByQuery
 import com.iwanickimarcel.products_search.FilterProductsSearchHistoryItems
 import com.iwanickimarcel.recipes.FilterRecipesByQuery
