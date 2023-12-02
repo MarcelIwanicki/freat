@@ -41,7 +41,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
-import com.iwanickimarcel.freat.core.presentation.ImagePicker
+import com.iwanickimarcel.core.ImagePicker
 import com.iwanickimarcel.freat.feature.add_product.presentation.AddProductScreen
 import com.iwanickimarcel.freat.feature.add_product.presentation.AddProductViewModel
 import com.iwanickimarcel.freat.navigation.BottomNavigationBar

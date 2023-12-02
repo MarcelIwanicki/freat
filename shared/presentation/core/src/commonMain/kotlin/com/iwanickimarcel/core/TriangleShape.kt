@@ -1,4 +1,4 @@
-package com.iwanickimarcel.freat.core.presentation
+package com.iwanickimarcel.core
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.height

@@ -2,9 +2,9 @@ package com.iwanickimarcel.freat.di
 
 import android.content.Context
 import androidx.compose.runtime.Composable
+import com.iwanickimarcel.core.ImagePicker
+import com.iwanickimarcel.core.ImagePickerFactory
 import com.iwanickimarcel.core.ImageStorage
-import com.iwanickimarcel.freat.core.presentation.ImagePicker
-import com.iwanickimarcel.freat.core.presentation.ImagePickerFactory
 
 actual class ImageModule(
     private val context: Context

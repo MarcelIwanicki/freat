@@ -1,4 +1,4 @@
-package com.iwanickimarcel.freat.ui.theme
+package com.iwanickimarcel.core.ui.theme
 
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme

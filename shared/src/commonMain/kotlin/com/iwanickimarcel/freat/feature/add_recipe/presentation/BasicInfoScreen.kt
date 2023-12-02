@@ -27,7 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import com.iwanickimarcel.freat.core.presentation.ImagePicker
+import com.iwanickimarcel.core.ImagePicker
 import com.iwanickimarcel.freat.feature.products.presentation.AddProductPlaceholder
 
 @Composable

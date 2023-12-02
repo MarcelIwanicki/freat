@@ -1,4 +1,4 @@
-package com.iwanickimarcel.freat.core.presentation
+package com.iwanickimarcel.core
 
 import android.app.Activity
 import android.os.Build
@@ -11,9 +11,9 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
-import com.iwanickimarcel.freat.ui.theme.DarkColors
-import com.iwanickimarcel.freat.ui.theme.LightColors
-import com.iwanickimarcel.freat.ui.theme.Typography
+import com.iwanickimarcel.core.ui.theme.DarkColors
+import com.iwanickimarcel.core.ui.theme.LightColors
+import com.iwanickimarcel.core.ui.theme.Typography
 
 @Composable
 actual fun FreatTheme(
