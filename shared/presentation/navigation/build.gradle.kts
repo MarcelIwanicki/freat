@@ -45,7 +45,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.iwanickimarcel.add_ingredient"
+    namespace = "com.iwanickimarcel.navigation"
     compileSdk = 33
     defaultConfig {
         minSdk = 24
@@ -57,9 +57,6 @@ android {
 }
 
 dependencies {
-    implementation(project(mapOf("path" to ":shared:domain:add_product")))
-    implementation(project(mapOf("path" to ":shared:domain:products")))
-
     implementation("androidx.core:core:1.12.0")
     commonMainApi("dev.icerock.moko:mvvm-core:0.16.1")
     commonMainApi("dev.icerock.moko:mvvm-compose:0.16.1")

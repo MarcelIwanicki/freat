@@ -1,7 +1,7 @@
 package com.iwanickimarcel.freat.di
 
 import androidx.compose.runtime.Composable
-import com.iwanickimarcel.freat.feature.add_ingredient.presentation.AddIngredientViewModel
+import com.iwanickimarcel.add_ingredient.AddIngredientViewModel
 import com.iwanickimarcel.freat.feature.add_product.presentation.AddProductViewModel
 import com.iwanickimarcel.freat.feature.add_recipe.presentation.AddRecipeViewModel
 import com.iwanickimarcel.freat.feature.add_step.presentation.AddStepViewModel

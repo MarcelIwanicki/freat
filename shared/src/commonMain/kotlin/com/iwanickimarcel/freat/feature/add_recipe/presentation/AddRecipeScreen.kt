@@ -41,9 +41,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
+import com.iwanickimarcel.add_ingredient.AddIngredientScreen
+import com.iwanickimarcel.add_ingredient.AddIngredientViewModel
 import com.iwanickimarcel.core.ImagePicker
-import com.iwanickimarcel.freat.feature.add_ingredient.presentation.AddIngredientScreen
-import com.iwanickimarcel.freat.feature.add_ingredient.presentation.AddIngredientViewModel
 import com.iwanickimarcel.freat.feature.add_step.presentation.AddStepScreen
 import com.iwanickimarcel.freat.feature.add_step.presentation.AddStepViewModel
 import kotlinx.coroutines.launch

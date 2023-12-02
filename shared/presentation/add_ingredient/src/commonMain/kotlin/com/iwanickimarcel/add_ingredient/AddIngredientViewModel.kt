@@ -1,4 +1,4 @@
-package com.iwanickimarcel.freat.feature.add_ingredient.presentation
+package com.iwanickimarcel.add_ingredient
 
 import com.iwanickimarcel.add_product.ValidateProduct
 import com.iwanickimarcel.products.AmountUnit
