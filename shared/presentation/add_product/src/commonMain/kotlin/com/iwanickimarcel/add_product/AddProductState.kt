@@ -1,4 +1,4 @@
-package com.iwanickimarcel.freat.feature.add_product.presentation
+package com.iwanickimarcel.add_product
 
 import com.iwanickimarcel.products.AmountUnit
 

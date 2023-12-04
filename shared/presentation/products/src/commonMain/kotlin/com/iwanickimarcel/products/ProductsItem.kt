@@ -1,4 +1,4 @@
-package com.iwanickimarcel.freat.feature.products.presentation
+package com.iwanickimarcel.products
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -19,7 +19,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.iwanickimarcel.products.Product
 
 @Composable
 fun ProductsItem(

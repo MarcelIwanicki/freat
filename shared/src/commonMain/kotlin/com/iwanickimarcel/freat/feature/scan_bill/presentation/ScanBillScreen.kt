@@ -25,10 +25,10 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.iwanickimarcel.add_ingredient.AddIngredientScreen
 import com.iwanickimarcel.add_ingredient.AddIngredientViewModel
+import com.iwanickimarcel.core.AddProductPlaceholder
 import com.iwanickimarcel.core.ImagePicker
 import com.iwanickimarcel.core.rememberBitmapFromBytes
 import com.iwanickimarcel.freat.feature.add_recipe.presentation.IngredientsScreen
-import com.iwanickimarcel.freat.feature.products.presentation.AddProductPlaceholder
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

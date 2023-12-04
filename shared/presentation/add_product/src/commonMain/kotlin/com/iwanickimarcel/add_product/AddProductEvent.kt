@@ -1,4 +1,4 @@
-package com.iwanickimarcel.freat.feature.add_product.presentation
+package com.iwanickimarcel.add_product
 
 sealed interface AddProductEvent {
     data class OnEditProductProvided(val name: String) : AddProductEvent

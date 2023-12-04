@@ -1,6 +1,4 @@
-package com.iwanickimarcel.freat.feature.products.presentation
-
-import com.iwanickimarcel.products.Product
+package com.iwanickimarcel.products
 
 data class ProductsState(
     val products: List<Product> = emptyList(),

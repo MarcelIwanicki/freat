@@ -1,4 +1,4 @@
-package com.iwanickimarcel.freat.feature.products.presentation
+package com.iwanickimarcel.products
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -17,7 +17,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.iwanickimarcel.core.rememberBitmapFromBytes
-import com.iwanickimarcel.products.Product
 
 @Composable
 fun ProductPhoto(

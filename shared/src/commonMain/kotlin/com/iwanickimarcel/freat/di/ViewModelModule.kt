@@ -2,16 +2,16 @@ package com.iwanickimarcel.freat.di
 
 import androidx.compose.runtime.Composable
 import com.iwanickimarcel.add_ingredient.AddIngredientViewModel
-import com.iwanickimarcel.freat.feature.add_product.presentation.AddProductViewModel
+import com.iwanickimarcel.add_product.AddProductViewModel
 import com.iwanickimarcel.freat.feature.add_recipe.presentation.AddRecipeViewModel
 import com.iwanickimarcel.freat.feature.add_step.presentation.AddStepViewModel
 import com.iwanickimarcel.freat.feature.home.presentation.HomeViewModel
-import com.iwanickimarcel.freat.feature.products.presentation.ProductsViewModel
 import com.iwanickimarcel.freat.feature.products_search.presentation.ProductsSearchViewModel
 import com.iwanickimarcel.freat.feature.recipes.presentation.RecipesViewModel
 import com.iwanickimarcel.freat.feature.recipes_search.presentation.RecipesSearchViewModel
 import com.iwanickimarcel.freat.feature.scan_bill.presentation.ScanBillViewModel
 import com.iwanickimarcel.products.ProductDataSource
+import com.iwanickimarcel.products.ProductsViewModel
 import com.iwanickimarcel.products_search.ProductsSearchHistoryDataSource
 import com.iwanickimarcel.recipes.RecipeDataSource
 import com.iwanickimarcel.recipes_search.RecipesSearchHistoryDataSource

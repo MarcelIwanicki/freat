@@ -1,4 +1,4 @@
-package com.iwanickimarcel.freat.feature.products.presentation
+package com.iwanickimarcel.products
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
@@ -41,13 +41,12 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.Navigator
+import com.iwanickimarcel.add_product.AddProductScreen
+import com.iwanickimarcel.add_product.AddProductViewModel
+import com.iwanickimarcel.core.AddProductPlaceholder
 import com.iwanickimarcel.core.ImagePicker
-import com.iwanickimarcel.freat.feature.add_product.presentation.AddProductScreen
-import com.iwanickimarcel.freat.feature.add_product.presentation.AddProductViewModel
-import com.iwanickimarcel.freat.navigation.BottomNavigationBar
-import com.iwanickimarcel.freat.navigation.Products
-import com.iwanickimarcel.freat.navigation.ProductsSearch
-import com.iwanickimarcel.freat.navigation.ScanBill
+import com.iwanickimarcel.core.NavigationBarFactory
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
@@ -55,6 +54,9 @@ fun ProductsScreen(
     getViewModel: @Composable () -> ProductsViewModel,
     getAddProductViewModel: @Composable () -> AddProductViewModel,
     imagePicker: ImagePicker,
+    navigationBarFactory: NavigationBarFactory,
+    navigateToProductsSearch: (Navigator) -> Unit,
+    navigateToScanBill: (Navigator) -> Unit,
     searchQuery: String?,
 ) {
     val viewModel = getViewModel()
@@ -93,11 +95,11 @@ fun ProductsScreen(
     }
 
     if (state.searchBarPressed) {
-        navigator.push(ProductsSearch)
+        navigateToProductsSearch(navigator)
     }
 
     if (state.isScanBillClicked) {
-        navigator.push(ScanBill)
+        navigateToScanBill(navigator)
     }
 
     state.productToDelete?.let {
@@ -304,7 +306,9 @@ fun ProductsScreen(
             }
         },
         bottomBar = {
-            BottomNavigationBar(Products())
+            with(navigationBarFactory) {
+                NavigationBar()
+            }
         }
     )
 

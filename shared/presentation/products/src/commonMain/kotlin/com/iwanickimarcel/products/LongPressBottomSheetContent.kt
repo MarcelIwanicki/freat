@@ -1,4 +1,4 @@
-package com.iwanickimarcel.freat.feature.products.presentation
+package com.iwanickimarcel.products
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement

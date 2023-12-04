@@ -1,4 +1,4 @@
-package com.iwanickimarcel.freat.feature.products.presentation
+package com.iwanickimarcel.products
 
 import com.iwanickimarcel.products.Product
 
