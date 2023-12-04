@@ -1,12 +1,5 @@
 package com.iwanickimarcel.freat.di
 
-import androidx.compose.runtime.Composable
-import com.iwanickimarcel.core.ImagePicker
-import com.iwanickimarcel.core.ImageStorage
+import org.koin.core.module.Module
 
-expect class ImageModule {
-    val imageStorage: ImageStorage
-
-    @get:Composable
-    val imagePicker: ImagePicker
-}
+expect val imageModule: Module

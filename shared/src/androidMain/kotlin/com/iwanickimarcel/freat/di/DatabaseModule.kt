@@ -1,6 +1,5 @@
 package com.iwanickimarcel.freat.di
 
-import android.content.Context
 import com.iwanickimarcel.products.ProductsDatabaseDriverFactory
 import com.iwanickimarcel.products.database.ProductsDatabase
 import com.iwanickimarcel.products_search.ProductsSearchHistoryDatabaseDriverFactory
@@ -9,31 +8,31 @@ import com.iwanickimarcel.recipes.RecipesDatabaseDriverFactory
 import com.iwanickimarcel.recipes.database.RecipesDatabase
 import com.iwanickimarcel.recipes_search.RecipesSearchHistoryDatabaseDriverFactory
 import com.iwanickimarcel.recipes_search.database.RecipesSearchHistoryDatabase
+import org.koin.android.ext.koin.androidContext
+import org.koin.dsl.module
 
-actual class DatabaseModule(
-    private val context: Context
-) {
-    actual val productsDatabase: ProductsDatabase by lazy {
+actual val databaseModule = module {
+    single {
         ProductsDatabase(
-            driver = ProductsDatabaseDriverFactory(context).create()
+            driver = ProductsDatabaseDriverFactory(androidContext()).create()
         )
     }
 
-    actual val productsSearchHistoryDatabase: ProductsSearchHistoryDatabase by lazy {
+    single {
         ProductsSearchHistoryDatabase(
-            driver = ProductsSearchHistoryDatabaseDriverFactory(context).create()
+            driver = ProductsSearchHistoryDatabaseDriverFactory(androidContext()).create()
         )
     }
 
-    actual val recipesDatabase: RecipesDatabase by lazy {
+    single {
         RecipesDatabase(
-            driver = RecipesDatabaseDriverFactory(context).create()
+            driver = RecipesDatabaseDriverFactory(androidContext()).create()
         )
     }
 
-    actual val recipesSearchHistoryDatabase: RecipesSearchHistoryDatabase by lazy {
+    single {
         RecipesSearchHistoryDatabase(
-            driver = RecipesSearchHistoryDatabaseDriverFactory(context).create()
+            driver = RecipesSearchHistoryDatabaseDriverFactory(androidContext()).create()
         )
     }
 }

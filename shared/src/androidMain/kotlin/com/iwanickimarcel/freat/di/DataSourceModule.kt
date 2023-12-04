@@ -1,50 +1,39 @@
 package com.iwanickimarcel.freat.di
 
-import com.iwanickimarcel.core.ImageStorage
 import com.iwanickimarcel.products.ProductDataSource
 import com.iwanickimarcel.products.SqlDelightProductDataSource
-import com.iwanickimarcel.products.database.ProductsDatabase
 import com.iwanickimarcel.products_search.ProductsSearchHistoryDataSource
 import com.iwanickimarcel.products_search.SqlDelightProductsSearchHistoryDataSource
-import com.iwanickimarcel.products_search.database.ProductsSearchHistoryDatabase
 import com.iwanickimarcel.recipes.RecipeDataSource
 import com.iwanickimarcel.recipes.SqlDelightRecipeDataSource
-import com.iwanickimarcel.recipes.database.RecipesDatabase
 import com.iwanickimarcel.recipes_search.RecipesSearchHistoryDataSource
 import com.iwanickimarcel.recipes_search.SqlDelightRecipesSearchHistoryDataSource
-import com.iwanickimarcel.recipes_search.database.RecipesSearchHistoryDatabase
+import org.koin.dsl.module
 
-actual class DataSourceModule(
-    private val productsDatabase: ProductsDatabase,
-    private val productsSearchHistoryDatabase: ProductsSearchHistoryDatabase,
-    private val recipesDatabase: RecipesDatabase,
-    private val recipesSearchHistoryDatabase: RecipesSearchHistoryDatabase,
-    private val imageStorage: ImageStorage
-) {
-
-    actual val productDataSource: ProductDataSource by lazy {
+actual val dataSourceModule = module {
+    single<ProductDataSource> {
         SqlDelightProductDataSource(
-            database = productsDatabase,
-            imageStorage = imageStorage
+            database = get(),
+            imageStorage = get()
         )
     }
 
-    actual val productsSearchHistoryDataSource: ProductsSearchHistoryDataSource by lazy {
+    single<ProductsSearchHistoryDataSource> {
         SqlDelightProductsSearchHistoryDataSource(
-            database = productsSearchHistoryDatabase
+            database = get()
         )
     }
 
-    actual val recipeDataSource: RecipeDataSource by lazy {
+    single<RecipeDataSource> {
         SqlDelightRecipeDataSource(
-            database = recipesDatabase,
-            imageStorage = imageStorage
+            database = get(),
+            imageStorage = get()
         )
     }
 
-    actual val recipesSearchHistoryDataSource: RecipesSearchHistoryDataSource by lazy {
+    single<RecipesSearchHistoryDataSource> {
         SqlDelightRecipesSearchHistoryDataSource(
-            database = recipesSearchHistoryDatabase
+            database = get()
         )
     }
 }

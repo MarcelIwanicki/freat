@@ -80,6 +80,8 @@ dependencies {
     implementation(project(mapOf("path" to ":shared:presentation:add_ingredient")))
 
     implementation("androidx.core:core:1.12.0")
+    implementation("io.insert-koin:koin-core:3.2.0")
+    implementation("io.insert-koin:koin-android:3.2.0")
     implementation("com.google.mlkit:text-recognition:16.0.0")
     commonMainImplementation("cafe.adriel.voyager:voyager-navigator:1.0.0-rc05")
     commonMainApi("dev.icerock.moko:mvvm-core:0.16.1")

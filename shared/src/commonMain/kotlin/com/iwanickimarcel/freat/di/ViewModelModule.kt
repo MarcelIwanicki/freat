@@ -18,15 +18,29 @@ import com.iwanickimarcel.recipes.RecipeDataSource
 import com.iwanickimarcel.recipes_search.RecipesSearchHistoryDataSource
 import dev.icerock.moko.mvvm.compose.getViewModel
 import dev.icerock.moko.mvvm.compose.viewModelFactory
+import org.koin.java.KoinJavaComponent.inject
 
-class ViewModelModule(
-    private val productDataSource: ProductDataSource,
-    private val productsSearchHistoryDataSource: ProductsSearchHistoryDataSource,
-    private val recipeDataSource: RecipeDataSource,
-    private val recipesSearchHistoryDataSource: RecipesSearchHistoryDataSource,
-    private val imageAnalyzer: ImageAnalyzer
-) {
-    private val useCaseModule: UseCaseModule = UseCaseModule()
+val viewModelModule: ViewModelModule = ViewModelModule()
+
+class ViewModelModule {
+    private val productDataSource: ProductDataSource by inject(
+        ProductDataSource::class.java
+    )
+    private val productsSearchHistoryDataSource: ProductsSearchHistoryDataSource by inject(
+        ProductsSearchHistoryDataSource::class.java
+    )
+    private val recipeDataSource: RecipeDataSource by inject(
+        RecipeDataSource::class.java
+    )
+    private val recipesSearchHistoryDataSource: RecipesSearchHistoryDataSource by inject(
+        RecipesSearchHistoryDataSource::class.java
+    )
+    private val imageAnalyzer: ImageAnalyzer by inject(
+        ImageAnalyzer::class.java
+    )
+    private val useCaseModule: UseCaseModule by lazy {
+        UseCaseModule()
+    }
 
     val homeViewModel: HomeViewModel
         @Composable
