@@ -52,7 +52,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.iwanickimarcel.freat"
+    namespace = "com.iwanickimarcel.scan_bill"
     compileSdk = 33
     defaultConfig {
         minSdk = 24
@@ -64,26 +64,9 @@ android {
 }
 
 dependencies {
-    implementation(project(mapOf("path" to ":shared:data:core")))
-    implementation(project(mapOf("path" to ":shared:data:products")))
-    implementation(project(mapOf("path" to ":shared:data:products_search")))
-    implementation(project(mapOf("path" to ":shared:data:recipes")))
-    implementation(project(mapOf("path" to ":shared:data:recipes_search")))
     implementation(project(mapOf("path" to ":shared:domain:products")))
-    implementation(project(mapOf("path" to ":shared:domain:products_search")))
-    implementation(project(mapOf("path" to ":shared:domain:add_product")))
-    implementation(project(mapOf("path" to ":shared:domain:recipes")))
-    implementation(project(mapOf("path" to ":shared:domain:recipes_search")))
-    implementation(project(mapOf("path" to ":shared:domain:add_recipe")))
-    implementation(project(mapOf("path" to ":shared:domain:add_step")))
-    implementation(project(mapOf("path" to ":shared:domain:scan_bill")))
-    implementation(project(mapOf("path" to ":shared:presentation:core")))
-    implementation(project(mapOf("path" to ":shared:presentation:add_ingredient")))
-
     implementation("androidx.core:core:1.12.0")
-    implementation("io.insert-koin:koin-core:3.2.0")
-    implementation("io.insert-koin:koin-android:3.2.0")
-    commonMainImplementation("cafe.adriel.voyager:voyager-navigator:1.0.0-rc05")
+    implementation("com.google.mlkit:text-recognition:16.0.0")
     commonMainApi("dev.icerock.moko:mvvm-core:0.16.1")
     commonMainApi("dev.icerock.moko:mvvm-compose:0.16.1")
     commonMainApi("dev.icerock.moko:mvvm-flow:0.16.1")
