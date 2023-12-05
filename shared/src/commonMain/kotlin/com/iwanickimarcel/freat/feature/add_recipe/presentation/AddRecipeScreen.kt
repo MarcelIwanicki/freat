@@ -43,9 +43,9 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.iwanickimarcel.add_ingredient.AddIngredientScreen
 import com.iwanickimarcel.add_ingredient.AddIngredientViewModel
+import com.iwanickimarcel.add_step.AddStepScreen
+import com.iwanickimarcel.add_step.AddStepViewModel
 import com.iwanickimarcel.core.ImagePicker
-import com.iwanickimarcel.freat.feature.add_step.presentation.AddStepScreen
-import com.iwanickimarcel.freat.feature.add_step.presentation.AddStepViewModel
 import kotlinx.coroutines.launch
 
 data class PagerScreenItem(

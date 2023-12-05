@@ -1,4 +1,4 @@
-package com.iwanickimarcel.freat.feature.add_step.presentation
+package com.iwanickimarcel.add_step
 
 import com.iwanickimarcel.recipes.Recipe
 

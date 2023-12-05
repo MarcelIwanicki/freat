@@ -1,6 +1,5 @@
-package com.iwanickimarcel.freat.feature.add_step.presentation
+package com.iwanickimarcel.add_step
 
-import com.iwanickimarcel.add_step.ValidateStep
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
