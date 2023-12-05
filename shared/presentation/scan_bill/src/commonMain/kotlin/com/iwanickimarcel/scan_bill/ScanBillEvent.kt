@@ -1,4 +1,4 @@
-package com.iwanickimarcel.freat.feature.scan_bill.presentation
+package com.iwanickimarcel.scan_bill
 
 import androidx.compose.ui.graphics.ImageBitmap
 import com.iwanickimarcel.products.Product

@@ -6,12 +6,12 @@ import com.iwanickimarcel.add_recipe.AddRecipeScreen
 import com.iwanickimarcel.freat.di.imagePicker
 import com.iwanickimarcel.freat.di.viewModelModule
 import com.iwanickimarcel.freat.feature.home.presentation.HomeScreen
-import com.iwanickimarcel.freat.feature.scan_bill.presentation.ScanBillScreen
 import com.iwanickimarcel.freat.feature.settings.presentation.SettingsScreen
 import com.iwanickimarcel.products.ProductsScreen
 import com.iwanickimarcel.products_search.ProductsSearchScreen
 import com.iwanickimarcel.recipes.RecipesScreen
 import com.iwanickimarcel.recipes_search.RecipesSearchScreen
+import com.iwanickimarcel.scan_bill.ScanBillScreen
 
 object Home : Screen {
     @Composable

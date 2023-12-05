@@ -1,4 +1,4 @@
-package com.iwanickimarcel.freat.feature.scan_bill.presentation
+package com.iwanickimarcel.scan_bill
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth

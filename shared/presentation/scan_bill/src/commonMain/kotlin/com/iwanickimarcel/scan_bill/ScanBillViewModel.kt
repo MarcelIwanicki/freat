@@ -1,4 +1,4 @@
-package com.iwanickimarcel.freat.feature.scan_bill.presentation
+package com.iwanickimarcel.scan_bill
 
 import com.iwanickimarcel.products.ProductDataSource
 import com.iwanickimarcel.scan_bill.ImageAnalyzer

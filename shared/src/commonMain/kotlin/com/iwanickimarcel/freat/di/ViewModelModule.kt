@@ -6,7 +6,6 @@ import com.iwanickimarcel.add_product.AddProductViewModel
 import com.iwanickimarcel.add_recipe.AddRecipeViewModel
 import com.iwanickimarcel.add_step.AddStepViewModel
 import com.iwanickimarcel.freat.feature.home.presentation.HomeViewModel
-import com.iwanickimarcel.freat.feature.scan_bill.presentation.ScanBillViewModel
 import com.iwanickimarcel.products.ProductDataSource
 import com.iwanickimarcel.products.ProductsViewModel
 import com.iwanickimarcel.products_search.ProductsSearchHistoryDataSource
@@ -16,6 +15,7 @@ import com.iwanickimarcel.recipes.RecipesViewModel
 import com.iwanickimarcel.recipes_search.RecipesSearchHistoryDataSource
 import com.iwanickimarcel.recipes_search.RecipesSearchViewModel
 import com.iwanickimarcel.scan_bill.ImageAnalyzer
+import com.iwanickimarcel.scan_bill.ScanBillViewModel
 import dev.icerock.moko.mvvm.compose.getViewModel
 import dev.icerock.moko.mvvm.compose.viewModelFactory
 import org.koin.java.KoinJavaComponent.inject
