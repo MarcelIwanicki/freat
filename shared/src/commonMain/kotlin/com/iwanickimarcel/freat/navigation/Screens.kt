@@ -5,13 +5,13 @@ import cafe.adriel.voyager.core.screen.Screen
 import com.iwanickimarcel.add_recipe.AddRecipeScreen
 import com.iwanickimarcel.freat.di.imagePicker
 import com.iwanickimarcel.freat.di.viewModelModule
-import com.iwanickimarcel.freat.feature.settings.presentation.SettingsScreen
 import com.iwanickimarcel.home.HomeScreen
 import com.iwanickimarcel.products.ProductsScreen
 import com.iwanickimarcel.products_search.ProductsSearchScreen
 import com.iwanickimarcel.recipes.RecipesScreen
 import com.iwanickimarcel.recipes_search.RecipesSearchScreen
 import com.iwanickimarcel.scan_bill.ScanBillScreen
+import com.iwanickimarcel.settings.SettingsScreen
 
 object Home : Screen {
     @Composable
@@ -130,6 +130,8 @@ object RecipesSearch : Screen {
 object Settings : Screen {
     @Composable
     override fun Content() {
-        SettingsScreen()
+        SettingsScreen(
+            navigationBarFactory = SettingsNavigationBarFactory()
+        )
     }
 }
