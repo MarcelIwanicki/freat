@@ -1,4 +1,4 @@
-package com.iwanickimarcel.freat.feature.products_search.presentation
+package com.iwanickimarcel.products_search
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -38,13 +38,17 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
-import com.iwanickimarcel.freat.navigation.Products
-import com.iwanickimarcel.products_search.ProductsSearchHistoryItem
+import cafe.adriel.voyager.navigator.Navigator
+
+fun interface ProductsNavigation {
+    operator fun invoke(navigator: Navigator, searchQuery: String?)
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductsSearchScreen(
-    getViewModel: @Composable () -> ProductsSearchViewModel
+    getViewModel: @Composable () -> ProductsSearchViewModel,
+    navigateToProducts: ProductsNavigation,
 ) {
     val viewModel = getViewModel()
     val navigator = LocalNavigator.current ?: return
@@ -60,16 +64,18 @@ fun ProductsSearchScreen(
 
     if (state.isSearchConfirmed) {
         LaunchedEffect(Unit) {
-            navigator.replace(
-                Products(searchQuery = state.query)
+            navigateToProducts(
+                navigator = navigator,
+                searchQuery = state.query
             )
         }
     }
 
     state.itemPressedName?.let {
         LaunchedEffect(Unit) {
-            navigator.replace(
-                Products(searchQuery = it)
+            navigateToProducts(
+                navigator = navigator,
+                searchQuery = it
             )
         }
     }

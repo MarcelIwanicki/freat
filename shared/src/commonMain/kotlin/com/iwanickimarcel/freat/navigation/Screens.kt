@@ -6,11 +6,11 @@ import com.iwanickimarcel.add_recipe.AddRecipeScreen
 import com.iwanickimarcel.freat.di.imagePicker
 import com.iwanickimarcel.freat.di.viewModelModule
 import com.iwanickimarcel.freat.feature.home.presentation.HomeScreen
-import com.iwanickimarcel.freat.feature.products_search.presentation.ProductsSearchScreen
 import com.iwanickimarcel.freat.feature.recipes_search.presentation.RecipesSearchScreen
 import com.iwanickimarcel.freat.feature.scan_bill.presentation.ScanBillScreen
 import com.iwanickimarcel.freat.feature.settings.presentation.SettingsScreen
 import com.iwanickimarcel.products.ProductsScreen
+import com.iwanickimarcel.products_search.ProductsSearchScreen
 import com.iwanickimarcel.recipes.RecipesScreen
 
 object Home : Screen {
@@ -81,7 +81,12 @@ object ProductsSearch : Screen {
     @Composable
     override fun Content() {
         ProductsSearchScreen(
-            getViewModel = { viewModelModule.productsSearchViewModel }
+            getViewModel = { viewModelModule.productsSearchViewModel },
+            navigateToProducts = { navigator, searchQuery ->
+                navigator.replace(
+                    Products(searchQuery)
+                )
+            }
         )
     }
 }

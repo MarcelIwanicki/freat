@@ -1,4 +1,4 @@
-package com.iwanickimarcel.freat.feature.products_search.presentation
+package com.iwanickimarcel.products_search
 
 sealed interface ProductsSearchEvent {
     data class OnQueryChange(val query: String) : ProductsSearchEvent

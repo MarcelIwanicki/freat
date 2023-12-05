@@ -1,6 +1,4 @@
-package com.iwanickimarcel.freat.feature.products_search.presentation
-
-import com.iwanickimarcel.products_search.ProductsSearchHistoryItem
+package com.iwanickimarcel.products_search
 
 data class ProductsSearchState(
     val query: String = "",
