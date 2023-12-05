@@ -5,8 +5,8 @@ import cafe.adriel.voyager.core.screen.Screen
 import com.iwanickimarcel.add_recipe.AddRecipeScreen
 import com.iwanickimarcel.freat.di.imagePicker
 import com.iwanickimarcel.freat.di.viewModelModule
-import com.iwanickimarcel.freat.feature.home.presentation.HomeScreen
 import com.iwanickimarcel.freat.feature.settings.presentation.SettingsScreen
+import com.iwanickimarcel.home.HomeScreen
 import com.iwanickimarcel.products.ProductsScreen
 import com.iwanickimarcel.products_search.ProductsSearchScreen
 import com.iwanickimarcel.recipes.RecipesScreen
@@ -17,7 +17,20 @@ object Home : Screen {
     @Composable
     override fun Content() {
         HomeScreen(
-            getViewModel = { viewModelModule.homeViewModel }
+            getViewModel = { viewModelModule.homeViewModel },
+            navigationBarFactory = HomeNavigationBarFactory(),
+            navigateToProducts = { navigator, searchQuery ->
+                navigator.push(Products(searchQuery))
+            },
+            navigateToRecipes = { navigator, searchQuery ->
+                navigator.push(Recipes(searchQuery))
+            },
+            navigateToRecipesSearch = {
+                it.push(RecipesSearch)
+            },
+            navigateToScanBill = {
+                it.push(ScanBill)
+            }
         )
     }
 }

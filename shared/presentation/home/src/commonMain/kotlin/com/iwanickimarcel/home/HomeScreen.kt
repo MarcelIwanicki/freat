@@ -1,4 +1,4 @@
-package com.iwanickimarcel.freat.feature.home.presentation
+package com.iwanickimarcel.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -53,20 +53,29 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.Navigator
+import com.iwanickimarcel.core.NavigationBarFactory
 import com.iwanickimarcel.core.TriangleShape
-import com.iwanickimarcel.freat.navigation.BottomNavigationBar
-import com.iwanickimarcel.freat.navigation.Home
-import com.iwanickimarcel.freat.navigation.Products
-import com.iwanickimarcel.freat.navigation.Recipes
-import com.iwanickimarcel.freat.navigation.RecipesSearch
-import com.iwanickimarcel.freat.navigation.ScanBill
 import com.iwanickimarcel.products.ProductPhoto
 import com.iwanickimarcel.recipes.RecipePhoto
+
+fun interface ProductsNavigation {
+    operator fun invoke(navigator: Navigator, searchQuery: String?)
+}
+
+fun interface RecipesNavigation {
+    operator fun invoke(navigator: Navigator, searchQuery: String?)
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    getViewModel: @Composable () -> HomeViewModel
+    getViewModel: @Composable () -> HomeViewModel,
+    navigationBarFactory: NavigationBarFactory,
+    navigateToProducts: ProductsNavigation,
+    navigateToRecipes: RecipesNavigation,
+    navigateToRecipesSearch: (Navigator) -> Unit,
+    navigateToScanBill: (Navigator) -> Unit,
 ) {
     val viewModel = getViewModel()
     val navigator = LocalNavigator.current ?: return
@@ -74,27 +83,39 @@ fun HomeScreen(
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
 
     state.clickedProduct?.let {
-        navigator.push(Products(it.name))
+        navigateToProducts(
+            navigator = navigator,
+            searchQuery = it.name
+        )
     }
 
     state.clickedRecipe?.let {
-        navigator.push(Recipes(it.name))
+        navigateToRecipes(
+            navigator = navigator,
+            searchQuery = it.name
+        )
     }
 
     if (state.isSearchBarClicked) {
-        navigator.push(RecipesSearch)
+        navigateToRecipesSearch(navigator)
     }
 
     if (state.isShowAllProductsClicked) {
-        navigator.push(Products())
+        navigateToProducts(
+            navigator = navigator,
+            searchQuery = null
+        )
     }
 
     if (state.isShowAllRecipesClicked) {
-        navigator.push(Recipes())
+        navigateToRecipes(
+            navigator = navigator,
+            searchQuery = null
+        )
     }
 
     if (state.isScanBillClicked) {
-        navigator.push(ScanBill)
+        navigateToScanBill(navigator)
     }
 
     Scaffold(
@@ -381,7 +402,9 @@ fun HomeScreen(
             }
         },
         bottomBar = {
-            BottomNavigationBar(Home)
+            with(navigationBarFactory) {
+                NavigationBar()
+            }
         }
     )
 }

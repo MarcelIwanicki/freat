@@ -87,6 +87,7 @@ dependencies {
     implementation(project(mapOf("path" to ":shared:presentation:add_step")))
     implementation(project(mapOf("path" to ":shared:presentation:add_recipe")))
     implementation(project(mapOf("path" to ":shared:presentation:scan_bill")))
+    implementation(project(mapOf("path" to ":shared:presentation:home")))
 
     implementation("androidx.core:core:1.12.0")
     implementation("io.insert-koin:koin-core:3.2.0")

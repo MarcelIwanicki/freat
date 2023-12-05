@@ -1,4 +1,4 @@
-package com.iwanickimarcel.freat.feature.home.presentation
+package com.iwanickimarcel.home
 
 import com.iwanickimarcel.products.Product
 import com.iwanickimarcel.recipes.Recipe
