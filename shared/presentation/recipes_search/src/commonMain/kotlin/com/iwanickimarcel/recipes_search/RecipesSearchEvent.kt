@@ -1,4 +1,4 @@
-package com.iwanickimarcel.freat.feature.recipes_search.presentation
+package com.iwanickimarcel.recipes_search
 
 sealed interface RecipesSearchEvent {
     data class OnQueryChange(val query: String) : RecipesSearchEvent

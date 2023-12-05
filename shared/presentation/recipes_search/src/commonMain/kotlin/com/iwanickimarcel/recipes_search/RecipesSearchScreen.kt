@@ -1,4 +1,4 @@
-package com.iwanickimarcel.freat.feature.recipes_search.presentation
+package com.iwanickimarcel.recipes_search
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -38,13 +38,17 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
-import com.iwanickimarcel.freat.navigation.Recipes
-import com.iwanickimarcel.recipes_search.RecipesSearchHistoryItem
+import cafe.adriel.voyager.navigator.Navigator
+
+fun interface RecipesNavigation {
+    operator fun invoke(navigator: Navigator, searchQuery: String?)
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RecipesSearchScreen(
-    getViewModel: @Composable () -> RecipesSearchViewModel
+    getViewModel: @Composable () -> RecipesSearchViewModel,
+    navigateToRecipes: RecipesNavigation
 ) {
     val viewModel = getViewModel()
     val navigator = LocalNavigator.current ?: return
@@ -59,16 +63,18 @@ fun RecipesSearchScreen(
 
     if (state.isSearchConfirmed) {
         LaunchedEffect(Unit) {
-            navigator.replace(
-                Recipes(searchQuery = state.query)
+            navigateToRecipes(
+                navigator = navigator,
+                searchQuery = state.query
             )
         }
     }
 
     state.itemPressedQuery?.let {
         LaunchedEffect(Unit) {
-            navigator.replace(
-                Recipes(searchQuery = it)
+            navigateToRecipes(
+                navigator = navigator,
+                searchQuery = it
             )
         }
     }
