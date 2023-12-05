@@ -1,4 +1,4 @@
-package com.iwanickimarcel.freat.feature.recipes.presentation
+package com.iwanickimarcel.recipes
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement

@@ -9,3 +9,10 @@ class ProductsNavigationBarFactory : NavigationBarFactory {
         BottomNavigationBar(Products())
     }
 }
+
+class RecipesNavigationBarFactory : NavigationBarFactory {
+    @Composable
+    override fun NavigationBar() {
+        BottomNavigationBar(Recipes())
+    }
+}

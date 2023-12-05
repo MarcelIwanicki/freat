@@ -1,4 +1,4 @@
-package com.iwanickimarcel.freat.feature.recipes.presentation
+package com.iwanickimarcel.recipes
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
@@ -49,15 +49,20 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.LocalNavigator
-import com.iwanickimarcel.freat.navigation.AddRecipe
-import com.iwanickimarcel.freat.navigation.BottomNavigationBar
-import com.iwanickimarcel.freat.navigation.Recipes
-import com.iwanickimarcel.freat.navigation.RecipesSearch
+import cafe.adriel.voyager.navigator.Navigator
+import com.iwanickimarcel.core.NavigationBarFactory
+
+fun interface AddRecipeNavigation {
+    operator fun invoke(navigator: Navigator, recipeId: Long?)
+}
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun RecipesScreen(
     getViewModel: @Composable () -> RecipesViewModel,
+    navigationBarFactory: NavigationBarFactory,
+    navigateToRecipesSearch: (Navigator) -> Unit,
+    navigateToAddRecipe: AddRecipeNavigation,
     searchQuery: String?
 ) {
     val viewModel = getViewModel()
@@ -77,7 +82,7 @@ fun RecipesScreen(
     }
 
     if (state.searchBarPressed) {
-        navigator.push(RecipesSearch)
+        navigateToRecipesSearch(navigator)
     }
 
     state.recipeToDelete?.let {
@@ -120,8 +125,9 @@ fun RecipesScreen(
 
     state.recipeToEdit?.let {
         LaunchedEffect(Unit) {
-            navigator.push(
-                AddRecipe(recipeId = it.id)
+            navigateToAddRecipe(
+                navigator = navigator,
+                recipeId = it.id
             )
         }
     }
@@ -283,12 +289,17 @@ fun RecipesScreen(
             }
         },
         bottomBar = {
-            BottomNavigationBar(Recipes())
+            with(navigationBarFactory) {
+                NavigationBar()
+            }
         },
         floatingActionButton = {
             ExtendedFloatingActionButton(
                 onClick = {
-                    navigator.push(AddRecipe())
+                    navigateToAddRecipe(
+                        navigator = navigator,
+                        recipeId = null
+                    )
                 },
                 text = {
                     Text(text = "Add recipe")

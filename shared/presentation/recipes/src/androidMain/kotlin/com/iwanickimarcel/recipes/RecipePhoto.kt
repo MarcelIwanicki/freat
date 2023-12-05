@@ -1,4 +1,4 @@
-package com.iwanickimarcel.freat.feature.recipes.presentation
+package com.iwanickimarcel.recipes
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -19,7 +19,6 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import com.iwanickimarcel.core.rememberBitmapFromBytes
-import com.iwanickimarcel.recipes.Recipe
 
 @Composable
 fun RecipePhoto(

@@ -1,6 +1,4 @@
-package com.iwanickimarcel.freat.feature.recipes.presentation
-
-import com.iwanickimarcel.recipes.Recipe
+package com.iwanickimarcel.recipes
 
 sealed interface RecipesEvent {
     data class OnSearchQuery(val query: String) : RecipesEvent

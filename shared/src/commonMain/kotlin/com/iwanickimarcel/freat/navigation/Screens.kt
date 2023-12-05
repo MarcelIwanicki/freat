@@ -7,11 +7,11 @@ import com.iwanickimarcel.freat.di.imagePicker
 import com.iwanickimarcel.freat.di.viewModelModule
 import com.iwanickimarcel.freat.feature.home.presentation.HomeScreen
 import com.iwanickimarcel.freat.feature.products_search.presentation.ProductsSearchScreen
-import com.iwanickimarcel.freat.feature.recipes.presentation.RecipesScreen
 import com.iwanickimarcel.freat.feature.recipes_search.presentation.RecipesSearchScreen
 import com.iwanickimarcel.freat.feature.scan_bill.presentation.ScanBillScreen
 import com.iwanickimarcel.freat.feature.settings.presentation.SettingsScreen
 import com.iwanickimarcel.products.ProductsScreen
+import com.iwanickimarcel.recipes.RecipesScreen
 
 object Home : Screen {
     @Composable
@@ -29,6 +29,13 @@ data class Recipes(
     override fun Content() {
         RecipesScreen(
             getViewModel = { viewModelModule.recipesViewModel },
+            navigationBarFactory = RecipesNavigationBarFactory(),
+            navigateToRecipesSearch = {
+                it.push(RecipesSearch)
+            },
+            navigateToAddRecipe = { navigator, recipeId ->
+                navigator.push(AddRecipe(recipeId))
+            },
             searchQuery = searchQuery
         )
     }

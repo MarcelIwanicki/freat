@@ -7,13 +7,13 @@ import com.iwanickimarcel.add_recipe.AddRecipeViewModel
 import com.iwanickimarcel.add_step.AddStepViewModel
 import com.iwanickimarcel.freat.feature.home.presentation.HomeViewModel
 import com.iwanickimarcel.freat.feature.products_search.presentation.ProductsSearchViewModel
-import com.iwanickimarcel.freat.feature.recipes.presentation.RecipesViewModel
 import com.iwanickimarcel.freat.feature.recipes_search.presentation.RecipesSearchViewModel
 import com.iwanickimarcel.freat.feature.scan_bill.presentation.ScanBillViewModel
 import com.iwanickimarcel.products.ProductDataSource
 import com.iwanickimarcel.products.ProductsViewModel
 import com.iwanickimarcel.products_search.ProductsSearchHistoryDataSource
 import com.iwanickimarcel.recipes.RecipeDataSource
+import com.iwanickimarcel.recipes.RecipesViewModel
 import com.iwanickimarcel.recipes_search.RecipesSearchHistoryDataSource
 import com.iwanickimarcel.scan_bill.ImageAnalyzer
 import dev.icerock.moko.mvvm.compose.getViewModel
