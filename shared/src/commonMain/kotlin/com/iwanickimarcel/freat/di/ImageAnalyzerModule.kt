@@ -1,7 +1,5 @@
 package com.iwanickimarcel.freat.di
 
-import com.iwanickimarcel.freat.core.domain.ImageAnalyzer
+import org.koin.core.module.Module
 
-expect class ImageAnalyzerModule {
-    val imageAnalyzer: ImageAnalyzer
-}
+expect val imageAnalyzerModule: Module

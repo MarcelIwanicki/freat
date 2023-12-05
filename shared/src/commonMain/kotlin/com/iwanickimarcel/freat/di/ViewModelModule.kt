@@ -1,32 +1,46 @@
 package com.iwanickimarcel.freat.di
 
 import androidx.compose.runtime.Composable
-import com.iwanickimarcel.freat.core.domain.ImageAnalyzer
-import com.iwanickimarcel.freat.feature.add_ingredient.presentation.AddIngredientViewModel
-import com.iwanickimarcel.freat.feature.add_product.presentation.AddProductViewModel
-import com.iwanickimarcel.freat.feature.add_recipe.presentation.AddRecipeViewModel
-import com.iwanickimarcel.freat.feature.add_step.presentation.AddStepViewModel
-import com.iwanickimarcel.freat.feature.home.presentation.HomeViewModel
-import com.iwanickimarcel.freat.feature.products.domain.ProductDataSource
-import com.iwanickimarcel.freat.feature.products.presentation.ProductsViewModel
-import com.iwanickimarcel.freat.feature.products_search.domain.ProductsSearchHistoryDataSource
-import com.iwanickimarcel.freat.feature.products_search.presentation.ProductsSearchViewModel
-import com.iwanickimarcel.freat.feature.recipes.domain.RecipeDataSource
-import com.iwanickimarcel.freat.feature.recipes.presentation.RecipesViewModel
-import com.iwanickimarcel.freat.feature.recipes_search.domain.RecipesSearchHistoryDataSource
-import com.iwanickimarcel.freat.feature.recipes_search.presentation.RecipesSearchViewModel
-import com.iwanickimarcel.freat.feature.scan_bill.presentation.ScanBillViewModel
+import com.iwanickimarcel.add_ingredient.AddIngredientViewModel
+import com.iwanickimarcel.add_product.AddProductViewModel
+import com.iwanickimarcel.add_recipe.AddRecipeViewModel
+import com.iwanickimarcel.add_step.AddStepViewModel
+import com.iwanickimarcel.home.HomeViewModel
+import com.iwanickimarcel.products.ProductDataSource
+import com.iwanickimarcel.products.ProductsViewModel
+import com.iwanickimarcel.products_search.ProductsSearchHistoryDataSource
+import com.iwanickimarcel.products_search.ProductsSearchViewModel
+import com.iwanickimarcel.recipes.RecipeDataSource
+import com.iwanickimarcel.recipes.RecipesViewModel
+import com.iwanickimarcel.recipes_search.RecipesSearchHistoryDataSource
+import com.iwanickimarcel.recipes_search.RecipesSearchViewModel
+import com.iwanickimarcel.scan_bill.ImageAnalyzer
+import com.iwanickimarcel.scan_bill.ScanBillViewModel
 import dev.icerock.moko.mvvm.compose.getViewModel
 import dev.icerock.moko.mvvm.compose.viewModelFactory
+import org.koin.java.KoinJavaComponent.inject
 
-class ViewModelModule(
-    private val productDataSource: ProductDataSource,
-    private val productsSearchHistoryDataSource: ProductsSearchHistoryDataSource,
-    private val recipeDataSource: RecipeDataSource,
-    private val recipesSearchHistoryDataSource: RecipesSearchHistoryDataSource,
-    private val imageAnalyzer: ImageAnalyzer
-) {
-    private val useCaseModule: UseCaseModule = UseCaseModule()
+val viewModelModule: ViewModelModule = ViewModelModule()
+
+class ViewModelModule {
+    private val productDataSource: ProductDataSource by inject(
+        ProductDataSource::class.java
+    )
+    private val productsSearchHistoryDataSource: ProductsSearchHistoryDataSource by inject(
+        ProductsSearchHistoryDataSource::class.java
+    )
+    private val recipeDataSource: RecipeDataSource by inject(
+        RecipeDataSource::class.java
+    )
+    private val recipesSearchHistoryDataSource: RecipesSearchHistoryDataSource by inject(
+        RecipesSearchHistoryDataSource::class.java
+    )
+    private val imageAnalyzer: ImageAnalyzer by inject(
+        ImageAnalyzer::class.java
+    )
+    private val useCaseModule: UseCaseModule by lazy {
+        UseCaseModule()
+    }
 
     val homeViewModel: HomeViewModel
         @Composable

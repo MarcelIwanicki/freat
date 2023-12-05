@@ -2,21 +2,35 @@ package com.iwanickimarcel.freat.navigation
 
 import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.core.screen.Screen
-import com.iwanickimarcel.freat.di.appModule
-import com.iwanickimarcel.freat.feature.add_recipe.presentation.AddRecipeScreen
-import com.iwanickimarcel.freat.feature.home.presentation.HomeScreen
-import com.iwanickimarcel.freat.feature.products.presentation.ProductsScreen
-import com.iwanickimarcel.freat.feature.products_search.presentation.ProductsSearchScreen
-import com.iwanickimarcel.freat.feature.recipes.presentation.RecipesScreen
-import com.iwanickimarcel.freat.feature.recipes_search.presentation.RecipesSearchScreen
-import com.iwanickimarcel.freat.feature.scan_bill.presentation.ScanBillScreen
-import com.iwanickimarcel.freat.feature.settings.presentation.SettingsScreen
+import com.iwanickimarcel.add_recipe.AddRecipeScreen
+import com.iwanickimarcel.freat.di.imagePicker
+import com.iwanickimarcel.freat.di.viewModelModule
+import com.iwanickimarcel.home.HomeScreen
+import com.iwanickimarcel.products.ProductsScreen
+import com.iwanickimarcel.products_search.ProductsSearchScreen
+import com.iwanickimarcel.recipes.RecipesScreen
+import com.iwanickimarcel.recipes_search.RecipesSearchScreen
+import com.iwanickimarcel.scan_bill.ScanBillScreen
+import com.iwanickimarcel.settings.SettingsScreen
 
 object Home : Screen {
     @Composable
     override fun Content() {
         HomeScreen(
-            getViewModel = { appModule.viewModelModule.homeViewModel }
+            getViewModel = { viewModelModule.homeViewModel },
+            navigationBarFactory = HomeNavigationBarFactory(),
+            navigateToProducts = { navigator, searchQuery ->
+                navigator.push(Products(searchQuery))
+            },
+            navigateToRecipes = { navigator, searchQuery ->
+                navigator.push(Recipes(searchQuery))
+            },
+            navigateToRecipesSearch = {
+                it.push(RecipesSearch)
+            },
+            navigateToScanBill = {
+                it.push(ScanBill)
+            }
         )
     }
 }
@@ -27,7 +41,14 @@ data class Recipes(
     @Composable
     override fun Content() {
         RecipesScreen(
-            getViewModel = { appModule.viewModelModule.recipesViewModel },
+            getViewModel = { viewModelModule.recipesViewModel },
+            navigationBarFactory = RecipesNavigationBarFactory(),
+            navigateToRecipesSearch = {
+                it.push(RecipesSearch)
+            },
+            navigateToAddRecipe = { navigator, recipeId ->
+                navigator.push(AddRecipe(recipeId))
+            },
             searchQuery = searchQuery
         )
     }
@@ -39,10 +60,10 @@ data class AddRecipe(
     @Composable
     override fun Content() {
         AddRecipeScreen(
-            getViewModel = { appModule.viewModelModule.addRecipeViewModel },
-            getAddIngredientViewModel = { appModule.viewModelModule.addIngredientViewModel },
-            getAddStepViewModel = { appModule.viewModelModule.addStepViewModel },
-            imagePicker = appModule.imageModule.imagePicker,
+            getViewModel = { viewModelModule.addRecipeViewModel },
+            getAddIngredientViewModel = { viewModelModule.addIngredientViewModel },
+            getAddStepViewModel = { viewModelModule.addStepViewModel },
+            imagePicker = imagePicker,
             editRecipeId = recipeId
         )
     }
@@ -54,9 +75,16 @@ data class Products(
     @Composable
     override fun Content() {
         ProductsScreen(
-            getViewModel = { appModule.viewModelModule.productsViewModel },
-            getAddProductViewModel = { appModule.viewModelModule.addProductViewModel },
-            imagePicker = appModule.imageModule.imagePicker,
+            getViewModel = { viewModelModule.productsViewModel },
+            getAddProductViewModel = { viewModelModule.addProductViewModel },
+            imagePicker = imagePicker,
+            navigationBarFactory = ProductsNavigationBarFactory(),
+            navigateToProductsSearch = {
+                it.push(ProductsSearch)
+            },
+            navigateToScanBill = {
+                it.push(ScanBill)
+            },
             searchQuery = searchQuery
         )
     }
@@ -66,7 +94,12 @@ object ProductsSearch : Screen {
     @Composable
     override fun Content() {
         ProductsSearchScreen(
-            getViewModel = { appModule.viewModelModule.productsSearchViewModel }
+            getViewModel = { viewModelModule.productsSearchViewModel },
+            navigateToProducts = { navigator, searchQuery ->
+                navigator.replace(
+                    Products(searchQuery)
+                )
+            }
         )
     }
 }
@@ -75,9 +108,9 @@ object ScanBill : Screen {
     @Composable
     override fun Content() {
         ScanBillScreen(
-            getViewModel = { appModule.viewModelModule.scanBillViewModel },
-            getAddIngredientViewModel = { appModule.viewModelModule.addIngredientViewModel },
-            imagePicker = appModule.imageModule.imagePicker
+            getViewModel = { viewModelModule.scanBillViewModel },
+            getAddIngredientViewModel = { viewModelModule.addIngredientViewModel },
+            imagePicker = imagePicker
         )
     }
 }
@@ -86,7 +119,10 @@ object RecipesSearch : Screen {
     @Composable
     override fun Content() {
         RecipesSearchScreen(
-            getViewModel = { appModule.viewModelModule.recipesSearchViewModel }
+            getViewModel = { viewModelModule.recipesSearchViewModel },
+            navigateToRecipes = { navigator, searchQuery ->
+                navigator.replace(Recipes(searchQuery))
+            }
         )
     }
 }
@@ -94,6 +130,8 @@ object RecipesSearch : Screen {
 object Settings : Screen {
     @Composable
     override fun Content() {
-        SettingsScreen()
+        SettingsScreen(
+            navigationBarFactory = SettingsNavigationBarFactory()
+        )
     }
 }

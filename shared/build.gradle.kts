@@ -2,7 +2,6 @@ plugins {
     kotlin("multiplatform")
     id("com.android.library")
     id("org.jetbrains.compose")
-    id("app.cash.sqldelight")
 }
 
 @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
@@ -33,8 +32,6 @@ kotlin {
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
 
-                implementation("app.cash.sqldelight:runtime:2.0.0")
-                implementation("app.cash.sqldelight:coroutines-extensions:2.0.0")
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
             }
         }
@@ -45,18 +42,11 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                implementation("app.cash.sqldelight:android-driver:2.0.0")
                 implementation("androidx.appcompat:appcompat:1.6.1")
                 implementation("androidx.activity:activity-compose:1.8.0")
             }
         }
         val androidUnitTest by getting
-        val iosMain by creating {
-            dependencies {
-                implementation("app.cash.sqldelight:native-driver:2.0.0")
-            }
-            dependsOn(commonMain)
-        }
 
     }
 }
@@ -73,30 +63,36 @@ android {
     }
 }
 
-sqldelight {
-    databases {
-        create("ProductsDatabase") {
-            packageName.set("com.iwanickimarcel.freat.products_database")
-            srcDirs.setFrom("src/commonMain/sqldelight_products")
-        }
-        create("ProductsSearchHistoryDatabase") {
-            packageName.set("com.iwanickimarcel.freat.products_search_history_database")
-            srcDirs.setFrom("src/commonMain/sqldelight_products_search_history")
-        }
-        create("RecipesDatabase") {
-            packageName.set("com.iwanickimarcel.freat.recipes_database")
-            srcDirs.setFrom("src/commonMain/sqldelight_recipes")
-        }
-        create("RecipesSearchHistoryDatabase") {
-            packageName.set("com.iwanickimarcel.freat.recipes_search_history_database")
-            srcDirs.setFrom("src/commonMain/sqldelight_recipes_search_history")
-        }
-    }
-}
-
 dependencies {
+    implementation(project(mapOf("path" to ":shared:data:core")))
+    implementation(project(mapOf("path" to ":shared:data:products")))
+    implementation(project(mapOf("path" to ":shared:data:products_search")))
+    implementation(project(mapOf("path" to ":shared:data:recipes")))
+    implementation(project(mapOf("path" to ":shared:data:recipes_search")))
+    implementation(project(mapOf("path" to ":shared:domain:products")))
+    implementation(project(mapOf("path" to ":shared:domain:products_search")))
+    implementation(project(mapOf("path" to ":shared:domain:add_product")))
+    implementation(project(mapOf("path" to ":shared:domain:recipes")))
+    implementation(project(mapOf("path" to ":shared:domain:recipes_search")))
+    implementation(project(mapOf("path" to ":shared:domain:add_recipe")))
+    implementation(project(mapOf("path" to ":shared:domain:add_step")))
+    implementation(project(mapOf("path" to ":shared:domain:scan_bill")))
+    implementation(project(mapOf("path" to ":shared:presentation:core")))
+    implementation(project(mapOf("path" to ":shared:presentation:add_ingredient")))
+    implementation(project(mapOf("path" to ":shared:presentation:products")))
+    implementation(project(mapOf("path" to ":shared:presentation:products_search")))
+    implementation(project(mapOf("path" to ":shared:presentation:recipes")))
+    implementation(project(mapOf("path" to ":shared:presentation:recipes_search")))
+    implementation(project(mapOf("path" to ":shared:presentation:add_product")))
+    implementation(project(mapOf("path" to ":shared:presentation:add_step")))
+    implementation(project(mapOf("path" to ":shared:presentation:add_recipe")))
+    implementation(project(mapOf("path" to ":shared:presentation:scan_bill")))
+    implementation(project(mapOf("path" to ":shared:presentation:settings")))
+    implementation(project(mapOf("path" to ":shared:presentation:home")))
+
     implementation("androidx.core:core:1.12.0")
-    implementation("com.google.mlkit:text-recognition:16.0.0")
+    implementation("io.insert-koin:koin-core:3.2.0")
+    implementation("io.insert-koin:koin-android:3.2.0")
     commonMainImplementation("cafe.adriel.voyager:voyager-navigator:1.0.0-rc05")
     commonMainApi("dev.icerock.moko:mvvm-core:0.16.1")
     commonMainApi("dev.icerock.moko:mvvm-compose:0.16.1")

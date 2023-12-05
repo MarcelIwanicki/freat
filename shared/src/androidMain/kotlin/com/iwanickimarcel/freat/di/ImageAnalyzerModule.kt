@@ -1,10 +1,10 @@
 package com.iwanickimarcel.freat.di
 
-import com.iwanickimarcel.freat.core.domain.ImageAnalyzer
+import com.iwanickimarcel.scan_bill.ImageAnalyzer
+import org.koin.dsl.module
 
-actual class ImageAnalyzerModule {
-    
-    actual val imageAnalyzer: ImageAnalyzer by lazy {
+actual val imageAnalyzerModule = module {
+    single {
         ImageAnalyzer()
     }
 }

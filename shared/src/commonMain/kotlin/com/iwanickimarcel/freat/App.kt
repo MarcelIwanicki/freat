@@ -6,19 +6,14 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.navigator.Navigator
-import com.iwanickimarcel.freat.core.presentation.FreatTheme
-import com.iwanickimarcel.freat.di.AppModule
-import com.iwanickimarcel.freat.di.appModule
+import com.iwanickimarcel.core.FreatTheme
 import com.iwanickimarcel.freat.navigation.Home
 
 @Composable
 fun App(
     darkTheme: Boolean,
     dynamicColor: Boolean,
-    module: AppModule,
 ) {
-    appModule = module
-
     FreatTheme(
         darkTheme = darkTheme,
         dynamicColor = dynamicColor

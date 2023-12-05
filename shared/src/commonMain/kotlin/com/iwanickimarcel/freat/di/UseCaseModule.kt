@@ -1,15 +1,15 @@
 package com.iwanickimarcel.freat.di
 
-import com.iwanickimarcel.freat.feature.add_product.domain.ValidateProduct
-import com.iwanickimarcel.freat.feature.add_recipe.domain.DeleteStep
-import com.iwanickimarcel.freat.feature.add_recipe.domain.EditStep
-import com.iwanickimarcel.freat.feature.add_recipe.domain.ValidateRecipe
-import com.iwanickimarcel.freat.feature.add_step.domain.ValidateStep
-import com.iwanickimarcel.freat.feature.products.domain.FilterProductsByQuery
-import com.iwanickimarcel.freat.feature.products_search.domain.FilterProductsSearchHistoryItems
-import com.iwanickimarcel.freat.feature.recipes.domain.FilterRecipesByQuery
-import com.iwanickimarcel.freat.feature.recipes.domain.GetRecipesWithOwnedProductsPercent
-import com.iwanickimarcel.freat.feature.recipes_search.domain.FilterRecipesSearchHistoryItems
+import com.iwanickimarcel.add_product.ValidateProduct
+import com.iwanickimarcel.add_recipe.DeleteStep
+import com.iwanickimarcel.add_recipe.EditStep
+import com.iwanickimarcel.add_recipe.ValidateRecipe
+import com.iwanickimarcel.add_step.ValidateStep
+import com.iwanickimarcel.products.FilterProductsByQuery
+import com.iwanickimarcel.products_search.FilterProductsSearchHistoryItems
+import com.iwanickimarcel.recipes.FilterRecipesByQuery
+import com.iwanickimarcel.recipes.GetRecipesWithOwnedProductsPercent
+import com.iwanickimarcel.recipes_search.FilterRecipesSearchHistoryItems
 
 class UseCaseModule {
     val filterProductsByQuery: FilterProductsByQuery by lazy {
