@@ -1,4 +1,4 @@
-package com.iwanickimarcel.freat.feature.add_recipe.presentation
+package com.iwanickimarcel.add_recipe
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable

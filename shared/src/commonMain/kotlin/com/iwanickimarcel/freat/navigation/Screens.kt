@@ -2,9 +2,9 @@ package com.iwanickimarcel.freat.navigation
 
 import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.core.screen.Screen
+import com.iwanickimarcel.add_recipe.AddRecipeScreen
 import com.iwanickimarcel.freat.di.imagePicker
 import com.iwanickimarcel.freat.di.viewModelModule
-import com.iwanickimarcel.freat.feature.add_recipe.presentation.AddRecipeScreen
 import com.iwanickimarcel.freat.feature.home.presentation.HomeScreen
 import com.iwanickimarcel.freat.feature.products_search.presentation.ProductsSearchScreen
 import com.iwanickimarcel.freat.feature.recipes.presentation.RecipesScreen

@@ -3,8 +3,8 @@ package com.iwanickimarcel.freat.di
 import androidx.compose.runtime.Composable
 import com.iwanickimarcel.add_ingredient.AddIngredientViewModel
 import com.iwanickimarcel.add_product.AddProductViewModel
+import com.iwanickimarcel.add_recipe.AddRecipeViewModel
 import com.iwanickimarcel.add_step.AddStepViewModel
-import com.iwanickimarcel.freat.feature.add_recipe.presentation.AddRecipeViewModel
 import com.iwanickimarcel.freat.feature.home.presentation.HomeViewModel
 import com.iwanickimarcel.freat.feature.products_search.presentation.ProductsSearchViewModel
 import com.iwanickimarcel.freat.feature.recipes.presentation.RecipesViewModel
