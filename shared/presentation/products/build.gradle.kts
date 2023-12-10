@@ -60,6 +60,7 @@ dependencies {
     implementation(project(mapOf("path" to ":shared:domain:products")))
     implementation(project(mapOf("path" to ":shared:presentation:core")))
     implementation(project(mapOf("path" to ":shared:presentation:add_product")))
+    commonTestImplementation(project(mapOf("path" to ":shared:test")))
 
     implementation("androidx.core:core:1.12.0")
     commonMainImplementation("cafe.adriel.voyager:voyager-navigator:1.0.0-rc05")

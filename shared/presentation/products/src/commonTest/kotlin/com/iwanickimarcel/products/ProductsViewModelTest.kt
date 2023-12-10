@@ -1,6 +1,7 @@
 package com.iwanickimarcel.products
 
 import app.cash.turbine.test
+import com.iwanickimarcel.test.CoroutineTestRule
 import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before

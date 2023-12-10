@@ -1,4 +1,4 @@
-package com.iwanickimarcel.products
+package com.iwanickimarcel.test
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
