@@ -60,10 +60,15 @@ dependencies {
     implementation(project(mapOf("path" to ":shared:domain:products")))
     implementation(project(mapOf("path" to ":shared:domain:add_product")))
     implementation(project(mapOf("path" to ":shared:presentation:core")))
+    commonTestImplementation(project(mapOf("path" to ":shared:test")))
 
     implementation("androidx.core:core:1.12.0")
     commonMainApi("dev.icerock.moko:mvvm-core:0.16.1")
     commonMainApi("dev.icerock.moko:mvvm-compose:0.16.1")
     commonMainApi("dev.icerock.moko:mvvm-flow:0.16.1")
     commonMainApi("dev.icerock.moko:mvvm-flow-compose:0.16.1")
+
+    commonTestImplementation("org.assertj:assertj-core:3.22.0")
+    commonTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+    commonTestImplementation("app.cash.turbine:turbine:1.0.0")
 }
