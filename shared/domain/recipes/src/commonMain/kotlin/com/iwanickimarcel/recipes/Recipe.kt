@@ -21,4 +21,39 @@ data class Recipe(
         val step: Int,
         val description: String
     )
+
+    /*
+        equals and hashcode have to be overwritten because of photoBytes ByteArray
+     */
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Recipe
+
+        if (id != other.id) return false
+        if (name != other.name) return false
+        if (photoBytes != null) {
+            if (other.photoBytes == null) return false
+            if (!photoBytes.contentEquals(other.photoBytes)) return false
+        } else if (other.photoBytes != null) return false
+        if (products != other.products) return false
+        if (tags != other.tags) return false
+        if (steps != other.steps) return false
+        if (ownedProductsPercent != other.ownedProductsPercent) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = id.hashCode()
+        result = 31 * result + name.hashCode()
+        result = 31 * result + (photoBytes?.contentHashCode() ?: 0)
+        result = 31 * result + products.hashCode()
+        result = 31 * result + tags.hashCode()
+        result = 31 * result + steps.hashCode()
+        result = 31 * result + ownedProductsPercent
+        return result
+    }
 }
