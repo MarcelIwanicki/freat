@@ -38,7 +38,7 @@ class AddIngredientViewModelTest {
     }
 
     @Test
-    fun `when edit product provided event is called state with ingredient info should be emitted`() =
+    fun `when edit product provided event is called, state with ingredient info should be emitted`() =
         runTest {
             viewModel.state.test {
                 viewModel.onEvent(
@@ -64,7 +64,7 @@ class AddIngredientViewModelTest {
         }
 
     @Test
-    fun `when name changed event is called state with name should be emitted`() = runTest {
+    fun `when name changed event is called, state with name should be emitted`() = runTest {
         viewModel.state.test {
             viewModel.onEvent(
                 AddIngredientEvent.OnNameChanged("Banana")
@@ -82,7 +82,7 @@ class AddIngredientViewModelTest {
     }
 
     @Test
-    fun `when amount changed event is called state with amount should be emitted`() = runTest {
+    fun `when amount changed event is called, state with amount should be emitted`() = runTest {
         viewModel.state.test {
             viewModel.onEvent(
                 AddIngredientEvent.OnAmountChanged("20")
@@ -100,7 +100,7 @@ class AddIngredientViewModelTest {
     }
 
     @Test
-    fun `when amount unit changed event is called state with amount unit should be emitted`() =
+    fun `when amount unit changed event is called, state with amount unit should be emitted`() =
         runTest {
             viewModel.state.test {
                 viewModel.onEvent(
@@ -119,7 +119,7 @@ class AddIngredientViewModelTest {
         }
 
     @Test
-    fun `when amount unit menu state changed event is called state with negated value should be emitted`() =
+    fun `when amount unit menu state changed event is called, state with negated value should be emitted`() =
         runTest {
             viewModel.state.test {
                 viewModel.onEvent(AddIngredientEvent.OnAmountUnitMenuStateChanged)
@@ -135,7 +135,7 @@ class AddIngredientViewModelTest {
         }
 
     @Test
-    fun `when amount unit menu state changed twice event is called state with twice negated value should be emitted`() =
+    fun `when amount unit menu state changed twice event is called, state with twice negated value should be emitted`() =
         runTest {
             viewModel.state.test {
                 repeat(2) {
@@ -154,7 +154,7 @@ class AddIngredientViewModelTest {
 
 
     @Test
-    fun `when add ingredient click event is called and name is wrong state with name error should be emitted`() =
+    fun `when add ingredient click event is called and name is wrong, state with name error should be emitted`() =
         runTest {
             viewModel.state.test {
                 viewModel.onEvent(
@@ -171,7 +171,7 @@ class AddIngredientViewModelTest {
         }
 
     @Test
-    fun `when add ingredient click event is called and amount is wrong state with amount error should be emitted`() =
+    fun `when add ingredient click event is called and amount is wrong, state with amount error should be emitted`() =
         runTest {
             viewModel.state.test {
                 viewModel.onEvent(
@@ -185,7 +185,7 @@ class AddIngredientViewModelTest {
         }
 
     @Test
-    fun `when add ingredient click event is called with correct inputs state with success should be emitted`() =
+    fun `when add ingredient click event is called with correct inputs, state with success should be emitted`() =
         runTest {
             viewModel.state.test {
                 viewModel.onEvent(
