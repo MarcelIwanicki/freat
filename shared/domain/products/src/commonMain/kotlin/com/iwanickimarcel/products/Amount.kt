@@ -49,7 +49,7 @@ val <T : Number> T.ml: Amount
         unit = AmountUnit.MilliLiter
     )
 
-val <T : Number> T.liter: Amount
+val <T : Number> T.l: Amount
     get() = Amount(
         amount = toDouble(),
         unit = AmountUnit.Liter
