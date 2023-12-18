@@ -62,7 +62,7 @@ class ProductsViewModelTest {
     }
 
     @Test
-    fun `when search query event is called state with products from dataSource filtered by query should be emitted`() =
+    fun `when search query event is called, state with products from dataSource filtered by query should be emitted`() =
         runTest {
             val products = listOf(
                 Product(
@@ -117,7 +117,7 @@ class ProductsViewModelTest {
         }
 
     @Test
-    fun `when long press event is called state with long pressed product should be emitted`() =
+    fun `when long press event is called, state with long pressed product should be emitted`() =
         runTest {
             viewModel.state.test {
                 viewModel.onEvent(
@@ -145,7 +145,7 @@ class ProductsViewModelTest {
         }
 
     @Test
-    fun `when long press dismiss event is called state with null long pressed product should be emitted`() =
+    fun `when long press dismiss event is called, state with null long pressed product should be emitted`() =
         runTest {
             viewModel.state.test {
                 viewModel.onEvent(
@@ -171,7 +171,7 @@ class ProductsViewModelTest {
         }
 
     @Test
-    fun `when add product click event is called state with add product open should be emitted`() =
+    fun `when add product click event is called, state with add product open should be emitted`() =
         runTest {
             viewModel.state.test {
                 viewModel.onEvent(ProductsEvent.OnAddProductClick)
@@ -187,7 +187,7 @@ class ProductsViewModelTest {
         }
 
     @Test
-    fun `when search bar click event is called state with search bar pressed should be emitted`() =
+    fun `when search bar click event is called, state with search bar pressed should be emitted`() =
         runTest {
             viewModel.state.test {
                 viewModel.onEvent(ProductsEvent.OnSearchBarClick)
@@ -203,7 +203,7 @@ class ProductsViewModelTest {
         }
 
     @Test
-    fun `when delete product press event is called state with product to delete should be emitted`() =
+    fun `when delete product press event is called, state with product to delete should be emitted`() =
         runTest {
             viewModel.state.test {
                 viewModel.onEvent(
@@ -232,7 +232,7 @@ class ProductsViewModelTest {
         }
 
     @Test
-    fun `when delete product menu dismiss event is called state with null product to delete should be emitted`() =
+    fun `when delete product menu dismiss event is called, state with null product to delete should be emitted`() =
         runTest {
             viewModel.state.test {
                 viewModel.onEvent(
@@ -258,7 +258,7 @@ class ProductsViewModelTest {
         }
 
     @Test
-    fun `when delete product confirm event is called product should be deleted from data source`() =
+    fun `when delete product confirm event is called, product should be deleted from data source`() =
         runTest {
             val products = listOf(
                 Product(
@@ -314,7 +314,7 @@ class ProductsViewModelTest {
         }
 
     @Test
-    fun `when delete product confirm event is called state with null product to delete should be emitted`() =
+    fun `when delete product confirm event is called, state with null product to delete should be emitted`() =
         runTest {
             viewModel.state.test {
                 viewModel.onEvent(
@@ -340,7 +340,7 @@ class ProductsViewModelTest {
         }
 
     @Test
-    fun `when edit product press is called state with product to edit should be emitted`() =
+    fun `when edit product press is called, state with product to edit should be emitted`() =
         runTest {
             viewModel.state.test {
                 viewModel.onEvent(
@@ -369,7 +369,7 @@ class ProductsViewModelTest {
         }
 
     @Test
-    fun `when add product dismiss event is called state with false add product open should be emitted`() =
+    fun `when add product dismiss event is called, state with false add product open should be emitted`() =
         runTest {
             viewModel.state.test {
                 viewModel.onEvent(ProductsEvent.OnAddProductClick)
@@ -386,7 +386,7 @@ class ProductsViewModelTest {
         }
 
     @Test
-    fun `when edit product dismiss event is called state with null product to edit should be emitted`() =
+    fun `when edit product dismiss event is called, state with null product to edit should be emitted`() =
         runTest {
             viewModel.state.test {
                 viewModel.onEvent(
@@ -412,7 +412,7 @@ class ProductsViewModelTest {
         }
 
     @Test
-    fun `when scan bill event is called state with null product to edit should be emitted`() =
+    fun `when scan bill event is called, state with null product to edit should be emitted`() =
         runTest {
             viewModel.state.test {
                 viewModel.onEvent(ProductsEvent.OnScanBillClick)
