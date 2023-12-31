@@ -38,6 +38,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
@@ -51,6 +52,7 @@ import com.iwanickimarcel.core.NavigationBarFactory
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun ProductsScreen(
+    navigator: Navigator? = LocalNavigator.current,
     getViewModel: @Composable () -> ProductsViewModel,
     getAddProductViewModel: @Composable () -> AddProductViewModel,
     imagePicker: ImagePicker,
@@ -60,7 +62,6 @@ fun ProductsScreen(
     searchQuery: String?,
 ) {
     val viewModel = getViewModel()
-    val navigator = LocalNavigator.current ?: return
     val state by viewModel.state.collectAsState()
 
     val bottomSheetState = rememberModalBottomSheetState(
@@ -95,11 +96,11 @@ fun ProductsScreen(
     }
 
     if (state.searchBarPressed) {
-        navigateToProductsSearch(navigator)
+        navigator?.let(navigateToProductsSearch)
     }
 
     if (state.isScanBillClicked) {
-        navigateToScanBill(navigator)
+        navigator?.let(navigateToScanBill)
     }
 
     state.productToDelete?.let {
@@ -243,7 +244,8 @@ fun ProductsScreen(
                         AddProductPlaceholder(
                             text = "Add product",
                             icon = Icons.Outlined.AddChart,
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier
+                                .fillMaxWidth()
                                 .padding(8.dp)
                         ) {
                             viewModel.onEvent(ProductsEvent.OnAddProductClick)
