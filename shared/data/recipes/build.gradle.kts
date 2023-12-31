@@ -62,7 +62,7 @@ kotlin {
 
 android {
     namespace = "com.iwanickimarcel.recipes"
-    compileSdk = 33
+    compileSdk = 34
     defaultConfig {
         minSdk = 24
     }

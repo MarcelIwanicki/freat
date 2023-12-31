@@ -47,7 +47,7 @@ kotlin {
 
 android {
     namespace = "com.iwanickimarcel.recipes_search"
-    compileSdk = 33
+    compileSdk = 34
     defaultConfig {
         minSdk = 24
     }

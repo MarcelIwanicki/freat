@@ -63,7 +63,7 @@ kotlin {
 
 android {
     namespace = "com.iwanickimarcel.products"
-    compileSdk = 33
+    compileSdk = 34
     defaultConfig {
         minSdk = 24
     }
