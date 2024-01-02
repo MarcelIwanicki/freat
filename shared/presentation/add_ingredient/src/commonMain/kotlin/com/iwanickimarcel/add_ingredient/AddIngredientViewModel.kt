@@ -1,5 +1,6 @@
 package com.iwanickimarcel.add_ingredient
 
+import androidx.compose.ui.text.input.TextFieldValue
 import com.iwanickimarcel.add_product.ValidateProduct
 import com.iwanickimarcel.products.AmountUnit
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
@@ -30,7 +31,7 @@ class AddIngredientViewModel(
         when (event) {
             is AddIngredientEvent.OnEditProductProvided -> {
                 _state.value = _state.value.copy(
-                    name = event.product.name,
+                    name = TextFieldValue(event.product.name),
                     amount = event.product.amount.amount,
                     amountUnit = event.product.amount.unit
                 )
@@ -74,7 +75,7 @@ class AddIngredientViewModel(
             is AddIngredientEvent.OnAddIngredientClick -> with(_state.value) {
                 viewModelScope.launch {
                     validateProduct(
-                        name = name,
+                        name = name?.text,
                         amount = amount,
                         amountUnit = amountUnit,
                         photoBytes = null,
