@@ -33,6 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.iwanickimarcel.recipes.Recipe
 
@@ -101,7 +102,7 @@ fun AddStepScreen(
                 ) {
                     Spacer(modifier = Modifier.height(16.dp))
                     OutlinedTextField(
-                        value = state.step ?: "",
+                        value = state.step ?: TextFieldValue(""),
                         singleLine = false,
                         placeholder = {
                             Text(text = "Insert step...")

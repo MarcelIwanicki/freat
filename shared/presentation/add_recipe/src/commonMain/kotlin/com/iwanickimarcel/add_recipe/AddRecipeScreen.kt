@@ -289,7 +289,7 @@ fun AddRecipeScreen(
                         editRecipeId?.let {
                             buildString {
                                 append("Edit ")
-                                append(state.name ?: "recipe")
+                                append(state.name?.text ?: "recipe")
                             }
                         } ?: "Add recipe"
                     )
