@@ -1,5 +1,6 @@
 package com.iwanickimarcel.add_recipe
 
+import androidx.compose.ui.text.input.TextFieldValue
 import com.iwanickimarcel.recipes.Recipe
 import com.iwanickimarcel.recipes.RecipeDataSource
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
@@ -35,7 +36,7 @@ class AddRecipeViewModel(
                     val recipe = recipeDataSource.getRecipeById(event.id)
                     _state.value = _state.value.copy(
                         editId = recipe.id,
-                        name = recipe.name,
+                        name = TextFieldValue(recipe.name),
                         photoBytes = recipe.photoBytes,
                         ingredients = recipe.products,
                         steps = recipe.steps,
@@ -199,7 +200,7 @@ class AddRecipeViewModel(
                 viewModelScope.launch {
                     validateRecipe(
                         editId = editId,
-                        name = name,
+                        name = name?.text,
                         ingredients = ingredients,
                         steps = steps,
                         tags = tags,
