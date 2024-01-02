@@ -1,5 +1,6 @@
 package com.iwanickimarcel.add_product
 
+import androidx.compose.ui.text.input.TextFieldValue
 import app.cash.turbine.test
 import com.iwanickimarcel.products.AmountUnit
 import com.iwanickimarcel.products.Product
@@ -72,7 +73,7 @@ class AddProductViewModelTest {
                 viewModel.onEvent(AddProductEvent.OnEditProductProvided("Water"))
 
                 val expectedState = AddProductState(
-                    name = "Water",
+                    name = TextFieldValue("Water"),
                     amount = 20.0,
                     amountUnit = AmountUnit.Liter,
                     photoBytes = null
@@ -87,10 +88,10 @@ class AddProductViewModelTest {
     @Test
     fun `when on name changed event called, state with name should be emitted`() = runTest {
         viewModel.state.test {
-            viewModel.onEvent(AddProductEvent.OnNameChanged("Apple"))
+            viewModel.onEvent(AddProductEvent.OnNameChanged(TextFieldValue("Apple")))
 
             val expectedState = AddProductState(
-                name = "Apple",
+                name = TextFieldValue("Apple"),
                 nameError = null
             )
 
@@ -191,14 +192,14 @@ class AddProductViewModelTest {
     fun `when on add product click event called and data is correct, state with success should be emitted`() =
         runTest {
             viewModel.state.test {
-                viewModel.onEvent(AddProductEvent.OnNameChanged("Apple"))
+                viewModel.onEvent(AddProductEvent.OnNameChanged(TextFieldValue("Apple")))
                 viewModel.onEvent(AddProductEvent.OnAmountChanged("30"))
                 viewModel.onEvent(AddProductEvent.OnAmountUnitChanged("g"))
                 viewModel.onEvent(AddProductEvent.OnPhotoSelected(byteArrayOf(1, 2, 3, 4, 5)))
                 viewModel.onEvent(AddProductEvent.OnAddProductClick)
 
                 val expectedState = AddProductState(
-                    name = "Apple",
+                    name = TextFieldValue("Apple"),
                     amount = 30.0,
                     amountUnit = AmountUnit.Gram,
                     photoBytes = byteArrayOf(1, 2, 3, 4, 5),
@@ -215,7 +216,7 @@ class AddProductViewModelTest {
     fun `when on add product click event called and name is incorrect, state with name error should be emitted`() =
         runTest {
             viewModel.state.test {
-                viewModel.onEvent(AddProductEvent.OnNameChanged(""))
+                viewModel.onEvent(AddProductEvent.OnNameChanged(TextFieldValue("")))
                 viewModel.onEvent(AddProductEvent.OnAmountChanged("30"))
                 viewModel.onEvent(AddProductEvent.OnAmountUnitChanged("g"))
                 viewModel.onEvent(AddProductEvent.OnPhotoSelected(byteArrayOf(1, 2, 3, 4, 5)))
@@ -233,7 +234,7 @@ class AddProductViewModelTest {
     fun `when on add product click event called and amount is incorrect, state with amount error should be emitted`() =
         runTest {
             viewModel.state.test {
-                viewModel.onEvent(AddProductEvent.OnNameChanged("Apple"))
+                viewModel.onEvent(AddProductEvent.OnNameChanged(TextFieldValue("Apple")))
                 viewModel.onEvent(AddProductEvent.OnAmountUnitChanged("g"))
                 viewModel.onEvent(AddProductEvent.OnPhotoSelected(byteArrayOf(1, 2, 3, 4, 5)))
                 viewModel.onEvent(AddProductEvent.OnAddProductClick)
