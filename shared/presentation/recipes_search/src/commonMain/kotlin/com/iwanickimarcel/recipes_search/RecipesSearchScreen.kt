@@ -65,7 +65,7 @@ fun RecipesSearchScreen(
         LaunchedEffect(Unit) {
             navigateToRecipes(
                 navigator = navigator,
-                searchQuery = state.query
+                searchQuery = state.query.text
             )
         }
     }

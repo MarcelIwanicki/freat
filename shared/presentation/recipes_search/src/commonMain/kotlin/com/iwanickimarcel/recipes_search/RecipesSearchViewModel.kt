@@ -32,7 +32,7 @@ class RecipesSearchViewModel(
             items = filterRecipesSearchHistoryItems(
                 items = historyItems,
                 recipes = recipes,
-                query = state.query
+                query = state.query.text
             )
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(STOP_TIMEOUT), RecipesSearchState())
@@ -61,11 +61,11 @@ class RecipesSearchViewModel(
             }
 
             is RecipesSearchEvent.OnSearchConfirm -> {
-                _state.value.query.takeIf { it.isNotEmpty() }?.let {
+                _state.value.query.takeIf { it.text.isNotEmpty() }?.let {
                     viewModelScope.launch {
                         recipesSearchHistoryDataSource.insertRecipesSearchHistoryItem(
                             item = RecipesSearchHistoryItem(
-                                query = it,
+                                query = it.text,
                                 type = RecipesSearchHistoryItem.Type.History
                             )
                         )
