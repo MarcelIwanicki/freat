@@ -46,7 +46,7 @@ kotlin {
 
 android {
     namespace = "com.iwanickimarcel.products"
-    compileSdk = 33
+    compileSdk = 34
     defaultConfig {
         minSdk = 24
     }
@@ -60,6 +60,8 @@ dependencies {
     implementation(project(mapOf("path" to ":shared:domain:products")))
     implementation(project(mapOf("path" to ":shared:presentation:core")))
     implementation(project(mapOf("path" to ":shared:presentation:add_product")))
+    androidTestImplementation(project(mapOf("path" to ":shared:domain:add_product")))
+    androidTestImplementation(project(mapOf("path" to ":shared")))
     commonTestImplementation(project(mapOf("path" to ":shared:test")))
 
     implementation("androidx.core:core:1.12.0")

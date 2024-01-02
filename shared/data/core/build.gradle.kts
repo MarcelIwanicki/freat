@@ -54,7 +54,7 @@ kotlin {
 
 android {
     namespace = "com.iwanickimarcel.core"
-    compileSdk = 33
+    compileSdk = 34
     defaultConfig {
         minSdk = 24
     }

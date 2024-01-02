@@ -13,6 +13,7 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     buildFeatures {
         compose = true
@@ -49,4 +50,10 @@ dependencies {
     implementation("androidx.activity:activity-compose:1.8.0")
     implementation("io.insert-koin:koin-core:3.2.0")
     implementation("io.insert-koin:koin-android:3.2.0")
+
+    androidTestImplementation(kotlin("test-junit"))
+    androidTestImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test:runner:1.5.2")
+    androidTestImplementation(compose.desktop.uiTestJUnit4)
+    androidTestDebugImplementation("androidx.compose.ui:ui-test-manifest:1.5.4")
 }
