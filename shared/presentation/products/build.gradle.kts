@@ -40,14 +40,6 @@ kotlin {
                 implementation("androidx.activity:activity-compose:1.8.0")
             }
         }
-        val androidInstrumentedTest by getting {
-            dependencies {
-                implementation(kotlin("test-junit"))
-                implementation("junit:junit:4.13.2")
-                implementation("androidx.test:runner:1.5.2")
-                implementation(compose.desktop.uiTestJUnit4)
-            }
-        }
         val androidUnitTest by getting
     }
 }
@@ -57,7 +49,6 @@ android {
     compileSdk = 34
     defaultConfig {
         minSdk = 24
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -83,6 +74,4 @@ dependencies {
     commonTestImplementation("org.assertj:assertj-core:3.22.0")
     commonTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
     commonTestImplementation("app.cash.turbine:turbine:1.0.0")
-
-    androidTestDebugImplementation("androidx.compose.ui:ui-test-manifest:1.5.4")
 }
