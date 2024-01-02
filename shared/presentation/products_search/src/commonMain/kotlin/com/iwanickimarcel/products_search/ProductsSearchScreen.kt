@@ -66,7 +66,7 @@ fun ProductsSearchScreen(
         LaunchedEffect(Unit) {
             navigateToProducts(
                 navigator = navigator,
-                searchQuery = state.query
+                searchQuery = state.query.text
             )
         }
     }
