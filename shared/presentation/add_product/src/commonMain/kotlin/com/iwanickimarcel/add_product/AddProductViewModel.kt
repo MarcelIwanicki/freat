@@ -1,5 +1,6 @@
 package com.iwanickimarcel.add_product
 
+import androidx.compose.ui.text.input.TextFieldValue
 import com.iwanickimarcel.products.AmountUnit
 import com.iwanickimarcel.products.ProductDataSource
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
@@ -33,7 +34,7 @@ class AddProductViewModel(
                 viewModelScope.launch {
                     val product = productDataSource.getProductByName(event.name)
                     _state.value = _state.value.copy(
-                        name = product.name,
+                        name = TextFieldValue(product.name),
                         amount = product.amount.amount,
                         amountUnit = product.amount.unit,
                         photoBytes = product.photoBytes
@@ -85,7 +86,7 @@ class AddProductViewModel(
             is AddProductEvent.OnAddProductClick -> with(_state.value) {
                 viewModelScope.launch {
                     validateProduct(
-                        name = name,
+                        name = name?.text,
                         amount = amount,
                         amountUnit = amountUnit,
                         photoBytes = photoBytes,

@@ -34,7 +34,7 @@ class ProductsSearchViewModel(
             items = filterProductsSearchHistoryItems(
                 items = historyItems,
                 products = products,
-                query = state.query
+                query = state.query.text
             )
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(STOP_TIMEOUT), ProductsSearchState())
@@ -63,11 +63,11 @@ class ProductsSearchViewModel(
             }
 
             is ProductsSearchEvent.OnSearchConfirm -> {
-                _state.value.query.takeIf { it.isNotEmpty() }?.let {
+                _state.value.query.takeIf { it.text.isNotEmpty() }?.let {
                     viewModelScope.launch {
                         productsSearchHistoryDataSource.insertProductsSearchHistoryItem(
                             item = ProductsSearchHistoryItem(
-                                name = it,
+                                name = it.text,
                                 type = ProductsSearchHistoryItem.Type.History
                             )
                         )

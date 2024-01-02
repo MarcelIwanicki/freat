@@ -1,5 +1,6 @@
 package com.iwanickimarcel.add_ingredient
 
+import androidx.compose.ui.text.input.TextFieldValue
 import app.cash.turbine.test
 import com.iwanickimarcel.add_product.ValidateProduct
 import com.iwanickimarcel.products.AmountUnit
@@ -52,7 +53,7 @@ class AddIngredientViewModelTest {
                 )
 
                 val expectedState = AddIngredientState(
-                    name = "Apple",
+                    name = TextFieldValue("Apple"),
                     amount = 10.0,
                     amountUnit = AmountUnit.MilliGram
                 )
@@ -67,11 +68,11 @@ class AddIngredientViewModelTest {
     fun `when name changed event is called, state with name should be emitted`() = runTest {
         viewModel.state.test {
             viewModel.onEvent(
-                AddIngredientEvent.OnNameChanged("Banana")
+                AddIngredientEvent.OnNameChanged(TextFieldValue("Banana"))
             )
 
             val expectedState = AddIngredientState(
-                name = "Banana",
+                name = TextFieldValue("Banana"),
                 nameError = null
             )
 
@@ -158,7 +159,7 @@ class AddIngredientViewModelTest {
         runTest {
             viewModel.state.test {
                 viewModel.onEvent(
-                    AddIngredientEvent.OnNameChanged("")
+                    AddIngredientEvent.OnNameChanged(TextFieldValue(""))
                 )
                 viewModel.onEvent(
                     AddIngredientEvent.OnAddIngredientClick {}
@@ -189,7 +190,7 @@ class AddIngredientViewModelTest {
         runTest {
             viewModel.state.test {
                 viewModel.onEvent(
-                    AddIngredientEvent.OnNameChanged("Banana")
+                    AddIngredientEvent.OnNameChanged(TextFieldValue("Banana"))
                 )
 
                 viewModel.onEvent(
@@ -205,7 +206,7 @@ class AddIngredientViewModelTest {
                 )
 
                 val expectedState = AddIngredientState(
-                    name = "Banana",
+                    name = TextFieldValue("Banana"),
                     amount = 20.0,
                     amountUnit = AmountUnit.Gram,
                     success = true

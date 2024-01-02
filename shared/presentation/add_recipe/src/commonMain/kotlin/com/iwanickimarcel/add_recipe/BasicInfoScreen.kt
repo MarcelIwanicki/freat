@@ -26,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.iwanickimarcel.core.AddProductPlaceholder
 import com.iwanickimarcel.core.ImagePicker
@@ -34,7 +35,7 @@ import com.iwanickimarcel.core.ImagePicker
 fun BasicInfoScreen(
     imagePicker: ImagePicker,
     addRecipeState: AddRecipeState,
-    onNameChanged: (String) -> Unit,
+    onNameChanged: (TextFieldValue) -> Unit,
     onNextClick: () -> Unit
 ) {
     Column(
@@ -63,7 +64,7 @@ fun BasicInfoScreen(
             }
             Spacer(modifier = Modifier.height(16.dp))
             OutlinedTextField(
-                value = addRecipeState.name ?: "",
+                value = addRecipeState.name ?: TextFieldValue(""),
                 placeholder = {
                     Text(text = "Insert name of the item...")
                 },

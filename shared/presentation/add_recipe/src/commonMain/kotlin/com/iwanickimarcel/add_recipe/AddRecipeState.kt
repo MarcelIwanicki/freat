@@ -6,7 +6,7 @@ import com.iwanickimarcel.recipes.Recipe
 
 data class AddRecipeState(
     val editId: Long? = null,
-    val name: String? = null,
+    val name: TextFieldValue? = null,
     val nameError: String? = null,
     val photoBytes: ByteArray? = null,
     val ingredients: List<Product> = emptyList(),

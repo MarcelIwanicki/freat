@@ -6,7 +6,7 @@ import com.iwanickimarcel.recipes.Recipe
 
 sealed interface AddRecipeEvent {
     data class OnEditRecipeProvided(val id: Long) : AddRecipeEvent
-    data class OnNameChanged(val name: String) : AddRecipeEvent
+    data class OnNameChanged(val name: TextFieldValue) : AddRecipeEvent
     data class OnPhotoSelected(val photoBytes: ByteArray) : AddRecipeEvent
     object OnAddIngredientPress : AddRecipeEvent
     object OnAddIngredientDismiss : AddRecipeEvent

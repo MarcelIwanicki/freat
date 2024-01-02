@@ -1,5 +1,6 @@
 package com.iwanickimarcel.add_step
 
+import androidx.compose.ui.text.input.TextFieldValue
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -27,7 +28,7 @@ class AddStepViewModel(
         when (event) {
             is AddStepEvent.OnEditStepProvided -> {
                 _state.value = _state.value.copy(
-                    step = event.step.description,
+                    step = TextFieldValue(event.step.description),
                 )
             }
 
@@ -41,7 +42,7 @@ class AddStepViewModel(
             is AddStepEvent.OnAddStepClick -> with(_state.value) {
                 viewModelScope.launch {
                     validateStep(
-                        step = step,
+                        step = step?.text,
                         stepsCount = event.stepsCount,
                         onStepAdded = event.onStepAdded,
                         onSuccess = {
