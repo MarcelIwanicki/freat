@@ -368,12 +368,17 @@ fun HomeScreen(
 
                                         IconButton(
                                             onClick = {
-
+                                                viewModel.onEvent(HomeEvent.OnFavoriteClick(it))
                                             },
                                             content = {
                                                 Icon(
                                                     imageVector = Icons.Outlined.Favorite,
                                                     contentDescription = "Favorite",
+                                                    tint = if (it.isFavorite) {
+                                                        MaterialTheme.colorScheme.error
+                                                    } else {
+                                                        MaterialTheme.colorScheme.onBackground
+                                                    }
                                                 )
                                             }
                                         )

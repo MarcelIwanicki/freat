@@ -98,6 +98,15 @@ class RecipesViewModel(
                     longPressedRecipe = null
                 )
             }
+
+            is RecipesEvent.OnFavoriteClick -> {
+                viewModelScope.launch {
+                    val favoriteRecipe = event.recipe.copy(
+                        isFavorite = !event.recipe.isFavorite
+                    )
+                    recipeDataSource.insertRecipe(favoriteRecipe)
+                }
+            }
         }
     }
 }

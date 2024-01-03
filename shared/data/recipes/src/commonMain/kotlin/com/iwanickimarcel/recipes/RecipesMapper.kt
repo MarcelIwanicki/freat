@@ -1,6 +1,7 @@
 package com.iwanickimarcel.recipes
 
 import com.iwanickimarcel.core.ImageStorage
+import com.iwanickimarcel.core.toBoolean
 import com.iwanickimarcel.products.Amount
 import com.iwanickimarcel.products.AmountUnit
 import com.iwanickimarcel.products.Product
@@ -22,7 +23,8 @@ suspend fun RecipeEntity.toRecipe(
         tags = tags,
         steps = steps,
         photoBytes = imagePath?.let { imageStorage.getBytes(it) },
-        ownedProductsPercent = 0
+        ownedProductsPercent = 0,
+        isFavorite = isFavorite.toBoolean()
     )
 }
 

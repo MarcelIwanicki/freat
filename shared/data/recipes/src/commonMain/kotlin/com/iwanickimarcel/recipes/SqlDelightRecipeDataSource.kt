@@ -4,6 +4,7 @@ import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import com.iwanickimarcel.core.ImageStorage
 import com.iwanickimarcel.core.combineIndices
+import com.iwanickimarcel.core.toLong
 import com.iwanickimarcel.recipes.database.RecipesDatabase
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.flow.Flow
@@ -151,7 +152,8 @@ class SqlDelightRecipeDataSource(
             id = recipe.id,
             name = recipe.name,
             createdAt = Clock.System.now().toEpochMilliseconds(),
-            imagePath = imagePath
+            imagePath = imagePath,
+            isFavorite = recipe.isFavorite.toLong()
         )
     }
 
