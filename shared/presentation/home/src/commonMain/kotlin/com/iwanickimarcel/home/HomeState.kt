@@ -4,6 +4,7 @@ import com.iwanickimarcel.products.Product
 import com.iwanickimarcel.recipes.Recipe
 
 data class HomeState(
+    val loading: Boolean = true,
     val products: List<Product> = emptyList(),
     val recipes: List<Recipe> = emptyList(),
     val isSearchBarClicked: Boolean = false,

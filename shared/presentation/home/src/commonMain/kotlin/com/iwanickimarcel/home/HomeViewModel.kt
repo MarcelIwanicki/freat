@@ -27,6 +27,7 @@ class HomeViewModel(
         recipeDataSource.getRecipes(),
     ) { state, products, recipes ->
         state.copy(
+            loading = false,
             products = products,
             recipes = recipes
         )
