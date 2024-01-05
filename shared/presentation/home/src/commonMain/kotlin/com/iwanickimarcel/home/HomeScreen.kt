@@ -56,6 +56,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import com.iwanickimarcel.core.NavigationBarFactory
 import com.iwanickimarcel.core.TriangleShape
+import com.iwanickimarcel.core.shimmerEffect
 import com.iwanickimarcel.products.ProductPhoto
 import com.iwanickimarcel.recipes.RecipePhoto
 
@@ -162,83 +163,86 @@ fun HomeScreen(
                 verticalArrangement = Arrangement.Top
             ) {
 
-                state.products.takeIf { it.isNotEmpty() }?.let {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .wrapContentHeight()
-                            .padding(horizontal = 16.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            text = "Your products",
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 16.sp
-                        )
-                        TextButton(
-                            modifier = Modifier.padding(top = 4.dp),
-                            onClick = {
-                                viewModel.onEvent(HomeEvent.OnShowAllProductsClick)
-                            },
-                            content = {
-                                Text(
-                                    text = "Show all",
-                                    fontWeight = FontWeight.SemiBold,
-                                    fontSize = 14.sp
-                                )
-                            }
-                        )
-                    }
-                    Spacer(modifier = Modifier.height(16.dp))
-                    LazyHorizontalGrid(
-                        rows = GridCells.Fixed(1),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(84.dp)
-                    ) {
-                        items(it) { item ->
-                            Column(
-                                modifier = Modifier
-                                    .wrapContentSize()
-                                    .clickable {
-                                        viewModel.onEvent(HomeEvent.OnProductClick(item))
-                                    }
-                                    .padding(horizontal = 16.dp),
-                                horizontalAlignment = Alignment.CenterHorizontally
-                            ) {
-                                ProductPhoto(
-                                    modifier = Modifier.size(64.dp),
-                                    product = item,
-                                    iconSize = 64.dp,
-                                    shape = RoundedCornerShape(64.dp)
-                                )
-                                Spacer(modifier = Modifier.height(4.dp))
-                                Text(
-                                    modifier = Modifier.width(64.dp),
-                                    text = item.name,
-                                    textAlign = TextAlign.Center,
-                                    fontSize = 12.sp,
-                                    maxLines = 1,
-                                    overflow = TextOverflow.Ellipsis
-                                )
+                if (state.loading) {
+                    ProductsShimmerLoading(viewModel)
+                } else {
+                    state.products.takeIf { it.isNotEmpty() }?.let {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .wrapContentHeight()
+                                .padding(horizontal = 16.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = "Your products",
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 16.sp
+                            )
+                            TextButton(
+                                modifier = Modifier.padding(top = 4.dp),
+                                onClick = {
+                                    viewModel.onEvent(HomeEvent.OnShowAllProductsClick)
+                                },
+                                content = {
+                                    Text(
+                                        text = "Show all",
+                                        fontWeight = FontWeight.SemiBold,
+                                        fontSize = 14.sp
+                                    )
+                                }
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(16.dp))
+                        LazyHorizontalGrid(
+                            rows = GridCells.Fixed(1),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(84.dp)
+                        ) {
+                            items(it) { item ->
+                                Column(
+                                    modifier = Modifier
+                                        .wrapContentSize()
+                                        .clickable {
+                                            viewModel.onEvent(HomeEvent.OnProductClick(item))
+                                        }
+                                        .padding(horizontal = 16.dp),
+                                    horizontalAlignment = Alignment.CenterHorizontally
+                                ) {
+                                    ProductPhoto(
+                                        modifier = Modifier.size(64.dp),
+                                        product = item,
+                                        iconSize = 64.dp,
+                                        shape = RoundedCornerShape(64.dp)
+                                    )
+                                    Spacer(modifier = Modifier.height(4.dp))
+                                    Text(
+                                        modifier = Modifier.width(64.dp),
+                                        text = item.name,
+                                        textAlign = TextAlign.Center,
+                                        fontSize = 12.sp,
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis
+                                    )
+                                }
                             }
                         }
                     }
-                    Spacer(modifier = Modifier.height(28.dp))
                 }
+
+                Spacer(modifier = Modifier.height(28.dp))
 
                 Column(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    state.products.takeIf { it.isNotEmpty() }?.let {
-                        TriangleShape(
-                            width = 32.dp,
-                            height = 16.dp,
-                            color = MaterialTheme.colorScheme.primaryContainer
-                        )
-                    }
+                    TriangleShape(
+                        width = 32.dp,
+                        height = 16.dp,
+                        color = MaterialTheme.colorScheme.primaryContainer
+                    )
                     Row(
                         modifier = Modifier
                             .padding(horizontal = 16.dp)
@@ -284,120 +288,129 @@ fun HomeScreen(
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                state.recipes.takeIf { it.isNotEmpty() }?.let {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .wrapContentHeight()
-                            .padding(horizontal = 16.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            text = "Recipes",
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 16.sp
-                        )
-                        TextButton(
-                            modifier = Modifier.padding(top = 4.dp),
-                            onClick = {
-                                viewModel.onEvent(HomeEvent.OnShowAllRecipesClick)
-                            },
-                            content = {
-                                Text(
-                                    text = "Show all",
-                                    fontWeight = FontWeight.SemiBold,
-                                    fontSize = 14.sp
-                                )
-                            }
-                        )
-                    }
-                    Spacer(modifier = Modifier.height(16.dp))
-                    LazyHorizontalGrid(
-                        rows = GridCells.Fixed(1),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(110.dp)
-                    ) {
-                        items(it) {
-                            Box(
-                                modifier = Modifier
-                                    .width(200.dp)
-                                    .height(110.dp)
-                                    .clip(RoundedCornerShape(10.dp))
-                                    .clickable {
-                                        viewModel.onEvent(HomeEvent.OnRecipeClick(it))
-                                    }
-                                    .padding(horizontal = 16.dp)
-                            ) {
-                                RecipePhoto(
-                                    recipe = it,
-                                    modifier = Modifier.fillMaxSize()
-                                )
-
-                                Column(
+                if (state.loading) {
+                    RecipesShimmerLoading(viewModel)
+                } else {
+                    state.recipes.takeIf { it.isNotEmpty() }?.let {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .wrapContentHeight()
+                                .padding(horizontal = 16.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = "Recipes",
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 16.sp
+                            )
+                            TextButton(
+                                modifier = Modifier.padding(top = 4.dp),
+                                onClick = {
+                                    viewModel.onEvent(HomeEvent.OnShowAllRecipesClick)
+                                },
+                                content = {
+                                    Text(
+                                        text = "Show all",
+                                        fontWeight = FontWeight.SemiBold,
+                                        fontSize = 14.sp
+                                    )
+                                }
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(16.dp))
+                        LazyHorizontalGrid(
+                            rows = GridCells.Fixed(1),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(110.dp)
+                        ) {
+                            items(it) {
+                                Box(
                                     modifier = Modifier
-                                        .fillMaxSize()
-                                        .padding(
-                                            start = 12.dp,
-                                            end = 12.dp,
-                                            bottom = 8.dp,
-                                            top = 4.dp,
-                                        ),
-                                    verticalArrangement = Arrangement.SpaceBetween
+                                        .width(200.dp)
+                                        .height(110.dp)
+                                        .clip(RoundedCornerShape(10.dp))
+                                        .clickable {
+                                            viewModel.onEvent(HomeEvent.OnRecipeClick(it))
+                                        }
+                                        .padding(horizontal = 16.dp)
                                 ) {
-                                    Row(
+                                    RecipePhoto(
+                                        recipe = it,
+                                        modifier = Modifier.fillMaxSize()
+                                    )
+
+                                    Column(
                                         modifier = Modifier
-                                            .fillMaxWidth(),
-                                        horizontalArrangement = Arrangement.SpaceBetween
+                                            .fillMaxSize()
+                                            .padding(
+                                                start = 12.dp,
+                                                end = 12.dp,
+                                                bottom = 8.dp,
+                                                top = 4.dp,
+                                            ),
+                                        verticalArrangement = Arrangement.SpaceBetween
                                     ) {
-                                        it.tags.firstOrNull()?.let {
-                                            ElevatedFilterChip(
-                                                selected = false,
-                                                onClick = { },
-                                                label = {
-                                                    Text(it.name)
-                                                },
-                                                shape = RoundedCornerShape(16.dp),
-                                                colors = FilterChipDefaults.filterChipColors(
-                                                    containerColor = MaterialTheme.colorScheme.tertiary,
-                                                    labelColor = MaterialTheme.colorScheme.onTertiary
+                                        Row(
+                                            modifier = Modifier
+                                                .fillMaxWidth(),
+                                            horizontalArrangement = Arrangement.SpaceBetween
+                                        ) {
+                                            it.tags.firstOrNull()?.let {
+                                                ElevatedFilterChip(
+                                                    selected = false,
+                                                    onClick = { },
+                                                    label = {
+                                                        Text(it.name)
+                                                    },
+                                                    shape = RoundedCornerShape(16.dp),
+                                                    colors = FilterChipDefaults.filterChipColors(
+                                                        containerColor = MaterialTheme.colorScheme.tertiary,
+                                                        labelColor = MaterialTheme.colorScheme.onTertiary
+                                                    )
                                                 )
+                                            }
+
+                                            IconButton(
+                                                onClick = {
+                                                    viewModel.onEvent(HomeEvent.OnFavoriteClick(it))
+                                                },
+                                                content = {
+                                                    Icon(
+                                                        imageVector = Icons.Outlined.Favorite,
+                                                        contentDescription = "Favorite",
+                                                        tint = if (it.isFavorite) {
+                                                            MaterialTheme.colorScheme.error
+                                                        } else {
+                                                            MaterialTheme.colorScheme.onBackground
+                                                        }
+                                                    )
+                                                }
                                             )
                                         }
 
-                                        IconButton(
-                                            onClick = {
-
-                                            },
-                                            content = {
-                                                Icon(
-                                                    imageVector = Icons.Outlined.Favorite,
-                                                    contentDescription = "Favorite",
-                                                )
-                                            }
-                                        )
-                                    }
-
-                                    Column {
-                                        Text(
-                                            text = it.name,
-                                            fontWeight = FontWeight.Bold
-                                        )
-                                        Text(
-                                            text = buildString {
-                                                append("You have ")
-                                                append(it.ownedProductsPercent)
-                                                append("% of ingredients")
-                                            },
-                                            fontSize = 10.sp
-                                        )
+                                        Column {
+                                            Text(
+                                                text = it.name,
+                                                fontWeight = FontWeight.Bold
+                                            )
+                                            Text(
+                                                text = buildString {
+                                                    append("You have ")
+                                                    append(it.ownedProductsPercent)
+                                                    append("% of ingredients")
+                                                },
+                                                fontSize = 10.sp
+                                            )
+                                        }
                                     }
                                 }
                             }
                         }
+                        Spacer(modifier = Modifier.height(28.dp))
                     }
-                    Spacer(modifier = Modifier.height(28.dp))
                 }
             }
         },
@@ -407,4 +420,182 @@ fun HomeScreen(
             }
         }
     )
+}
+
+@Composable
+private fun RecipesShimmerLoading(
+    viewModel: HomeViewModel
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+            .padding(horizontal = 16.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = "Recipes",
+            fontWeight = FontWeight.Bold,
+            fontSize = 16.sp
+        )
+        TextButton(
+            modifier = Modifier.padding(top = 4.dp),
+            onClick = {
+                viewModel.onEvent(HomeEvent.OnShowAllRecipesClick)
+            },
+            content = {
+                Text(
+                    text = "Show all",
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 14.sp
+                )
+            }
+        )
+    }
+
+    Spacer(modifier = Modifier.height(16.dp))
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(110.dp)
+    ) {
+        repeat(5) {
+
+            Box(
+                modifier = Modifier
+                    .width(200.dp)
+                    .height(110.dp)
+                    .clip(RoundedCornerShape(10.dp))
+                    .padding(horizontal = 16.dp)
+            ) {
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .clip(RoundedCornerShape(10.dp))
+                        .background(MaterialTheme.colorScheme.secondaryContainer)
+                )
+
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(
+                            start = 12.dp,
+                            end = 12.dp,
+                            bottom = 8.dp,
+                            top = 4.dp,
+                        ),
+                    verticalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .padding(top = 8.dp)
+                                .width(64.dp)
+                                .height(32.dp)
+                                .clip(RoundedCornerShape(16.dp))
+                                .shimmerEffect()
+                        )
+
+                        IconButton(
+                            onClick = {},
+                            content = {
+                                Icon(
+                                    imageVector = Icons.Outlined.Favorite,
+                                    contentDescription = "Favorite",
+                                )
+                            }
+                        )
+                    }
+
+                    Column {
+                        Box(
+                            modifier = Modifier
+                                .width(64.dp)
+                                .height(18.dp)
+                                .clip(RoundedCornerShape(10.dp))
+                                .shimmerEffect()
+                        )
+                        Box(
+                            modifier = Modifier
+                                .padding(top = 4.dp)
+                                .width(110.dp)
+                                .height(12.dp)
+                                .clip(RoundedCornerShape(10.dp))
+                                .shimmerEffect()
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun ProductsShimmerLoading(
+    viewModel: HomeViewModel
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+            .padding(horizontal = 16.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = "Your products",
+            fontWeight = FontWeight.Bold,
+            fontSize = 16.sp
+        )
+        TextButton(
+            modifier = Modifier.padding(top = 4.dp),
+            onClick = {
+                viewModel.onEvent(HomeEvent.OnShowAllProductsClick)
+            },
+            content = {
+                Text(
+                    text = "Show all",
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 14.sp
+                )
+            }
+        )
+    }
+    Spacer(modifier = Modifier.height(16.dp))
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(84.dp)
+    ) {
+        repeat(5) {
+            Column(
+                modifier = Modifier
+                    .wrapContentSize()
+                    .padding(horizontal = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Box(
+                    modifier = Modifier
+                        .size(64.dp)
+                        .clip(RoundedCornerShape(64.dp))
+                        .shimmerEffect()
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Box(
+                    modifier = Modifier
+                        .width(48.dp)
+                        .height(16.dp)
+                        .clip(RoundedCornerShape(10.dp))
+                        .shimmerEffect()
+                )
+            }
+        }
+    }
 }

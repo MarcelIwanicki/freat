@@ -8,11 +8,12 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.WhileSubscribed
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import kotlin.time.Duration.Companion.seconds
 
 class HomeViewModel(
     productDataSource: ProductDataSource,
-    recipeDataSource: RecipeDataSource
+    private val recipeDataSource: RecipeDataSource
 ) : ViewModel() {
 
     companion object {
@@ -26,6 +27,7 @@ class HomeViewModel(
         recipeDataSource.getRecipes(),
     ) { state, products, recipes ->
         state.copy(
+            loading = false,
             products = products,
             recipes = recipes
         )
@@ -67,6 +69,15 @@ class HomeViewModel(
                 _state.value = _state.value.copy(
                     isScanBillClicked = true
                 )
+            }
+
+            is HomeEvent.OnFavoriteClick -> {
+                viewModelScope.launch {
+                    val favoriteRecipe = event.recipe.copy(
+                        isFavorite = !event.recipe.isFavorite
+                    )
+                    recipeDataSource.insertRecipe(favoriteRecipe)
+                }
             }
         }
     }

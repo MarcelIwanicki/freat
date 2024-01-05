@@ -258,14 +258,19 @@ fun RecipesScreen(
 
                                 IconButton(
                                     onClick = {
-
+                                        viewModel.onEvent(RecipesEvent.OnFavoriteClick(item))
                                     },
                                     content = {
                                         Icon(
                                             imageVector = Icons.Outlined.Favorite,
                                             contentDescription = "Favorite",
+                                            tint = if (item.isFavorite) {
+                                                MaterialTheme.colorScheme.error
+                                            } else {
+                                                MaterialTheme.colorScheme.onBackground
+                                            }
                                         )
-                                    }
+                                    },
                                 )
                             }
 

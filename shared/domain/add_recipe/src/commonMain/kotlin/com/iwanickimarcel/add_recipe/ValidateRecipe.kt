@@ -35,7 +35,8 @@ class ValidateRecipe {
                     products = ingredients,
                     tags = tags,
                     steps = steps,
-                    ownedProductsPercent = 0
+                    ownedProductsPercent = 0,
+                    isFavorite = false
                 )
 
                 if (editId != null) {

@@ -9,4 +9,5 @@ sealed interface RecipesEvent {
     object OnDeleteRecipeMenuDismiss : RecipesEvent
     object OnDeleteRecipeConfirm : RecipesEvent
     data class OnEditRecipePress(val recipe: Recipe) : RecipesEvent
+    data class OnFavoriteClick(val recipe: Recipe) : RecipesEvent
 }

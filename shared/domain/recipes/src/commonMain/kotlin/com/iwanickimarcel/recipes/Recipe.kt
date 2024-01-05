@@ -12,6 +12,7 @@ data class Recipe(
     val tags: List<Tag>,
     val steps: List<Step>,
     val ownedProductsPercent: Percent,
+    val isFavorite: Boolean,
 ) {
     data class Tag(
         val name: String
@@ -42,6 +43,7 @@ data class Recipe(
         if (tags != other.tags) return false
         if (steps != other.steps) return false
         if (ownedProductsPercent != other.ownedProductsPercent) return false
+        if (isFavorite != other.isFavorite) return false
 
         return true
     }
@@ -54,6 +56,8 @@ data class Recipe(
         result = 31 * result + tags.hashCode()
         result = 31 * result + steps.hashCode()
         result = 31 * result + ownedProductsPercent
+        result = 31 * result + isFavorite.hashCode()
         return result
     }
+
 }
