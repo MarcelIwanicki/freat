@@ -49,6 +49,9 @@ import com.iwanickimarcel.core.AddProductPlaceholder
 import com.iwanickimarcel.core.ImagePicker
 import com.iwanickimarcel.core.NavigationBarFactory
 
+private const val TEST_TAG_ADD_PRODUCT = "add_product"
+private const val TEST_TAG_SCAN_THE_BILL = "scan_the_bill"
+
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun ProductsScreen(
@@ -247,6 +250,7 @@ fun ProductsScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(8.dp)
+                                .testTag(TEST_TAG_ADD_PRODUCT)
                         ) {
                             viewModel.onEvent(ProductsEvent.OnAddProductClick)
                         }
@@ -256,8 +260,10 @@ fun ProductsScreen(
                         AddProductPlaceholder(
                             text = "Scan the bill",
                             icon = Icons.Outlined.AddAPhoto,
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier
+                                .fillMaxWidth()
                                 .padding(8.dp)
+                                .testTag(TEST_TAG_SCAN_THE_BILL)
                         ) {
                             viewModel.onEvent(ProductsEvent.OnScanBillClick)
                         }

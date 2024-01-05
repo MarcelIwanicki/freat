@@ -38,12 +38,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.iwanickimarcel.core.AddProductPlaceholder
 import com.iwanickimarcel.core.ImagePicker
+
+private const val TEST_TAG_ADD_PRODUCT_NAME = "add_product_name"
+private const val TEST_TAG_ADD_PRODUCT_AMOUNT = "add_product_amount"
+private const val TEST_TAG_CONFIRM_ADD_PRODUCT = "confirm_add_product"
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -141,7 +146,8 @@ fun AddProductScreen(
                         shape = RoundedCornerShape(20.dp),
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(68.dp),
+                            .height(68.dp)
+                            .testTag(TEST_TAG_ADD_PRODUCT_NAME),
                         leadingIcon = {
                             Icon(
                                 imageVector = Icons.Outlined.Book,
@@ -165,7 +171,8 @@ fun AddProductScreen(
                         OutlinedTextField(
                             modifier = Modifier
                                 .fillMaxWidth(0.65f)
-                                .height(68.dp),
+                                .height(68.dp)
+                                .testTag(TEST_TAG_ADD_PRODUCT_AMOUNT),
                             value = state.amount?.toString() ?: "",
                             placeholder = {
                                 Text(text = "Insert amount...")
@@ -243,7 +250,8 @@ fun AddProductScreen(
                         .fillMaxWidth()
                         .height(48.dp)
                         .clip(RoundedCornerShape(16.dp))
-                        .background(MaterialTheme.colorScheme.primary),
+                        .background(MaterialTheme.colorScheme.primary)
+                        .testTag(TEST_TAG_CONFIRM_ADD_PRODUCT),
                     onClick = {
                         viewModel.onEvent(AddProductEvent.OnAddProductClick)
                     }
