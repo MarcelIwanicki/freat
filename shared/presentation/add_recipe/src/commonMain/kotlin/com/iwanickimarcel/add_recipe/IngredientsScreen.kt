@@ -33,9 +33,9 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.iwanickimarcel.products.Product
 
-private const val TEST_TAG_ADD_INGREDIENT_PLUS = "add_ingredient_plus"
-private const val TEST_TAG_ADD_INGREDIENT_CONFIRM_ADDING_PRODUCTS =
-    "add_ingredient_confirm_adding_products"
+private object TestTags {
+    const val ADD_INGREDIENT_PLUS = "add_ingredient_plus"
+}
 
 @Composable
 fun IngredientsScreen(
@@ -127,7 +127,7 @@ fun IngredientsScreen(
                             shape = RoundedCornerShape(16.dp)
                         )
                         .background(MaterialTheme.colorScheme.secondaryContainer)
-                        .testTag(TEST_TAG_ADD_INGREDIENT_PLUS),
+                        .testTag(TestTags.ADD_INGREDIENT_PLUS),
                     onClick = {
                         onAddIngredientPressed()
                     },
@@ -144,8 +144,7 @@ fun IngredientsScreen(
         Button(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(48.dp)
-                .testTag(TEST_TAG_ADD_INGREDIENT_CONFIRM_ADDING_PRODUCTS),
+                .height(48.dp),
             onClick = {
                 onConfirmClick()
             },

@@ -1,13 +1,16 @@
 package com.iwanickimarcel.freat
 
 import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.longClick
+import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import androidx.compose.ui.test.performTextReplacement
+import androidx.compose.ui.test.performScrollToNode
+import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.performTouchInput
+import androidx.test.espresso.Espresso.closeSoftKeyboard
 import com.iwanickimarcel.freat.android.MainActivity
 import org.junit.Before
 import org.junit.Rule
@@ -15,20 +18,9 @@ import org.junit.Test
 
 class ProductsScreenTest {
 
-    companion object {
-        private const val TEST_TAG_ADD_PRODUCT = "add_product"
-        private const val TEST_TAG_SCAN_THE_BILL = "scan_the_bill"
-
-        private const val TEST_TAG_ADD_PRODUCT_NAME = "add_product_name"
-        private const val TEST_TAG_ADD_PRODUCT_AMOUNT = "add_product_amount"
-        private const val TEST_TAG_CONFIRM_ADD_PRODUCT = "confirm_add_product"
-
-        private const val TEST_TAG_ADD_INGREDIENT_PLUS = "add_ingredient_plus"
-        private const val TEST_TAG_ADD_INGREDIENT_NAME = "add_ingredient_name"
-        private const val TEST_TAG_ADD_INGREDIENT_AMOUNT = "add_ingredient_amount"
-        private const val TEST_TAG_CONFIRM_ADD_INGREDIENT = "confirm_add_ingredient"
-        private const val TEST_TAG_ADD_INGREDIENT_CONFIRM_ADDING_PRODUCTS =
-            "add_ingredient_confirm_adding_products"
+    private object TestTags {
+        const val ADD_INGREDIENT_PLUS = "add_ingredient_plus"
+        const val PRODUCTS_GRID = "products_grid"
     }
 
     @get:Rule
@@ -36,93 +28,112 @@ class ProductsScreenTest {
 
     @Before
     fun setUp() {
-        composeRule.onNode(hasText("Products")).performClick()
+        composeRule.onNodeWithText("Products").performClick()
     }
 
     @Test
     fun test_screen_contains_addProduct_button() {
-        composeRule.onNode(hasTestTag(TEST_TAG_ADD_PRODUCT)).assertIsDisplayed()
+        composeRule.onNodeWithText("Add product").assertIsDisplayed()
     }
 
     @Test
     fun test_screen_contains_scanTheBill_button() {
-        composeRule.onNode(hasTestTag(TEST_TAG_SCAN_THE_BILL)).assertIsDisplayed()
+        composeRule.onNodeWithText("Scan the bill").assertIsDisplayed()
     }
 
     @Test
     fun test_adding_new_product() {
-        composeRule.onNode(hasTestTag(TEST_TAG_ADD_PRODUCT)).performClick()
+        with(composeRule) {
+            onNodeWithText("Add product").performClick()
 
-        composeRule.onNode(hasTestTag(TEST_TAG_ADD_PRODUCT_NAME)).performTextReplacement("Apple")
-        composeRule.onNode(hasTestTag(TEST_TAG_ADD_PRODUCT_AMOUNT)).performTextReplacement("20.0")
-        composeRule.onNode(hasTestTag(TEST_TAG_CONFIRM_ADD_PRODUCT)).performClick()
+            onNodeWithText("Name").performTextInput("Apple")
+            closeSoftKeyboard()
+            onNodeWithText("Amount").performTextInput("20.0")
+            closeSoftKeyboard()
+            onNodeWithText("Confirm adding product").performClick()
 
-        composeRule.onNode(hasText("Apple")).assertIsDisplayed()
+            onNodeWithTag(TestTags.PRODUCTS_GRID).performScrollToNode(hasText("Apple"))
+            onNodeWithText("Apple").assertIsDisplayed()
+        }
     }
 
     @Test
     fun test_adding_new_products_from_scan_the_bill() {
-        composeRule.onNode(hasTestTag(TEST_TAG_SCAN_THE_BILL)).performClick()
+        with(composeRule) {
+            onNodeWithText("Scan the bill").performClick()
 
-        composeRule.onNode(hasTestTag(TEST_TAG_ADD_INGREDIENT_PLUS)).performClick()
-        composeRule.onNode(hasTestTag(TEST_TAG_ADD_INGREDIENT_NAME))
-            .performTextReplacement("Banana")
-        composeRule.onNode(hasTestTag(TEST_TAG_ADD_INGREDIENT_AMOUNT))
-            .performTextReplacement("20.0")
-        composeRule.onNode(hasTestTag(TEST_TAG_CONFIRM_ADD_INGREDIENT)).performClick()
+            onNodeWithTag(TestTags.ADD_INGREDIENT_PLUS).performClick()
+            onNodeWithText("Name").performTextInput("Banana")
+            closeSoftKeyboard()
+            onNodeWithText("Amount").performTextInput("20.0")
+            closeSoftKeyboard()
+            onNodeWithText("Confirm adding ingredient").performClick()
 
-        composeRule.onNode(hasTestTag(TEST_TAG_ADD_INGREDIENT_PLUS)).performClick()
-        composeRule.onNode(hasTestTag(TEST_TAG_ADD_INGREDIENT_NAME))
-            .performTextReplacement("Mustard")
-        composeRule.onNode(hasTestTag(TEST_TAG_ADD_INGREDIENT_AMOUNT))
-            .performTextReplacement("555.0")
-        composeRule.onNode(hasTestTag(TEST_TAG_CONFIRM_ADD_INGREDIENT)).performClick()
+            onNodeWithTag(TestTags.ADD_INGREDIENT_PLUS).performClick()
+            onNodeWithText("Name").performTextInput("Mustard")
+            closeSoftKeyboard()
+            onNodeWithText("Amount").performTextInput("10.0")
+            closeSoftKeyboard()
+            onNodeWithText("Confirm adding ingredient").performClick()
 
-        composeRule.onNode(hasTestTag(TEST_TAG_ADD_INGREDIENT_PLUS)).performClick()
-        composeRule.onNode(hasTestTag(TEST_TAG_ADD_INGREDIENT_NAME))
-            .performTextReplacement("Strawberry")
-        composeRule.onNode(hasTestTag(TEST_TAG_ADD_INGREDIENT_AMOUNT)).performTextReplacement("1.0")
-        composeRule.onNode(hasTestTag(TEST_TAG_CONFIRM_ADD_INGREDIENT)).performClick()
+            onNodeWithTag(TestTags.ADD_INGREDIENT_PLUS).performClick()
+            onNodeWithText("Name").performTextInput("Strawberry")
+            closeSoftKeyboard()
+            onNodeWithText("Amount").performTextInput("1.0")
+            closeSoftKeyboard()
+            onNodeWithText("Confirm adding ingredient").performClick()
 
-        composeRule.onNode(hasTestTag(TEST_TAG_ADD_INGREDIENT_CONFIRM_ADDING_PRODUCTS))
-            .performClick()
+            onNodeWithText("Confirm adding products").performClick()
 
-        composeRule.onNode(hasText("Banana")).assertIsDisplayed()
-        composeRule.onNode(hasText("Mustard")).assertIsDisplayed()
-        composeRule.onNode(hasText("Strawberry")).assertIsDisplayed()
+            onNodeWithTag(TestTags.PRODUCTS_GRID).performScrollToNode(hasText("Banana"))
+            onNodeWithText("Banana").assertIsDisplayed()
+            onNodeWithTag(TestTags.PRODUCTS_GRID).performScrollToNode(hasText("Mustard"))
+            onNodeWithText("Mustard").assertIsDisplayed()
+            onNodeWithTag(TestTags.PRODUCTS_GRID).performScrollToNode(hasText("Strawberry"))
+            onNodeWithText("Strawberry").assertIsDisplayed()
+        }
     }
 
     @Test
     fun test_editing_product() {
-        composeRule.onNode(hasTestTag(TEST_TAG_ADD_PRODUCT)).performClick()
+        with(composeRule) {
+            onNodeWithText("Add product").performClick()
 
-        composeRule.onNode(hasTestTag(TEST_TAG_ADD_PRODUCT_NAME)).performTextReplacement("Steak")
-        composeRule.onNode(hasTestTag(TEST_TAG_ADD_PRODUCT_AMOUNT)).performTextReplacement("20.0")
-        composeRule.onNode(hasTestTag(TEST_TAG_CONFIRM_ADD_PRODUCT)).performClick()
+            onNodeWithText("Name").performTextInput("Steak")
+            closeSoftKeyboard()
+            onNodeWithText("Amount").performTextInput("20.0")
+            closeSoftKeyboard()
+            onNodeWithText("Confirm adding product").performClick()
 
-        composeRule.onNode(hasText("Steak")).performTouchInput { longClick() }
-        composeRule.onNode(hasText("Edit Steak")).performClick()
+            onNodeWithTag(TestTags.PRODUCTS_GRID).performScrollToNode(hasText("Steak"))
+            onNodeWithText("Steak").performTouchInput { longClick() }
+            onNodeWithText("Edit Steak").performClick()
 
-        composeRule.onNode(hasTestTag(TEST_TAG_ADD_PRODUCT_NAME)).performTextReplacement("NewSteak")
-        composeRule.onNode(hasTestTag(TEST_TAG_CONFIRM_ADD_PRODUCT)).performClick()
+            onNodeWithText("Name").performTextInput("New")
+            closeSoftKeyboard()
+            onNodeWithText("Save changes").performClick()
 
-        composeRule.onNode(hasText("NewSteak")).assertIsDisplayed()
+            onNodeWithTag(TestTags.PRODUCTS_GRID).performScrollToNode(hasText("NewSteak"))
+            onNodeWithText("NewSteak").assertIsDisplayed()
+        }
     }
 
     @Test
     fun test_deleting_product() {
-        composeRule.onNode(hasTestTag(TEST_TAG_ADD_PRODUCT)).performClick()
+        with(composeRule) {
+            onNodeWithText("Add product").performClick()
 
-        composeRule.onNode(hasTestTag(TEST_TAG_ADD_PRODUCT_NAME)).performTextReplacement("Lemon")
-        composeRule.onNode(hasTestTag(TEST_TAG_ADD_PRODUCT_AMOUNT)).performTextReplacement("20.0")
-        composeRule.onNode(hasTestTag(TEST_TAG_CONFIRM_ADD_PRODUCT)).performClick()
+            onNodeWithText("Name").performTextInput("Lemon")
+            closeSoftKeyboard()
+            onNodeWithText("Amount").performTextInput("20.0")
+            closeSoftKeyboard()
+            onNodeWithText("Confirm adding product").performClick()
 
-        composeRule.onNode(hasText("Lemon")).assertIsDisplayed()
+            onNodeWithTag(TestTags.PRODUCTS_GRID).performScrollToNode(hasText("Lemon"))
+            onNodeWithText("Lemon").performTouchInput { longClick() }
+            onNodeWithText("Delete Lemon").performClick()
 
-//        composeRule.onNode(hasText("Lemon")).performTouchInput { longClick() }
-//        composeRule.onNode(hasText("Delete Lemon")).performClick()
-//
-//        composeRule.onNode(hasText("Delete")).performClick()
-//        composeRule.onNode(hasText("Lemon")).assertIsNotDisplayed()
+            onNodeWithText("Delete").performClick()
+        }
     }
 }

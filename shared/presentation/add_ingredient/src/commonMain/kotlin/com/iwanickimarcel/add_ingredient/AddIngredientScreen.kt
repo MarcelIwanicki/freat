@@ -242,7 +242,7 @@ fun AddIngredientScreen(
                         if (editProduct != null) {
                             "Save changes"
                         } else {
-                            "Add ingredient"
+                            "Confirm adding ingredient"
                         },
                         color = MaterialTheme.colorScheme.onPrimary
                     )

@@ -46,10 +46,6 @@ import androidx.compose.ui.unit.dp
 import com.iwanickimarcel.core.AddProductPlaceholder
 import com.iwanickimarcel.core.ImagePicker
 
-private const val TEST_TAG_ADD_PRODUCT_NAME = "add_product_name"
-private const val TEST_TAG_ADD_PRODUCT_AMOUNT = "add_product_amount"
-private const val TEST_TAG_CONFIRM_ADD_PRODUCT = "confirm_add_product"
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddProductScreen(
@@ -146,8 +142,7 @@ fun AddProductScreen(
                         shape = RoundedCornerShape(20.dp),
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(68.dp)
-                            .testTag(TEST_TAG_ADD_PRODUCT_NAME),
+                            .height(68.dp),
                         leadingIcon = {
                             Icon(
                                 imageVector = Icons.Outlined.Book,
@@ -171,8 +166,7 @@ fun AddProductScreen(
                         OutlinedTextField(
                             modifier = Modifier
                                 .fillMaxWidth(0.65f)
-                                .height(68.dp)
-                                .testTag(TEST_TAG_ADD_PRODUCT_AMOUNT),
+                                .height(68.dp),
                             value = state.amount?.toString() ?: "",
                             placeholder = {
                                 Text(text = "Insert amount...")
@@ -250,8 +244,7 @@ fun AddProductScreen(
                         .fillMaxWidth()
                         .height(48.dp)
                         .clip(RoundedCornerShape(16.dp))
-                        .background(MaterialTheme.colorScheme.primary)
-                        .testTag(TEST_TAG_CONFIRM_ADD_PRODUCT),
+                        .background(MaterialTheme.colorScheme.primary),
                     onClick = {
                         viewModel.onEvent(AddProductEvent.OnAddProductClick)
                     }
@@ -259,7 +252,7 @@ fun AddProductScreen(
                     Text(
                         editProductName?.let {
                             "Save changes"
-                        } ?: "Add product",
+                        } ?: "Confirm adding product",
                         color = MaterialTheme.colorScheme.onPrimary
                     )
                 }
