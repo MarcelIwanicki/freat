@@ -49,6 +49,10 @@ import com.iwanickimarcel.core.AddProductPlaceholder
 import com.iwanickimarcel.core.ImagePicker
 import com.iwanickimarcel.core.NavigationBarFactory
 
+private object TestTags {
+    const val PRODUCTS_GRID = "products_grid"
+}
+
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun ProductsScreen(
@@ -231,7 +235,9 @@ fun ProductsScreen(
             ) {
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(2),
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .testTag(TestTags.PRODUCTS_GRID),
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                     repeat(2) {
@@ -256,7 +262,8 @@ fun ProductsScreen(
                         AddProductPlaceholder(
                             text = "Scan the bill",
                             icon = Icons.Outlined.AddAPhoto,
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier
+                                .fillMaxWidth()
                                 .padding(8.dp)
                         ) {
                             viewModel.onEvent(ProductsEvent.OnScanBillClick)

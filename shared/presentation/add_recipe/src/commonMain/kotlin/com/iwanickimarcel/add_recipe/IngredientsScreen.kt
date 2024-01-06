@@ -29,8 +29,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.iwanickimarcel.products.Product
+
+private object TestTags {
+    const val ADD_INGREDIENT_PLUS = "add_ingredient_plus"
+}
 
 @Composable
 fun IngredientsScreen(
@@ -121,7 +126,8 @@ fun IngredientsScreen(
                             color = MaterialTheme.colorScheme.onSecondaryContainer,
                             shape = RoundedCornerShape(16.dp)
                         )
-                        .background(MaterialTheme.colorScheme.secondaryContainer),
+                        .background(MaterialTheme.colorScheme.secondaryContainer)
+                        .testTag(TestTags.ADD_INGREDIENT_PLUS),
                     onClick = {
                         onAddIngredientPressed()
                     },

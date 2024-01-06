@@ -37,11 +37,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.iwanickimarcel.products.Product
+
+private const val TEST_TAG_ADD_INGREDIENT_NAME = "add_ingredient_name"
+private const val TEST_TAG_ADD_INGREDIENT_AMOUNT = "add_ingredient_amount"
+private const val TEST_TAG_CONFIRM_ADD_INGREDIENT = "confirm_add_ingredient"
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -123,7 +128,8 @@ fun AddIngredientScreen(
                         shape = RoundedCornerShape(20.dp),
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(68.dp),
+                            .height(68.dp)
+                            .testTag(TEST_TAG_ADD_INGREDIENT_NAME),
                         leadingIcon = {
                             Icon(
                                 imageVector = Icons.Outlined.Book,
@@ -147,7 +153,8 @@ fun AddIngredientScreen(
                         OutlinedTextField(
                             modifier = Modifier
                                 .fillMaxWidth(0.65f)
-                                .height(68.dp),
+                                .height(68.dp)
+                                .testTag(TEST_TAG_ADD_INGREDIENT_AMOUNT),
                             value = state.amount?.toString() ?: "",
                             placeholder = {
                                 Text(text = "Insert amount...")
@@ -225,7 +232,8 @@ fun AddIngredientScreen(
                         .fillMaxWidth()
                         .height(48.dp)
                         .clip(RoundedCornerShape(16.dp))
-                        .background(MaterialTheme.colorScheme.primary),
+                        .background(MaterialTheme.colorScheme.primary)
+                        .testTag(TEST_TAG_CONFIRM_ADD_INGREDIENT),
                     onClick = {
                         viewModel.onEvent(AddIngredientEvent.OnAddIngredientClick(onIngredientAdded))
                     }
@@ -234,7 +242,7 @@ fun AddIngredientScreen(
                         if (editProduct != null) {
                             "Save changes"
                         } else {
-                            "Add ingredient"
+                            "Confirm adding ingredient"
                         },
                         color = MaterialTheme.colorScheme.onPrimary
                     )
