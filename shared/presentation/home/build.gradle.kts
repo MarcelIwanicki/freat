@@ -62,6 +62,7 @@ dependencies {
     implementation(project(mapOf("path" to ":shared:presentation:core")))
     implementation(project(mapOf("path" to ":shared:presentation:products")))
     implementation(project(mapOf("path" to ":shared:presentation:recipes")))
+    commonTestImplementation(project(mapOf("path" to ":shared:test")))
 
     implementation("androidx.core:core:1.12.0")
     commonMainImplementation("cafe.adriel.voyager:voyager-navigator:1.0.0-rc05")
@@ -69,4 +70,8 @@ dependencies {
     commonMainApi("dev.icerock.moko:mvvm-compose:0.16.1")
     commonMainApi("dev.icerock.moko:mvvm-flow:0.16.1")
     commonMainApi("dev.icerock.moko:mvvm-flow-compose:0.16.1")
+
+    commonTestImplementation("org.assertj:assertj-core:3.22.0")
+    commonTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+    commonTestImplementation("app.cash.turbine:turbine:1.0.0")
 }

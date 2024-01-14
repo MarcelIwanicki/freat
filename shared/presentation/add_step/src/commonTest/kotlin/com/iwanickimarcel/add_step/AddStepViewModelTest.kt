@@ -1,9 +1,7 @@
+package com.iwanickimarcel.add_step
+
 import androidx.compose.ui.text.input.TextFieldValue
 import app.cash.turbine.test
-import com.iwanickimarcel.add_step.AddStepEvent
-import com.iwanickimarcel.add_step.AddStepState
-import com.iwanickimarcel.add_step.AddStepViewModel
-import com.iwanickimarcel.add_step.ValidateStep
 import com.iwanickimarcel.test.CoroutineTestRule
 import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions.assertThat
