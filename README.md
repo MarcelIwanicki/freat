@@ -8,10 +8,6 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/MarcelIwanicki/freat">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
-  </a>
-
 <h3 align="center">Freat - Smart Recipe App</h3>
 
   <p align="center">
@@ -58,9 +54,9 @@
 
 ## About The Project
 
-<center>
+<div align="center">
   <img src="images/home.jpg" alt="Freat home Screen Shot" width="50%"/>
-</center>
+</div>
 
 Freat is an open-source variation of a smart recipe app designed to make cooking easier
 and more enjoyable. It allows users to import products from receipt/bill scans, calculates available
@@ -166,24 +162,24 @@ steps:
 
 ## Screenshots
 
-<center>
+<div align="center">
   <img src="images/recipes.jpg" alt="Freat recipes Screen Shot" width="50%"/>
-</center>
-<center>
+</div>
+<div align="center">
   <img src="images/products.jpg" alt="Freat products Screen Shot" width="50%"/>
-</center>
-<center>
+</div>
+<div align="center">
   <img src="images/add_photo.jpg" alt="Freat add photo Screen Shot" width="50%"/>
-</center>
-<center>
+</div>
+<div align="center">
   <img src="images/add_recipe.jpg" alt="Freat add recipe Screen Shot" width="50%"/>
-</center>
-<center>
+</div>
+<div align="center">
   <img src="images/add_tags.jpg" alt="Freat add tags Screen Shot" width="50%"/>
-</center>
-<center>
+</div>
+<div align="center">
   <img src="images/search.jpg" alt="Freat search Screen Shot" width="50%"/>
-</center>
+</div>
 
 ## License
 
