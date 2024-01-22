@@ -213,23 +213,23 @@ Use this space to give credit to resources that have been helpful. Here are a fe
 * [JetBrains Kotlin Documentation](https://kotlinlang.org)
 * [Compose Multiplatform Documentation](https://www.jetbrains.com/lp/compose-multiplatform)
 
-[contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
+[contributors-shield]: https://img.shields.io/github/contributors/MarcelIwanicki/freat.svg?style=for-the-badge
 
 [contributors-url]: https://github.com/MarcelIwanicki/freat/graphs/contributors
 
-[forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
+[forks-shield]: https://img.shields.io/github/forks/MarcelIwanicki/freat.svg?style=for-the-badge
 
 [forks-url]: https://github.com/MarcelIwanicki/freat/network/members
 
-[stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
+[stars-shield]: https://img.shields.io/github/stars/MarcelIwanicki/freat.svg?style=for-the-badge
 
 [stars-url]: https://github.com/MarcelIwanicki/freat/stargazers
 
-[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
+[issues-shield]: https://img.shields.io/github/issues/MarcelIwanicki/freat.svg?style=for-the-badge
 
 [issues-url]: https://github.com/MarcelIwanicki/freat/issues
 
-[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
+[license-shield]: https://img.shields.io/github/license/MarcelIwanicki/freat.svg?style=for-the-badge
 
 [license-url]: https://github.com/MarcelIwanicki/freat/blob/main/LICENSE.txt
 
