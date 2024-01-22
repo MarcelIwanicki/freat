@@ -58,7 +58,7 @@
 
 ## About The Project
 
-<img src="home-screenshot" alt="Freat home Screen Shot" width="50%"/>
+<img src="images/home.jpg" alt="Freat home Screen Shot" width="50%"/>
 
 Freat is an open-source variation of a smart recipe app designed to make cooking easier
 and more enjoyable. It allows users to import products from receipt/bill scans, calculates available
