@@ -54,9 +54,13 @@
 
 ## About The Project
 
+<br />
+
 <div align="center">
   <img src="images/home.jpg" alt="Freat home Screen Shot" width="50%"/>
 </div>
+
+<br />
 
 Freat is an open-source variation of a smart recipe app designed to make cooking easier
 and more enjoyable. It allows users to import products from receipt/bill scans, calculates available
@@ -80,8 +84,13 @@ examples for a Compose Multiplatform project.
 
 * [![Android][Android-badge]][Android-url]
 * [![Kotlin][Kotlin-badge]][Kotlin-url]
-* [![Compose Multiplatform][Compose-badge]][Compose-url]
-* [![SqlDelight][SqlDelight-badge]][SqlDelight-url]
+* [![SqlDelight][SqlDelight-badge]][SqlDelight-url] SqlDelight
+* Compose Multiplatform
+* Voyager
+* Moko
+* Koin
+* JUnit
+* Turbine
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -162,24 +171,33 @@ steps:
 
 ## Screenshots
 
+<br />
+
 <div align="center">
   <img src="images/recipes.jpg" alt="Freat recipes Screen Shot" width="50%"/>
 </div>
+<br />
 <div align="center">
   <img src="images/products.jpg" alt="Freat products Screen Shot" width="50%"/>
 </div>
+<br />
 <div align="center">
   <img src="images/add_photo.jpg" alt="Freat add photo Screen Shot" width="50%"/>
 </div>
+<br />
 <div align="center">
   <img src="images/add_recipe.jpg" alt="Freat add recipe Screen Shot" width="50%"/>
 </div>
+<br />
 <div align="center">
   <img src="images/add_tags.jpg" alt="Freat add tags Screen Shot" width="50%"/>
 </div>
+<br />
 <div align="center">
   <img src="images/search.jpg" alt="Freat search Screen Shot" width="50%"/>
 </div>
+
+<br />
 
 ## License
 
